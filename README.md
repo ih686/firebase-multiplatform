@@ -1,2 +1,2 @@
-# rx
-ReactiveX Kotlin Multiplatform library wrapper
+# firebase
+Firebase Kotlin Multiplatform library wrapper
