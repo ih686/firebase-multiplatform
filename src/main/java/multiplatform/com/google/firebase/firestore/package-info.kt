@@ -1,21 +1,12 @@
 package multiplatform.com.google.firebase.firestore
 
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import multiplatform.com.google.firebase.await
 
-suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
-    addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            continuation.resume(task.result)
-        } else {
-            continuation.resumeWithException(task.exception!!)
-        }
-    }
-}
 
 actual class FirebaseFirestore {
 
@@ -30,7 +21,7 @@ actual class FirebaseFirestore {
 }
 
 actual class CollectionReference(private val ref: CollectionReference) {
-    actual suspend fun get(): QuerySnapshot = ref.get().await()
+    actual fun get() = GlobalScope.async { ref.get().await() }
 }
 
 actual typealias QuerySnapshot = com.google.firebase.firestore.QuerySnapshot

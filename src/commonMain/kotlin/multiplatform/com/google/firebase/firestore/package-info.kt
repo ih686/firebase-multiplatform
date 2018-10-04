@@ -1,5 +1,7 @@
 package multiplatform.com.google.firebase.firestore
 
+import kotlinx.coroutines.Deferred
+
 expect class FirebaseFirestore {
     companion object {
         fun getInstance(): FirebaseFirestore
@@ -9,7 +11,7 @@ expect class FirebaseFirestore {
 }
 
 expect class CollectionReference {
-    suspend fun get(): QuerySnapshot
+    fun get(): Deferred<QuerySnapshot>
 }
 
 expect class QuerySnapshot

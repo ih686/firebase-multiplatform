@@ -13,7 +13,7 @@ actual class FirebaseFirestore {
 
     init {
         db.settings(json(
-                "timestampsInSnapshots" to true
+            "timestampsInSnapshots" to true
         ))
     }
 
@@ -26,7 +26,7 @@ actual class FirebaseFirestore {
 }
 
 actual class CollectionReference(private val ref: dynamic) {
-    actual suspend fun get(): QuerySnapshot = ref.get().asDeferred()
+    actual fun get() = ref.get().asDeferred()
 }
 
 actual external class QuerySnapshot
