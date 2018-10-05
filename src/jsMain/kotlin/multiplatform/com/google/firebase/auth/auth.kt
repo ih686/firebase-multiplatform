@@ -16,6 +16,19 @@ actual class FirebaseAuth {
 
     actual fun signInWithCustomToken(token: String) = instance.signInWithCustomToken(token).asDeferred()
 
+    actual val currentUser: FirebaseUser?
+        get() = TODO("not implemented")
+
+    actual fun signOut() {}
+
 }
 
-actual external interface AuthResult
+actual class AuthResult {
+    actual val user: FirebaseUser
+        get() = TODO("not implemented")
+}
+
+actual class FirebaseUser {
+    actual val uid: String
+        get() = TODO("not implemented")
+}

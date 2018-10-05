@@ -15,10 +15,23 @@ actual class FirebaseFirestore {
 
 }
 
-actual class CollectionReference {
+actual class QuerySnapshot
+
+actual open class Query {
+    actual fun whereGreaterThan(field: String, value: Any): Query {
+        TODO("not implemented")
+    }
+
     actual fun get(): Deferred<QuerySnapshot> {
-        TODO("not implemented") //To change body of created multiplatform.com.google.firebase.functions use File | Settings | File Templates.
+        TODO("not implemented")
+    }
+
+    actual fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration {
+        TODO("not implemented")
     }
 }
 
-actual class QuerySnapshot
+actual class CollectionReference : Query() {
+}
+
+actual class FirebaseFirestoreException

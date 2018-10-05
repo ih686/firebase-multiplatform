@@ -7,7 +7,16 @@ expect class FirebaseAuth {
         fun getInstance(): FirebaseAuth
     }
 
+    val currentUser: FirebaseUser?
+
     fun signInWithCustomToken(token: String): Deferred<AuthResult>
+    fun signOut()
 }
 
-expect interface AuthResult
+expect class AuthResult {
+    val user: FirebaseUser
+}
+
+expect class FirebaseUser {
+    val uid: String
+}

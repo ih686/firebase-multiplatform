@@ -29,11 +29,11 @@ kotlin {
     targets {
         fromPreset(presets.android, 'android')
         
-        fromPreset(presets.jvm, 'jvm') {
-            tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+//        fromPreset(presets.jvm, 'jvm') {
+//            tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {
+//                jvmTarget = "1.8"
+//            }
+//        }
         
         fromPreset(presets.js, 'js') {
             tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {

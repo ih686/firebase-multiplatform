@@ -26,4 +26,7 @@ actual class HttpsCallableReference(private val ref: dynamic) {
     actual fun call() = ref.call().asDeferred()
 }
 
-actual class HttpsCallableResult
+actual class HttpsCallableResult {
+    actual val data: Any
+        get() = TODO("not implemented")
+}

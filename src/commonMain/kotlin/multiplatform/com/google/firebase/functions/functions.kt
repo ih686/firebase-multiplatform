@@ -15,4 +15,6 @@ expect class HttpsCallableReference {
     fun call(): Deferred<HttpsCallableResult>
 }
 
-expect class HttpsCallableResult
+expect class HttpsCallableResult {
+    val data: Any
+}
