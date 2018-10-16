@@ -51,15 +51,10 @@ kotlin {
             }
         }
         jvmMain {
-            dependsOn androidMain
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.27.0-eap13'
-                implementation 'org.robolectric:android-all:9-robolectric-4913185-2'
-                implementation "app.teamhub:firebase-aar-dependencies:1.0-SNAPSHOT"
-                api 'com.google.firebase:firebase-firestore:17.1.1'
-                api 'com.google.firebase:firebase-auth:16.0.4'
-                api 'com.google.firebase:firebase-functions:16.1.1'
+                api "app.teamhub:firebase-swing:1.0-SNAPSHOT"
             }
         }
         jsMain {
@@ -69,6 +64,7 @@ kotlin {
             }
         }
         androidMain {
+            dependsOn jvmMain
             dependencies {
                 api 'com.google.firebase:firebase-firestore:17.1.1'
                 api 'com.google.firebase:firebase-auth:16.0.4'
