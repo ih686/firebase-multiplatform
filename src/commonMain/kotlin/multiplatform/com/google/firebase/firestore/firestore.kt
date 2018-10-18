@@ -8,8 +8,18 @@ expect class FirebaseFirestore {
     companion object {
         fun getInstance(): FirebaseFirestore
     }
-
+    fun getFirestoreSettings(): FirebaseFirestoreSettings
+    fun setFirestoreSettings(settings: FirebaseFirestoreSettings)
     fun collection(collectionPath: String): CollectionReference
+}
+
+expect class FirebaseFirestoreSettings {
+    class Builder constructor() {
+        constructor(settings: FirebaseFirestoreSettings)
+        fun setPersistenceEnabled(enabled: Boolean): FirebaseFirestoreSettings.Builder
+        fun setTimestampsInSnapshotsEnabled(enabled: Boolean): FirebaseFirestoreSettings.Builder
+        fun build(): FirebaseFirestoreSettings
+    }
 }
 
 expect open class Query {

@@ -26,6 +26,12 @@ actual class FirebaseFirestore {
     }
 
     actual fun collection(collectionPath: String) = CollectionReference(/*db.collection(collectionPath)*/)
+
+    actual fun setFirestoreSettings(settings: FirebaseFirestoreSettings) {}
+
+    actual fun getFirestoreSettings(): FirebaseFirestoreSettings {
+        TODO("not implemented")
+    }
 }
 
 actual external class QuerySnapshot {
@@ -67,5 +73,23 @@ actual class FieldPath {
 actual class DocumentSnapshot {
     actual fun <T : Any> toObject(valueType: KClass<T>): T {
         TODO("not implemented")
+    }
+}
+
+actual class FirebaseFirestoreSettings {
+    actual class Builder actual constructor() {
+        actual fun setPersistenceEnabled(enabled: Boolean): Builder {
+            TODO("not implemented")
+        }
+
+        actual fun setTimestampsInSnapshotsEnabled(enabled: Boolean): Builder {
+            TODO("not implemented")
+        }
+
+        actual fun build(): FirebaseFirestoreSettings {
+            TODO("not implemented")
+        }
+
+        actual constructor(settings: FirebaseFirestoreSettings) : this()
     }
 }

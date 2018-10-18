@@ -19,6 +19,11 @@ actual class FirebaseFirestore {
     }
 
     actual fun collection(collectionPath: String) = CollectionReference(instance.collection(collectionPath))
+
+    actual fun setFirestoreSettings(settings: FirebaseFirestoreSettings) = instance.setFirestoreSettings(settings.instance)
+
+    actual fun getFirestoreSettings() = FirebaseFirestoreSettings(instance.getFirestoreSettings())
+
 }
 
 actual class CollectionReference(instance: CollectionReference) : multiplatform.com.google.firebase.firestore.Query(instance) {
@@ -52,5 +57,29 @@ actual open class Query(private val instance: Query) {
 actual class FieldPath(internal val instance: com.google.firebase.firestore.FieldPath) {
     actual companion object {
         actual fun of(vararg fieldNames: String) = multiplatform.com.google.firebase.firestore.FieldPath(com.google.firebase.firestore.FieldPath.of(*fieldNames))
+    }
+}
+
+actual class FirebaseFirestoreSettings internal constructor(internal val instance: com.google.firebase.firestore.FirebaseFirestoreSettings) {
+    actual class Builder(internal val instance: com.google.firebase.firestore.FirebaseFirestoreSettings.Builder)
+    {
+        actual constructor() : this(com.google.firebase.firestore.FirebaseFirestoreSettings.Builder())
+
+
+        actual constructor(settings: FirebaseFirestoreSettings) : this(com.google.firebase.firestore.FirebaseFirestoreSettings.Builder(settings.instance))
+
+        actual fun setPersistenceEnabled(enabled: Boolean): Builder {
+            instance.setPersistenceEnabled(enabled)
+            return this
+        }
+
+        actual fun setTimestampsInSnapshotsEnabled(enabled: Boolean): Builder {
+            instance.setTimestampsInSnapshotsEnabled(enabled)
+            return this
+        }
+
+        actual fun build(): FirebaseFirestoreSettings {
+            return FirebaseFirestoreSettings(instance.build())
+        }
     }
 }
