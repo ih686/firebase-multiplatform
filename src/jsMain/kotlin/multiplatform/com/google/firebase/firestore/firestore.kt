@@ -40,12 +40,14 @@ actual external class QuerySnapshot {
 }
 
 actual open external class Query {
-    actual fun whereGreaterThan(field: String, value: Any): Query
 
     actual fun get(): Deferred<QuerySnapshot>
 
     actual fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
     actual fun addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
+    actual fun whereEqualTo(field: String, value: Any): Query
+    actual fun whereEqualTo(path: FieldPath, value: Any): Query
+    actual fun whereGreaterThan(field: String, value: Any): Query
     actual fun whereGreaterThan(path: FieldPath, value: Any): Query
 }
 

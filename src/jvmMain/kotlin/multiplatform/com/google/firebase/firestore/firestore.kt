@@ -47,6 +47,8 @@ actual typealias ListenerRegistration = ListenerRegistration
 
 actual open class Query(private val instance: Query) {
     actual fun get() = GlobalScope.async { QuerySnapshot(instance.get().await()) }
+    actual fun whereEqualTo(field: String, value: Any) = Query(instance.whereEqualTo(field, value))
+    actual fun whereEqualTo(path: FieldPath, value: Any) = Query(instance.whereEqualTo(path.instance, value))
     actual fun whereGreaterThan(field: String, value: Any) = Query(instance.whereGreaterThan(field, value))
     actual fun whereGreaterThan(path: FieldPath, value: Any) = Query(instance.whereGreaterThan(path.instance, value))
     actual fun addSnapshotListener(listener: EventListener<QuerySnapshot>) = instance.addSnapshotListener { s, e -> listener.onEvent(s?.let { QuerySnapshot(it) }, e) }
