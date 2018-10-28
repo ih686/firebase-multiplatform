@@ -2,19 +2,18 @@ package multiplatform.com.google.firebase.functions
 
 import kotlinx.coroutines.Deferred
 
-expect class FirebaseFunctions {
-    companion object {
-        fun getInstance(): FirebaseFunctions
-    }
+expect fun getFirebaseFunctions(): FirebaseFunctions
 
+expect class FirebaseFunctions {
     fun getHttpsCallable(name: String): HttpsCallableReference
 }
 
-expect class HttpsCallableReference {
-    fun call(data: Any?): Deferred<HttpsCallableResult>
-    fun call(): Deferred<HttpsCallableResult>
-}
+expect class HttpsCallableReference
 
-expect class HttpsCallableResult {
-    val data: Any
-}
+expect fun HttpsCallableReference.callAsync(data: Any?): Deferred<HttpsCallableResult>
+expect fun HttpsCallableReference.callAsync(): Deferred<HttpsCallableResult>
+
+
+expect class HttpsCallableResult
+
+expect val HttpsCallableResult.data: Any

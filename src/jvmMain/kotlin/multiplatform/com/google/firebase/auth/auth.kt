@@ -1,38 +1,30 @@
 package multiplatform.com.google.firebase.auth
 
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import multiplatform.com.google.firebase.await
 
-actual class FirebaseAuth {
 
-    private val instance = FirebaseAuth.getInstance()
+actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
 
-    actual companion object {
-        private val instance = FirebaseAuth()
-        actual fun getInstance() = instance
-    }
+actual typealias FirebaseAuth = com.google.firebase.auth.FirebaseAuth
 
-    actual fun signInWithCustomToken(token: String) = GlobalScope.async {
-        AuthResult(instance.signInWithCustomToken(token).await())
-    }
+actual val FirebaseAuth.currentUser: FirebaseUser?
+    get() = currentUser
 
-    actual fun signOut() {
-        instance.signOut()
-    }
-
-    actual val currentUser: FirebaseUser?
-        get() = instance.currentUser?.let { FirebaseUser(it) }
+actual fun FirebaseAuth.signInWithCustomTokenAsync(token: String) = GlobalScope.async {
+    signInWithCustomToken(token).await()
 }
 
-actual class AuthResult(internal val instance: com.google.firebase.auth.AuthResult) {
-    actual val user: FirebaseUser
-        get() = FirebaseUser(instance.user)
-}
+actual typealias AuthStateListener = com.google.firebase.auth.FirebaseAuth.AuthStateListener
 
-actual class FirebaseUser(internal val instance: com.google.firebase.auth.FirebaseUser) {
-    actual val uid: String
-        get() = instance.uid
+actual typealias AuthResult = com.google.firebase.auth.AuthResult
 
-}
+actual val AuthResult.user: FirebaseUser
+    get() = user
+
+actual typealias FirebaseUser = com.google.firebase.auth.FirebaseUser
+
+actual val FirebaseUser.uid: String
+    get() = uid
+

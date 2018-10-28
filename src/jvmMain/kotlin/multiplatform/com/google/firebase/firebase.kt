@@ -19,47 +19,12 @@ suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
 
 actual typealias FirebaseException = com.google.firebase.FirebaseException
 
-actual class FirebaseApp {
-    actual companion object {
-        actual fun initializeApp(context: Any, options: FirebaseOptions) {
-            FirebaseApp.initializeApp(context as Context, options.instance)
-        }
-    }
+actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =
+    FirebaseApp.initializeApp(context as Context, options)
 
-}
+actual typealias FirebaseApp = com.google.firebase.FirebaseApp
 
-actual class FirebaseOptions(internal val instance: com.google.firebase.FirebaseOptions) {
-    actual class Builder {
+actual typealias FirebaseOptions = com.google.firebase.FirebaseOptions
 
-        private val instance = com.google.firebase.FirebaseOptions.Builder()
 
-        actual fun setApiKey(apiKey: String): Builder {
-            instance.setApiKey(apiKey)
-            return this
-        }
-
-        actual fun setApplicationId(applicationId: String): Builder {
-            instance.setApplicationId(applicationId)
-            return this
-        }
-
-        actual fun setDatabaseUrl(databaseUrl: String?): Builder {
-            instance.setDatabaseUrl(databaseUrl)
-            return this
-        }
-
-        actual fun setStorageBucket(storageBucket: String?): Builder {
-            instance.setStorageBucket(storageBucket)
-            return this
-        }
-
-        actual fun setProjectId(projectId: String?): Builder {
-            instance.setProjectId(projectId)
-            return this
-        }
-
-        actual fun build(): FirebaseOptions {
-            return FirebaseOptions(instance.build())
-        }
-    }
-}
+actual typealias FirebaseOptionsBuilder = com.google.firebase.FirebaseOptions.Builder
