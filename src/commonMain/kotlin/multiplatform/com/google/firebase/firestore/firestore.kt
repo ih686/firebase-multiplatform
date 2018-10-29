@@ -28,6 +28,8 @@ expect open class Query {
     fun whereEqualTo(path: FieldPath, value: Any?): Query
     fun whereGreaterThan(field: String, value: Any): Query
     fun whereGreaterThan(path: FieldPath, value: Any): Query
+    fun whereArrayContains(field: String, value: Any): Query
+    fun whereArrayContains(path: FieldPath, value: Any): Query
     fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
 }
 
@@ -40,6 +42,10 @@ expect class DocumentReference
 expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
 
 expect fun DocumentReference.setAsync(pojo: Any): Job
+
+expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job
+
+expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
 
 expect class CollectionReference : Query
 
@@ -61,6 +67,10 @@ expect interface ListenerRegistration {
 expect interface EventListener<T> {
     fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
 }
+
+expect class SetOptions
+
+expect fun mergeSetOptions(): SetOptions
 
 expect fun fieldPathOf(vararg fieldNames: String): FieldPath
 

@@ -4,16 +4,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import multiplatform.com.google.firebase.await
+import kotlinx.coroutines.tasks.asDeferred
 import kotlin.reflect.KClass
 
 actual fun getFirebaseFirestore() = FirebaseFirestore.getInstance()
 
 actual typealias FirebaseFirestore = com.google.firebase.firestore.FirebaseFirestore
 
-actual fun DocumentReference.setAsync(data: Map<String, Any>): Job = GlobalScope.launch { set(data).await() }
+actual fun DocumentReference.setAsync(data: Map<String, Any>): Job = set(data).asDeferred()
 
-actual fun DocumentReference.setAsync(pojo: Any): Job = GlobalScope.launch { set(pojo).await() }
+actual fun DocumentReference.setAsync(pojo: Any): Job = set(pojo).asDeferred()
+
+actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job = set(data, options).asDeferred()
+
+actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job = set(pojo, options).asDeferred()
 
 actual typealias CollectionReference = com.google.firebase.firestore.CollectionReference
 
@@ -37,7 +41,7 @@ actual typealias ListenerRegistration = com.google.firebase.firestore.ListenerRe
 
 actual typealias Query = com.google.firebase.firestore.Query
 
-actual fun Query.getAsync() = GlobalScope.async { get().await() }
+actual fun Query.getAsync() = get().asDeferred()
 
 actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit) = addSnapshotListener { s, e -> listener(s, e) }
 
@@ -51,3 +55,6 @@ actual typealias FirebaseFirestoreSettingsBuilder =  com.google.firebase.firesto
 
 actual typealias DocumentReference = com.google.firebase.firestore.DocumentReference
 
+actual typealias SetOptions = com.google.firebase.firestore.SetOptions
+
+actual fun mergeSetOptions(): SetOptions = SetOptions.merge()

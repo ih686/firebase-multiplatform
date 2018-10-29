@@ -2,8 +2,7 @@ package multiplatform.com.google.firebase.auth
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import multiplatform.com.google.firebase.await
-
+import kotlinx.coroutines.tasks.asDeferred
 
 actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
 
@@ -12,9 +11,7 @@ actual typealias FirebaseAuth = com.google.firebase.auth.FirebaseAuth
 actual val FirebaseAuth.currentUser: FirebaseUser?
     get() = currentUser
 
-actual fun FirebaseAuth.signInWithCustomTokenAsync(token: String) = GlobalScope.async {
-    signInWithCustomToken(token).await()
-}
+actual fun FirebaseAuth.signInWithCustomTokenAsync(token: String) = signInWithCustomToken(token).asDeferred()
 
 actual typealias AuthStateListener = com.google.firebase.auth.FirebaseAuth.AuthStateListener
 

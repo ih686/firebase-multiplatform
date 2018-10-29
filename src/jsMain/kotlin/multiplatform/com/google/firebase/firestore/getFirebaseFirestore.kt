@@ -43,6 +43,7 @@ actual class FirebaseFirestoreSettingsBuilder actual constructor() {
 }
 
 actual class FirebaseFirestoreSettings
+
 actual open class Query {
     actual fun whereEqualTo(field: String, value: Any?): Query {
         TODO("not implemented")
@@ -62,6 +63,14 @@ actual open class Query {
 
     actual fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration {
         TODO("not implemented")
+    }
+
+    actual fun whereArrayContains(field: String, value: Any): Query {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    actual fun whereArrayContains(path: FieldPath, value: Any): Query {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
 
@@ -111,4 +120,18 @@ actual fun DocumentReference.setAsync(data: Map<String, Any>): Job {
 
 actual fun DocumentReference.setAsync(pojo: Any): Job {
     TODO("not implemented")
+}
+
+actual class SetOptions
+
+actual fun mergeSetOptions(): SetOptions {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }

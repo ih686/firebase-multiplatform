@@ -7,16 +7,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
-    addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            continuation.resume(task.result!!)
-        } else {
-            continuation.resumeWithException(task.exception!!)
-        }
-    }
-}
-
 actual typealias FirebaseException = com.google.firebase.FirebaseException
 
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =
