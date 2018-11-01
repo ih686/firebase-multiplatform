@@ -28,7 +28,13 @@ repositories {
 kotlin {
     targets {
         fromPreset(presets.android, 'android')
-        
+
+        fromPreset(presets.jvm, 'intellij') {
+            tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+
         fromPreset(presets.js, 'js') {
             tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {
                 sourceMap = true
@@ -58,6 +64,15 @@ kotlin {
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
             }
         }
+        intellijMain {
+            dependsOn androidMain
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.0.0'
+                implementation "app.teamhub:firebase-intellij:0.1.0"
+            }
+        }
     }
 }
 
@@ -75,6 +90,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url myMavenRepoWriteUrl
+            credentials {
+                username myMavenRepoWriteUsername
+                password myMavenRepoWritePassword
+            }
         }
     }
 }
