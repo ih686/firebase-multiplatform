@@ -18,10 +18,10 @@ expect fun FirebaseAuth.signInWithCustomTokenAsync(token: String): Deferred<Auth
 
 expect val FirebaseAuth.currentUser: FirebaseUser?
 
-expect class AuthResult
+expect interface AuthResult
 
 expect val AuthResult.user: FirebaseUser
 
-expect class FirebaseUser
+expect abstract class FirebaseUser
 
 expect val FirebaseUser.uid: String

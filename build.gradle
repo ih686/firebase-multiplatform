@@ -56,6 +56,7 @@ kotlin {
                 api 'com.google.firebase:firebase-auth:16.0.4'
                 api 'com.google.firebase:firebase-functions:16.1.1'
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.0.0'
             }
         }
     }
@@ -75,6 +76,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            manifest.srcFile "src/androidMain/AndroidManifest.xml"
         }
     }
 }
