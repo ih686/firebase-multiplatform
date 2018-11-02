@@ -23,12 +23,12 @@ actual fun FirebaseAuth.signInWithCustomTokenAsync(token: String): Deferred<Auth
 actual val FirebaseAuth.currentUser: FirebaseUser?
     get() = TODO("not implemented")
 
-actual class AuthResult
+actual interface AuthResult
 
 actual val AuthResult.user: FirebaseUser
     get() = TODO("not implemented")
 
-actual class FirebaseUser
+actual abstract class FirebaseUser
 
 actual val FirebaseUser.uid: String
     get() = TODO("not implemented")

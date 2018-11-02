@@ -29,7 +29,7 @@ kotlin {
     targets {
         fromPreset(presets.android, 'android')
 
-        fromPreset(presets.jvm, 'intellij') {
+        fromPreset(presets.jvm, 'jvm') {
             tasks.getByName(compilations.main.compileKotlinTaskName).kotlinOptions {
                 jvmTarget = "1.8"
             }
