@@ -66,7 +66,7 @@ kotlin {
             }
         }
         jvmMain {
-            dependsOn androidMain
+            kotlin.srcDir('src/androidMain')
             dependencies {
                 api "app.teamhub:firebase-java:0.1.0"
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
