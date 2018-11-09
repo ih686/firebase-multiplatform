@@ -47,13 +47,13 @@ kotlin {
         commonMain {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib"
-                api 'org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.0.0'
             }
         }
         jsMain {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
-                api 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.0.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.0.0'
             }
         }
         androidMain {

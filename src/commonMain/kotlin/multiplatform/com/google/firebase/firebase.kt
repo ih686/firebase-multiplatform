@@ -4,6 +4,8 @@ expect fun initializeFirebaseApp(context: Any, options: FirebaseOptions): Fireba
 
 expect class FirebaseApp
 
+expect fun getFirebaseApps(context: Any): List<FirebaseApp>
+
 expect class FirebaseOptions
 
 expect class FirebaseOptionsBuilder constructor() {
