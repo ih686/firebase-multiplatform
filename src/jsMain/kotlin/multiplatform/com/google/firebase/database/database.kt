@@ -11,6 +11,9 @@ actual class FirebaseDatabase {
     actual fun getReference(path: String): DatabaseReference {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+    actual fun setPersistenceEnabled(enabled: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
 
 actual class DatabaseReference {

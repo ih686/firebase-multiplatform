@@ -8,6 +8,7 @@ expect fun getFirebaseDatabase(): FirebaseDatabase
 
 expect class FirebaseDatabase {
     fun getReference(path: String): DatabaseReference
+    fun setPersistenceEnabled(enabled: Boolean)
 }
 
 expect class DatabaseReference {
