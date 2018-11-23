@@ -28,6 +28,8 @@ actual class DatabaseReference {
     actual fun addValueEventListener(listener: ValueEventListener): ValueEventListener {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    actual fun removeEventListener(listener: ValueEventListener) {}
 }
 
 actual interface ValueEventListener {
@@ -47,17 +49,21 @@ actual class DatabaseError {
 
 actual class OnDisconnect
 
-actual fun OnDisconnect.removeValue(): Job {
+actual fun OnDisconnect.removeValueAsync(): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun OnDisconnect.setValue(value: Any?): Job {
+actual fun OnDisconnect.setValueAsync(value: Any?): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
 actual val TIMESTAMP: Map<String, String>
     get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
-actual fun DatabaseReference.setValue(value: Any?): Job {
+actual fun DatabaseReference.setValueAsync(value: Any?): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun OnDisconnect.cancelAsync(): Job {
+    TODO("not implemented")
 }

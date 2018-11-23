@@ -17,7 +17,7 @@ actual typealias FirebaseDatabase = FirebaseDatabase
 
 actual typealias DatabaseReference = DatabaseReference
 
-actual fun DatabaseReference.setValue(value: Any?): Job = setValue(value).asDeferred()
+actual fun DatabaseReference.setValueAsync(value: Any?): Job = setValue(value).asDeferred()
 
 actual typealias ValueEventListener = ValueEventListener
 
@@ -29,9 +29,11 @@ actual typealias DatabaseError = DatabaseError
 
 actual typealias OnDisconnect = OnDisconnect
 
-actual fun OnDisconnect.removeValue(): Job = removeValue().asDeferred()
+actual fun OnDisconnect.removeValueAsync(): Job = removeValue().asDeferred()
 
-actual fun OnDisconnect.setValue(value: Any?): Job = setValue(value).asDeferred()
+actual fun OnDisconnect.cancelAsync(): Job = cancel().asDeferred()
+
+actual fun OnDisconnect.setValueAsync(value: Any?): Job = setValue(value).asDeferred()
 
 actual val TIMESTAMP = ServerValue.TIMESTAMP
 

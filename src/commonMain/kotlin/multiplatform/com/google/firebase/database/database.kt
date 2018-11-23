@@ -15,9 +15,10 @@ expect class DatabaseReference {
     fun push(): DatabaseReference
     fun onDisconnect(): OnDisconnect
     fun addValueEventListener(listener: ValueEventListener): ValueEventListener
+    fun removeEventListener(listener: ValueEventListener)
 }
 
-expect fun DatabaseReference.setValue(value: Any?): Job
+expect fun DatabaseReference.setValueAsync(value: Any?): Job
 
 
 expect interface ValueEventListener {
@@ -38,5 +39,6 @@ expect class DatabaseError {
 
 expect class OnDisconnect
 
-expect fun OnDisconnect.removeValue(): Job
-expect fun OnDisconnect.setValue(value: Any?): Job
+expect fun OnDisconnect.removeValueAsync(): Job
+expect fun OnDisconnect.cancelAsync(): Job
+expect fun OnDisconnect.setValueAsync(value: Any?): Job
