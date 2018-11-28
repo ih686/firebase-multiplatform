@@ -15,6 +15,7 @@ actual class FirebaseFirestore {
     }
 
     actual fun setFirestoreSettings(settings: FirebaseFirestoreSettings) {}
+
     actual fun collection(collectionPath: String): CollectionReference {
         TODO("not implemented")
     }
@@ -87,6 +88,14 @@ actual val QuerySnapshot.documents: List<DocumentSnapshot>
 
 actual class DocumentSnapshot {
     actual fun get(field: String): Any? {
+        TODO("not implemented")
+    }
+
+    actual fun getString(field: String): String? {
+        TODO("not implemented")
+    }
+
+    actual fun contains(field: String): Boolean {
         TODO("not implemented")
     }
 }

@@ -69,6 +69,8 @@ expect val QuerySnapshot.documents: List<DocumentSnapshot>
 
 expect class DocumentSnapshot {
     fun get(field: String): Any?
+    fun getString(field: String): String?
+    fun contains(field: String): Boolean
 }
 
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
