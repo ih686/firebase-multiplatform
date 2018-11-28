@@ -62,4 +62,7 @@ actual typealias SetOptions = com.google.firebase.firestore.SetOptions
 
 actual fun mergeSetOptions(): SetOptions = SetOptions.merge()
 
-actual fun DocumentReference.delete(): Job = delete().asDeferred()
+actual fun DocumentReference.deleteAsync(): Job = delete().asDeferred()
+
+actual val DocumentReference.id: String
+    get() = id

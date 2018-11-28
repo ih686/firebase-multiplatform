@@ -41,6 +41,8 @@ expect class DocumentReference {
     fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
 }
 
+expect val DocumentReference.id: String
+
 expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
 expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
@@ -51,7 +53,7 @@ expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOption
 
 expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
 
-expect fun DocumentReference.delete(): Job
+expect fun DocumentReference.deleteAsync(): Job
 
 expect class CollectionReference : Query
 

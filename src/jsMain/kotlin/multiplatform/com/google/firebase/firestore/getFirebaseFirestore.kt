@@ -122,6 +122,10 @@ actual class DocumentReference {
     }
 }
 
+
+actual val DocumentReference.id: String
+    get() = TODO("not implemented")
+
 actual fun DocumentReference.setAsync(data: Map<String, Any>): Job {
     TODO("not implemented")
 }
@@ -156,6 +160,6 @@ actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSn
     TODO("not implemented")
 }
 
-actual fun DocumentReference.delete(): Job {
+actual fun DocumentReference.deleteAsync(): Job {
     TODO("not implemented")
 }
