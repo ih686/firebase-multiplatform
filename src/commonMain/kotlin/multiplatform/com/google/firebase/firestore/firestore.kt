@@ -37,7 +37,11 @@ expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, except
 
 expect fun Query.getAsync(): Deferred<QuerySnapshot>
 
-expect class DocumentReference
+expect class DocumentReference {
+    fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
+}
+
+expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
 expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
 
@@ -47,7 +51,13 @@ expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOption
 
 expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
 
+expect fun DocumentReference.delete(): Job
+
 expect class CollectionReference : Query
+
+expect fun CollectionReference.addAsync(data: Map<String, Any>): Deferred<DocumentReference>
+
+expect fun CollectionReference.addAsync(pojo: Any): Deferred<DocumentReference>
 
 expect class FirebaseFirestoreException : FirebaseException
 
@@ -55,7 +65,9 @@ expect class QuerySnapshot
 
 expect val QuerySnapshot.documents: List<DocumentSnapshot>
 
-expect class DocumentSnapshot
+expect class DocumentSnapshot {
+    fun get(field: String): Any?
+}
 
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
 expect val DocumentSnapshot.id: String

@@ -85,7 +85,11 @@ actual class QuerySnapshot
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = TODO("not implemented")
 
-actual class DocumentSnapshot
+actual class DocumentSnapshot {
+    actual fun get(field: String): Any? {
+        TODO("not implemented")
+    }
+}
 
 actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>): T {
     TODO("not implemented")
@@ -112,7 +116,11 @@ actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, except
     TODO("not implemented")
 }
 
-actual class DocumentReference
+actual class DocumentReference {
+    actual fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration {
+        TODO("not implemented")
+    }
+}
 
 actual fun DocumentReference.setAsync(data: Map<String, Any>): Job {
     TODO("not implemented")
@@ -134,4 +142,20 @@ actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOption
 
 actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun CollectionReference.addAsync(data: Map<String, Any>): Deferred<DocumentReference> {
+    TODO("not implemented")
+}
+
+actual fun CollectionReference.addAsync(pojo: Any): Deferred<DocumentReference> {
+    TODO("not implemented")
+}
+
+actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
+    TODO("not implemented")
+}
+
+actual fun DocumentReference.delete(): Job {
+    TODO("not implemented")
 }

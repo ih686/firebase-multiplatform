@@ -1,9 +1,6 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.asDeferred
 import kotlin.reflect.KClass
 
@@ -19,7 +16,13 @@ actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOption
 
 actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job = set(pojo, options).asDeferred()
 
+actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit) = addSnapshotListener { s, e -> listener(s, e) }
+
 actual typealias CollectionReference = com.google.firebase.firestore.CollectionReference
+
+actual fun CollectionReference.addAsync(data: Map<String, Any>) = add(data).asDeferred()
+
+actual fun CollectionReference.addAsync(pojo: Any) = add(pojo).asDeferred()
 
 actual typealias FirebaseFirestoreException = com.google.firebase.firestore.FirebaseFirestoreException
 
@@ -58,3 +61,5 @@ actual typealias DocumentReference = com.google.firebase.firestore.DocumentRefer
 actual typealias SetOptions = com.google.firebase.firestore.SetOptions
 
 actual fun mergeSetOptions(): SetOptions = SetOptions.merge()
+
+actual fun DocumentReference.delete(): Job = delete().asDeferred()
