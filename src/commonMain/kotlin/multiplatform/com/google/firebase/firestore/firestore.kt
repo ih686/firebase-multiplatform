@@ -12,6 +12,21 @@ expect class FirebaseFirestore {
     fun setFirestoreSettings(settings: FirebaseFirestoreSettings)
     fun collection(collectionPath: String): CollectionReference
     fun document(documentPath: String): DocumentReference
+    fun batch(): WriteBatch
+}
+
+expect fun <T> FirebaseFirestore.runTransactionAsync(func: (transaction: Transaction) -> T): Deferred<T>
+
+expect class Transaction {
+    fun set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): Transaction
+    fun set(documentRef: DocumentReference, pojo: Any): Transaction
+    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): Transaction
+    fun update(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+    fun delete(documentRef: DocumentReference): Transaction
+    fun get(documentRef: DocumentReference): DocumentSnapshot
 }
 
 expect class FirebaseFirestoreSettingsBuilder constructor() {
@@ -33,6 +48,20 @@ expect open class Query {
     fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
 }
 
+expect class WriteBatch {
+    fun set(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): WriteBatch
+    fun set(documentRef: DocumentReference, pojo: Any): WriteBatch
+    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): WriteBatch
+    fun update(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+    fun delete(documentRef: DocumentReference): WriteBatch
+
+}
+
+expect fun WriteBatch.commitAsync(): Job
+
 expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
 expect fun Query.getAsync(): Deferred<QuerySnapshot>
@@ -45,6 +74,8 @@ expect val DocumentReference.id: String
 
 expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
+expect fun DocumentReference.getAsync(): Deferred<DocumentSnapshot>
+
 expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
 
 expect fun DocumentReference.setAsync(pojo: Any): Job
@@ -52,6 +83,8 @@ expect fun DocumentReference.setAsync(pojo: Any): Job
 expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job
 
 expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
+
+expect fun DocumentReference.updateAsync(data: Map<String, Any>): Job
 
 expect fun DocumentReference.deleteAsync(): Job
 

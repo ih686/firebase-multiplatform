@@ -23,6 +23,10 @@ actual class FirebaseFirestore {
         TODO("not implemented")
     }
 
+    actual fun batch(): WriteBatch {
+        TODO("not implemented")
+    }
+
 }
 
 actual class FirebaseFirestoreSettingsBuilder actual constructor() {
@@ -132,6 +136,11 @@ actual class DocumentReference {
 }
 
 
+actual class SetOptions
+
+actual fun mergeSetOptions(): SetOptions {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
 actual val DocumentReference.id: String
     get() = TODO("not implemented")
 
@@ -143,18 +152,16 @@ actual fun DocumentReference.setAsync(pojo: Any): Job {
     TODO("not implemented")
 }
 
-actual class SetOptions
-
-actual fun mergeSetOptions(): SetOptions {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
 actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
 actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DocumentReference.updateAsync(data: Map<String, Any>): Job {
+    TODO("not implemented")
 }
 
 actual fun CollectionReference.addAsync(data: Map<String, Any>): Deferred<DocumentReference> {
@@ -170,5 +177,90 @@ actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSn
 }
 
 actual fun DocumentReference.deleteAsync(): Job {
+    TODO("not implemented")
+}
+
+actual class WriteBatch {
+    actual fun set(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, pojo: Any): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch {
+        TODO("not implemented")
+    }
+
+    actual fun delete(documentRef: DocumentReference): WriteBatch {
+        TODO("not implemented")
+    }
+
+}
+
+actual fun WriteBatch.commitAsync(): Job {
+    TODO("not implemented")
+}
+
+actual fun DocumentReference.getAsync(): Deferred<DocumentSnapshot> {
+    TODO("not implemented")
+}
+
+actual class Transaction {
+    actual fun set(documentRef: DocumentReference, data: Map<String, Any>): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, pojo: Any): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, data: Map<String, Any>): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun delete(documentRef: DocumentReference): Transaction {
+        TODO("not implemented")
+    }
+
+    actual fun get(documentRef: DocumentReference): DocumentSnapshot {
+        TODO("not implemented")
+    }
+}
+
+actual fun <T> FirebaseFirestore.runTransactionAsync(func: (transaction: Transaction) -> T): Deferred<T> {
     TODO("not implemented")
 }

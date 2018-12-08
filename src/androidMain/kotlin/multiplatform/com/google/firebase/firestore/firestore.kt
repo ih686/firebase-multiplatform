@@ -8,6 +8,10 @@ actual fun getFirebaseFirestore() = FirebaseFirestore.getInstance()
 
 actual typealias FirebaseFirestore = com.google.firebase.firestore.FirebaseFirestore
 
+actual fun <T> FirebaseFirestore.runTransactionAsync(func: (transaction: Transaction) -> T) = runTransaction(func).asDeferred()
+
+actual typealias Transaction = com.google.firebase.firestore.Transaction
+
 actual fun DocumentReference.setAsync(data: Map<String, Any>): Job = set(data).asDeferred()
 
 actual fun DocumentReference.setAsync(pojo: Any): Job = set(pojo).asDeferred()
@@ -15,6 +19,8 @@ actual fun DocumentReference.setAsync(pojo: Any): Job = set(pojo).asDeferred()
 actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job = set(data, options).asDeferred()
 
 actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job = set(pojo, options).asDeferred()
+
+actual fun DocumentReference.updateAsync(data: Map<String, Any>): Job = update(data).asDeferred()
 
 actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit) = addSnapshotListener { s, e -> listener(s, e) }
 
@@ -66,3 +72,9 @@ actual fun DocumentReference.deleteAsync(): Job = delete().asDeferred()
 
 actual val DocumentReference.id: String
     get() = id
+
+actual typealias WriteBatch = com.google.firebase.firestore.WriteBatch
+
+actual fun WriteBatch.commitAsync(): Job = commit().asDeferred()
+
+actual fun DocumentReference.getAsync(): Deferred<DocumentSnapshot> = get().asDeferred()
