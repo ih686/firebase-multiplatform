@@ -32,6 +32,10 @@ actual fun CollectionReference.addAsync(pojo: Any) = add(pojo).asDeferred()
 
 actual typealias FirebaseFirestoreException = com.google.firebase.firestore.FirebaseFirestoreException
 
+actual val FirebaseFirestoreException.code: FirestoreExceptionCode get() = code
+
+actual typealias FirestoreExceptionCode = com.google.firebase.firestore.FirebaseFirestoreException.Code
+
 actual typealias QuerySnapshot =  com.google.firebase.firestore.QuerySnapshot
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
