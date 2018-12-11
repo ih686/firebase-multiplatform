@@ -1,6 +1,6 @@
 package multiplatform.com.google.firebase.database
 
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Deferred
 import kotlin.reflect.KClass
 
 actual fun getFirebaseDatabase(): FirebaseDatabase {
@@ -49,21 +49,21 @@ actual class DatabaseError {
 
 actual class OnDisconnect
 
-actual fun OnDisconnect.removeValueAsync(): Job {
+actual fun OnDisconnect.removeValueAsync(): Deferred<*> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun OnDisconnect.setValueAsync(value: Any?): Job {
+actual fun OnDisconnect.setValueAsync(value: Any?): Deferred<*> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
 actual val TIMESTAMP: Map<String, String>
     get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
-actual fun DatabaseReference.setValueAsync(value: Any?): Job {
+actual fun DatabaseReference.setValueAsync(value: Any?): Deferred<*> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun OnDisconnect.cancelAsync(): Job {
+actual fun OnDisconnect.cancelAsync(): Deferred<*> {
     TODO("not implemented")
 }

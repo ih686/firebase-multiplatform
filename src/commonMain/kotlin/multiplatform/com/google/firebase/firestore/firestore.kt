@@ -1,7 +1,6 @@
 package multiplatform.com.google.firebase.firestore
 
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Job
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.reflect.KClass
 
@@ -60,7 +59,7 @@ expect class WriteBatch {
 
 }
 
-expect fun WriteBatch.commitAsync(): Job
+expect fun WriteBatch.commitAsync(): Deferred<*>
 
 expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
@@ -76,17 +75,17 @@ expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSn
 
 expect fun DocumentReference.getAsync(): Deferred<DocumentSnapshot>
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
+expect fun DocumentReference.setAsync(data: Map<String, Any>): Deferred<*>
 
-expect fun DocumentReference.setAsync(pojo: Any): Job
+expect fun DocumentReference.setAsync(pojo: Any): Deferred<*>
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job
+expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Deferred<*>
 
-expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
+expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Deferred<*>
 
-expect fun DocumentReference.updateAsync(data: Map<String, Any>): Job
+expect fun DocumentReference.updateAsync(data: Map<String, Any>): Deferred<*>
 
-expect fun DocumentReference.deleteAsync(): Job
+expect fun DocumentReference.deleteAsync(): Deferred<*>
 
 expect class CollectionReference : Query
 

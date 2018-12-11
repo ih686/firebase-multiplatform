@@ -1,9 +1,8 @@
 package multiplatform.com.google.firebase.firestore
 
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Job
-import multiplatform.com.google.firebase.FirebaseException
 import kotlin.reflect.KClass
+import multiplatform.com.google.firebase.FirebaseException
 
 actual fun getFirebaseFirestore(): FirebaseFirestore {
     TODO("not implemented")
@@ -144,23 +143,23 @@ actual fun mergeSetOptions(): SetOptions {
 actual val DocumentReference.id: String
     get() = TODO("not implemented")
 
-actual fun DocumentReference.setAsync(data: Map<String, Any>): Job {
+actual fun DocumentReference.setAsync(data: Map<String, Any>): Deferred<*> {
     TODO("not implemented")
 }
 
-actual fun DocumentReference.setAsync(pojo: Any): Job {
+actual fun DocumentReference.setAsync(pojo: Any): Deferred<*> {
     TODO("not implemented")
 }
 
-actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job {
+actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Deferred<*> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job {
+actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Deferred<*> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun DocumentReference.updateAsync(data: Map<String, Any>): Job {
+actual fun DocumentReference.updateAsync(data: Map<String, Any>): Deferred<*> {
     TODO("not implemented")
 }
 
@@ -176,7 +175,7 @@ actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSn
     TODO("not implemented")
 }
 
-actual fun DocumentReference.deleteAsync(): Job {
+actual fun DocumentReference.deleteAsync(): Deferred<*> {
     TODO("not implemented")
 }
 
@@ -215,7 +214,7 @@ actual class WriteBatch {
 
 }
 
-actual fun WriteBatch.commitAsync(): Job {
+actual fun WriteBatch.commitAsync(): Deferred<*> {
     TODO("not implemented")
 }
 

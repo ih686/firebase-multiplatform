@@ -1,6 +1,6 @@
 package multiplatform.com.google.firebase.database
 
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.Deferred
 import kotlin.reflect.KClass
 
 expect fun getFirebaseDatabase(): FirebaseDatabase
@@ -18,7 +18,7 @@ expect class DatabaseReference {
     fun removeEventListener(listener: ValueEventListener)
 }
 
-expect fun DatabaseReference.setValueAsync(value: Any?): Job
+expect fun DatabaseReference.setValueAsync(value: Any?): Deferred<*>
 
 
 expect interface ValueEventListener {
@@ -39,6 +39,6 @@ expect class DatabaseError {
 
 expect class OnDisconnect
 
-expect fun OnDisconnect.removeValueAsync(): Job
-expect fun OnDisconnect.cancelAsync(): Job
-expect fun OnDisconnect.setValueAsync(value: Any?): Job
+expect fun OnDisconnect.removeValueAsync(): Deferred<*>
+expect fun OnDisconnect.cancelAsync(): Deferred<*>
+expect fun OnDisconnect.setValueAsync(value: Any?): Deferred<*>
