@@ -18,8 +18,7 @@ expect class DatabaseReference {
     fun removeEventListener(listener: ValueEventListener)
 }
 
-expect fun DatabaseReference.setValueAsync(value: Any?): Deferred<*>
-
+expect suspend fun DatabaseReference.awaitSetValue(value: Any?)
 
 expect interface ValueEventListener {
     fun onDataChange(data: DataSnapshot)
@@ -39,6 +38,6 @@ expect class DatabaseError {
 
 expect class OnDisconnect
 
-expect fun OnDisconnect.removeValueAsync(): Deferred<*>
-expect fun OnDisconnect.cancelAsync(): Deferred<*>
-expect fun OnDisconnect.setValueAsync(value: Any?): Deferred<*>
+expect suspend fun OnDisconnect.awaitRemoveValue()
+expect suspend fun OnDisconnect.awaitCancel()
+expect suspend fun OnDisconnect.awaitSetValue(value: Any?)

@@ -49,21 +49,14 @@ actual class DatabaseError {
 
 actual class OnDisconnect
 
-actual fun OnDisconnect.removeValueAsync(): Deferred<*> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-actual fun OnDisconnect.setValueAsync(value: Any?): Deferred<*> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
 actual val TIMESTAMP: Map<String, String>
     get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
-actual fun DatabaseReference.setValueAsync(value: Any?): Deferred<*> {
+actual suspend fun DatabaseReference.awaitSetValue(value: Any?) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun OnDisconnect.cancelAsync(): Deferred<*> {
-    TODO("not implemented")
-}
+actual suspend fun OnDisconnect.awaitRemoveValue() {}
+actual suspend fun OnDisconnect.awaitCancel() {}
+
+actual suspend fun OnDisconnect.awaitSetValue(value: Any?) {}

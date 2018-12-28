@@ -78,9 +78,6 @@ actual open class Query {
     }
 }
 
-actual fun Query.getAsync(): Deferred<QuerySnapshot> {
-    TODO("not implemented")
-}
 
 actual class CollectionReference : Query()
 actual class FirebaseFirestoreException : FirebaseException()
@@ -143,39 +140,7 @@ actual fun mergeSetOptions(): SetOptions {
 actual val DocumentReference.id: String
     get() = TODO("not implemented")
 
-actual fun DocumentReference.setAsync(data: Map<String, Any>): Deferred<*> {
-    TODO("not implemented")
-}
-
-actual fun DocumentReference.setAsync(pojo: Any): Deferred<*> {
-    TODO("not implemented")
-}
-
-actual fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Deferred<*> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-actual fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Deferred<*> {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-actual fun DocumentReference.updateAsync(data: Map<String, Any>): Deferred<*> {
-    TODO("not implemented")
-}
-
-actual fun CollectionReference.addAsync(data: Map<String, Any>): Deferred<DocumentReference> {
-    TODO("not implemented")
-}
-
-actual fun CollectionReference.addAsync(pojo: Any): Deferred<DocumentReference> {
-    TODO("not implemented")
-}
-
 actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
-    TODO("not implemented")
-}
-
-actual fun DocumentReference.deleteAsync(): Deferred<*> {
     TODO("not implemented")
 }
 
@@ -212,14 +177,6 @@ actual class WriteBatch {
         TODO("not implemented")
     }
 
-}
-
-actual fun WriteBatch.commitAsync(): Deferred<*> {
-    TODO("not implemented")
-}
-
-actual fun DocumentReference.getAsync(): Deferred<DocumentSnapshot> {
-    TODO("not implemented")
 }
 
 actual class Transaction {
@@ -260,10 +217,6 @@ actual class Transaction {
     }
 }
 
-actual fun <T> FirebaseFirestore.runTransactionAsync(func: (transaction: Transaction) -> T): Deferred<T> {
-    TODO("not implemented")
-}
-
 actual val FirebaseFirestoreException.code: FirestoreExceptionCode
     get() = TODO("not implemented")
 
@@ -285,4 +238,38 @@ actual enum class FirestoreExceptionCode {
     UNAVAILABLE,
     DATA_LOSS,
     UNAUTHENTICATED
+}
+
+actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T {
+    TODO("not implemented")
+}
+
+actual suspend fun WriteBatch.awaitCommit() {}
+
+actual suspend fun Query.awaitGet(): QuerySnapshot {
+    TODO("not implemented")
+}
+
+actual suspend fun DocumentReference.awaitGet(): DocumentSnapshot {
+    TODO("not implemented")
+}
+
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) {}
+
+actual suspend fun DocumentReference.awaitSet(pojo: Any) {}
+
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) {}
+
+actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) {}
+
+actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) {}
+
+actual suspend fun DocumentReference.awaitDelete() {}
+
+actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>): DocumentReference {
+    TODO("not implemented")
+}
+
+actual suspend fun CollectionReference.awaitAdd(pojo: Any): DocumentReference {
+    TODO("not implemented")
 }

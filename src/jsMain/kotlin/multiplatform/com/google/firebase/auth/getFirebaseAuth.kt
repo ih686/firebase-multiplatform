@@ -16,10 +16,6 @@ actual class FirebaseAuth {
     actual fun removeAuthStateListener(listener: AuthStateListener) {}
 }
 
-actual fun FirebaseAuth.signInWithCustomTokenAsync(token: String): Deferred<AuthResult> {
-    TODO("not implemented")
-}
-
 actual val FirebaseAuth.currentUser: FirebaseUser?
     get() = TODO("not implemented")
 
@@ -32,3 +28,7 @@ actual abstract class FirebaseUser
 
 actual val FirebaseUser.uid: String
     get() = TODO("not implemented")
+
+actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String): AuthResult {
+    TODO("not implemented")
+}

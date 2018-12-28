@@ -14,7 +14,7 @@ expect class FirebaseFirestore {
     fun batch(): WriteBatch
 }
 
-expect fun <T> FirebaseFirestore.runTransactionAsync(func: (transaction: Transaction) -> T): Deferred<T>
+expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T
 
 expect class Transaction {
     fun set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
@@ -59,11 +59,11 @@ expect class WriteBatch {
 
 }
 
-expect fun WriteBatch.commitAsync(): Deferred<*>
+expect suspend fun WriteBatch.awaitCommit()
 
 expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
-expect fun Query.getAsync(): Deferred<QuerySnapshot>
+expect suspend fun Query.awaitGet(): QuerySnapshot
 
 expect class DocumentReference {
     fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
@@ -73,25 +73,25 @@ expect val DocumentReference.id: String
 
 expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
-expect fun DocumentReference.getAsync(): Deferred<DocumentSnapshot>
+expect suspend fun DocumentReference.awaitGet(): DocumentSnapshot
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>): Deferred<*>
+expect suspend fun DocumentReference.awaitSet(data: Map<String, Any>)
 
-expect fun DocumentReference.setAsync(pojo: Any): Deferred<*>
+expect suspend fun DocumentReference.awaitSet(pojo: Any)
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Deferred<*>
+expect suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions)
 
-expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Deferred<*>
+expect suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions)
 
-expect fun DocumentReference.updateAsync(data: Map<String, Any>): Deferred<*>
+expect suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>)
 
-expect fun DocumentReference.deleteAsync(): Deferred<*>
+expect suspend fun DocumentReference.awaitDelete()
 
 expect class CollectionReference : Query
 
-expect fun CollectionReference.addAsync(data: Map<String, Any>): Deferred<DocumentReference>
+expect suspend fun CollectionReference.awaitAdd(data: Map<String, Any>): DocumentReference
 
-expect fun CollectionReference.addAsync(pojo: Any): Deferred<DocumentReference>
+expect suspend fun CollectionReference.awaitAdd(pojo: Any): DocumentReference
 
 expect class FirebaseFirestoreException : FirebaseException
 

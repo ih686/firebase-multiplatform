@@ -14,7 +14,7 @@ expect class FirebaseAuth {
     fun signOut()
 }
 
-expect fun FirebaseAuth.signInWithCustomTokenAsync(token: String): Deferred<AuthResult>
+expect suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String): AuthResult
 
 expect val FirebaseAuth.currentUser: FirebaseUser?
 

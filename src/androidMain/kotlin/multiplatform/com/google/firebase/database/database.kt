@@ -9,6 +9,7 @@ import com.google.firebase.database.OnDisconnect
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.tasks.asDeferred
+import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 
 actual fun getFirebaseDatabase() = FirebaseDatabase.getInstance()
@@ -17,7 +18,7 @@ actual typealias FirebaseDatabase = FirebaseDatabase
 
 actual typealias DatabaseReference = DatabaseReference
 
-actual fun DatabaseReference.setValueAsync(value: Any?): Deferred<*> = setValue(value).asDeferred()
+actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = setValue(value).await().run { Unit }
 
 actual typealias ValueEventListener = ValueEventListener
 
@@ -29,11 +30,11 @@ actual typealias DatabaseError = DatabaseError
 
 actual typealias OnDisconnect = OnDisconnect
 
-actual fun OnDisconnect.removeValueAsync(): Deferred<*> = removeValue().asDeferred()
+actual suspend fun OnDisconnect.awaitRemoveValue() = removeValue().await().run { Unit }
 
-actual fun OnDisconnect.cancelAsync(): Deferred<*> = cancel().asDeferred()
+actual suspend fun OnDisconnect.awaitCancel() = cancel().await().run { Unit }
 
-actual fun OnDisconnect.setValueAsync(value: Any?): Deferred<*> = setValue(value).asDeferred()
+actual suspend fun OnDisconnect.awaitSetValue(value: Any?) = setValue(value).await().run { Unit }
 
 actual val TIMESTAMP = ServerValue.TIMESTAMP
 
