@@ -1,8 +1,5 @@
 package multiplatform.com.google.firebase.functions
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 
 actual fun getFirebaseFunctions() = FirebaseFunctions.getInstance()

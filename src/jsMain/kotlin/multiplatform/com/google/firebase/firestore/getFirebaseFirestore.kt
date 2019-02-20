@@ -1,8 +1,7 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.Deferred
-import kotlin.reflect.KClass
 import multiplatform.com.google.firebase.FirebaseException
+import kotlin.reflect.KClass
 
 actual fun getFirebaseFirestore(): FirebaseFirestore {
     TODO("not implemented")
@@ -80,7 +79,7 @@ actual open class Query {
 
 
 actual class CollectionReference : Query()
-actual class FirebaseFirestoreException : FirebaseException()
+actual class FirebaseFirestoreException actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException()
 actual class QuerySnapshot
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>

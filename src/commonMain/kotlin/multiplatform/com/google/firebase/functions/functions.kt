@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.functions
 
-import kotlinx.coroutines.Deferred
-
 expect fun getFirebaseFunctions(): FirebaseFunctions
 
 expect class FirebaseFunctions {

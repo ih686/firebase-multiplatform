@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.functions
 
-import kotlinx.coroutines.Deferred
-
 actual fun getFirebaseFunctions(): FirebaseFunctions {
     TODO("not implemented")
 }

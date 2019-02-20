@@ -1,8 +1,5 @@
 package multiplatform.com.google.firebase.auth
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 
 actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
@@ -26,3 +23,9 @@ actual typealias FirebaseUser = com.google.firebase.auth.FirebaseUser
 actual val FirebaseUser.uid: String
     get() = uid
 
+actual suspend fun FirebaseAuth.awaitSignInAnonymously() = signInAnonymously().await()
+
+actual val FirebaseUser.isAnonymous: Boolean
+    get() = isAnonymous
+
+actual suspend fun FirebaseUser.awaitDelete() = delete().await().run { Unit }

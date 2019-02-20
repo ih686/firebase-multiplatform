@@ -1,6 +1,5 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.Deferred
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.reflect.KClass
 
@@ -93,7 +92,7 @@ expect suspend fun CollectionReference.awaitAdd(data: Map<String, Any>): Documen
 
 expect suspend fun CollectionReference.awaitAdd(pojo: Any): DocumentReference
 
-expect class FirebaseFirestoreException : FirebaseException
+expect class FirebaseFirestoreException(detailMessage: String, code: FirestoreExceptionCode ) : FirebaseException
 
 expect val FirebaseFirestoreException.code: FirestoreExceptionCode
 

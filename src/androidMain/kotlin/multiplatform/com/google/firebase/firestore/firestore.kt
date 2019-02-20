@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 

@@ -1,6 +1,5 @@
 package multiplatform.com.google.firebase.database
 
-import kotlinx.coroutines.Deferred
 import kotlin.reflect.KClass
 
 actual fun getFirebaseDatabase(): FirebaseDatabase {
@@ -13,6 +12,9 @@ actual class FirebaseDatabase {
     }
     actual fun setPersistenceEnabled(enabled: Boolean) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    actual fun setLogLevel(logLevel: LoggerLevel) {
     }
 }
 
@@ -39,11 +41,15 @@ actual interface ValueEventListener {
 
 actual class DataSnapshot
 
-actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T {
+actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T? {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
 actual class DatabaseError {
+    actual fun toException(): DatabaseException {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
 }
 
@@ -60,3 +66,9 @@ actual suspend fun OnDisconnect.awaitRemoveValue() {}
 actual suspend fun OnDisconnect.awaitCancel() {}
 
 actual suspend fun OnDisconnect.awaitSetValue(value: Any?) {}
+actual class DatabaseException : RuntimeException()
+
+actual suspend fun DatabaseReference.awaitRemoveValue() {}
+actual enum class LoggerLevel {
+    DEBUG, INFO, WARN, ERROR, NONE
+}

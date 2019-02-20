@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.auth
 
-import kotlinx.coroutines.Deferred
-
 actual fun getFirebaseAuth(): FirebaseAuth {
     TODO("not implemented")
 }
@@ -32,3 +30,12 @@ actual val FirebaseUser.uid: String
 actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String): AuthResult {
     TODO("not implemented")
 }
+
+actual suspend fun FirebaseAuth.awaitSignInAnonymously(): AuthResult {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual val FirebaseUser.isAnonymous: Boolean
+    get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+actual suspend fun FirebaseUser.awaitDelete() {}

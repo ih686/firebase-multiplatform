@@ -3,16 +3,17 @@ package multiplatform.com.google.firebase.database
 import com.google.firebase.database.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.OnDisconnect
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 
 actual fun getFirebaseDatabase() = FirebaseDatabase.getInstance()
+
+actual typealias LoggerLevel = Logger.Level
 
 actual typealias FirebaseDatabase = FirebaseDatabase
 
@@ -24,7 +25,9 @@ actual typealias ValueEventListener = ValueEventListener
 
 actual typealias DataSnapshot = DataSnapshot
 
-actual fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>) = getValue(valueType.java) as T
+actual fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>) = getValue(valueType.java)
+
+actual typealias DatabaseException = DatabaseException
 
 actual typealias DatabaseError = DatabaseError
 
@@ -38,3 +41,4 @@ actual suspend fun OnDisconnect.awaitSetValue(value: Any?) = setValue(value).awa
 
 actual val TIMESTAMP = ServerValue.TIMESTAMP
 
+actual suspend fun DatabaseReference.awaitRemoveValue() = removeValue().await().run { Unit }
