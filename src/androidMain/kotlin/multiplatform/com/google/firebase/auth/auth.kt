@@ -29,3 +29,5 @@ actual val FirebaseUser.isAnonymous: Boolean
     get() = isAnonymous
 
 actual suspend fun FirebaseUser.awaitDelete() = delete().await().run { Unit }
+
+actual suspend fun FirebaseUser.awaitReload() = reload().await().run { Unit }

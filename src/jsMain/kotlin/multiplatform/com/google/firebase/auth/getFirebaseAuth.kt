@@ -39,3 +39,5 @@ actual val FirebaseUser.isAnonymous: Boolean
     get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
 actual suspend fun FirebaseUser.awaitDelete() {}
+actual suspend fun FirebaseUser.awaitReload() {
+}
