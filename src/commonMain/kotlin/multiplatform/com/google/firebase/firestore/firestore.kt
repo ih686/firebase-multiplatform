@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Job
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.reflect.KClass
 
@@ -12,6 +10,21 @@ expect class FirebaseFirestore {
     fun setFirestoreSettings(settings: FirebaseFirestoreSettings)
     fun collection(collectionPath: String): CollectionReference
     fun document(documentPath: String): DocumentReference
+    fun batch(): WriteBatch
+}
+
+expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T
+
+expect class Transaction {
+    fun set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): Transaction
+    fun set(documentRef: DocumentReference, pojo: Any): Transaction
+    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): Transaction
+    fun update(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+    fun delete(documentRef: DocumentReference): Transaction
+    fun get(documentRef: DocumentReference): DocumentSnapshot
 }
 
 expect class FirebaseFirestoreSettingsBuilder constructor() {
@@ -33,29 +46,85 @@ expect open class Query {
     fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
 }
 
+expect class WriteBatch {
+    fun set(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): WriteBatch
+    fun set(documentRef: DocumentReference, pojo: Any): WriteBatch
+    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): WriteBatch
+    fun update(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+    fun delete(documentRef: DocumentReference): WriteBatch
+
+}
+
+expect suspend fun WriteBatch.awaitCommit()
+
 expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
-expect fun Query.getAsync(): Deferred<QuerySnapshot>
+expect suspend fun Query.awaitGet(): QuerySnapshot
 
-expect class DocumentReference
+expect class DocumentReference {
+    fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
+}
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>): Job
+expect val DocumentReference.id: String
 
-expect fun DocumentReference.setAsync(pojo: Any): Job
+expect fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
-expect fun DocumentReference.setAsync(data: Map<String, Any>, options: SetOptions): Job
+expect suspend fun DocumentReference.awaitGet(): DocumentSnapshot
 
-expect fun DocumentReference.setAsync(pojo: Any, options: SetOptions): Job
+expect suspend fun DocumentReference.awaitSet(data: Map<String, Any>)
+
+expect suspend fun DocumentReference.awaitSet(pojo: Any)
+
+expect suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions)
+
+expect suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions)
+
+expect suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>)
+
+expect suspend fun DocumentReference.awaitDelete()
 
 expect class CollectionReference : Query
 
-expect class FirebaseFirestoreException : FirebaseException
+expect suspend fun CollectionReference.awaitAdd(data: Map<String, Any>): DocumentReference
+
+expect suspend fun CollectionReference.awaitAdd(pojo: Any): DocumentReference
+
+expect class FirebaseFirestoreException(detailMessage: String, code: FirestoreExceptionCode ) : FirebaseException
+
+expect val FirebaseFirestoreException.code: FirestoreExceptionCode
+
+expect enum class FirestoreExceptionCode {
+    OK,
+    CANCELLED,
+    UNKNOWN,
+    INVALID_ARGUMENT,
+    DEADLINE_EXCEEDED,
+    NOT_FOUND,
+    ALREADY_EXISTS,
+    PERMISSION_DENIED,
+    RESOURCE_EXHAUSTED,
+    FAILED_PRECONDITION,
+    ABORTED,
+    OUT_OF_RANGE,
+    UNIMPLEMENTED,
+    INTERNAL,
+    UNAVAILABLE,
+    DATA_LOSS,
+    UNAUTHENTICATED
+}
 
 expect class QuerySnapshot
 
 expect val QuerySnapshot.documents: List<DocumentSnapshot>
 
-expect class DocumentSnapshot
+expect class DocumentSnapshot {
+    fun get(field: String): Any?
+    fun getString(field: String): String?
+    fun contains(field: String): Boolean
+}
 
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
 expect val DocumentSnapshot.id: String

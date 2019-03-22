@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.functions
 
-import kotlin.js.json
-
 @JsModule("firebase")
 external val firebase: dynamic
 @JsModule("firebase/functions")

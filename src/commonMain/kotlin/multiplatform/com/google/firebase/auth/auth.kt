@@ -1,7 +1,5 @@
 package multiplatform.com.google.firebase.auth
 
-import kotlinx.coroutines.Deferred
-
 expect fun getFirebaseAuth(): FirebaseAuth
 
 expect interface AuthStateListener {
@@ -14,7 +12,9 @@ expect class FirebaseAuth {
     fun signOut()
 }
 
-expect fun FirebaseAuth.signInWithCustomTokenAsync(token: String): Deferred<AuthResult>
+expect suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String): AuthResult
+
+expect suspend fun FirebaseAuth.awaitSignInAnonymously(): AuthResult
 
 expect val FirebaseAuth.currentUser: FirebaseUser?
 
@@ -25,3 +25,10 @@ expect val AuthResult.user: FirebaseUser
 expect abstract class FirebaseUser
 
 expect val FirebaseUser.uid: String
+
+expect val FirebaseUser.isAnonymous: Boolean
+
+expect suspend fun FirebaseUser.awaitDelete()
+
+expect suspend fun FirebaseUser.awaitReload()
+

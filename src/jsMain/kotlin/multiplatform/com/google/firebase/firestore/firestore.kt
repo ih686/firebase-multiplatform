@@ -1,10 +1,5 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.Deferred
-import multiplatform.com.google.firebase.FirebaseException
-import kotlin.js.json
-import kotlin.reflect.KClass
-
 @JsModule("firebase")
 external val firebase: dynamic
 @JsModule("firebase/firestore")
