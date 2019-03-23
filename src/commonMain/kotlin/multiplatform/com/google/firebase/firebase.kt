@@ -18,3 +18,5 @@ expect class FirebaseOptionsBuilder constructor() {
 }
 
 expect open class FirebaseException : Exception
+
+expect open class FirebaseNetworkException : FirebaseException
