@@ -37,3 +37,5 @@ actual open class FirebaseException : Exception()
 actual fun getFirebaseApps(context: Any): List<FirebaseApp> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual open class FirebaseNetworkException : FirebaseException()

@@ -4,13 +4,14 @@ import android.content.Context
 
 actual typealias FirebaseException = com.google.firebase.FirebaseException
 
+actual typealias FirebaseNetworkException = com.google.firebase.FirebaseNetworkException
+
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =
     FirebaseApp.initializeApp(context as Context, options)
 
 actual typealias FirebaseApp = com.google.firebase.FirebaseApp
 
 actual typealias FirebaseOptions = com.google.firebase.FirebaseOptions
-
 
 actual typealias FirebaseOptionsBuilder = com.google.firebase.FirebaseOptions.Builder
 
