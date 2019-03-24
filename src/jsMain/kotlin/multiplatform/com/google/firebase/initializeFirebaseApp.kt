@@ -39,3 +39,6 @@ actual fun getFirebaseApps(context: Any): List<FirebaseApp> {
 }
 
 actual open class FirebaseNetworkException : FirebaseException()
+actual open class FirebaseTooManyRequestsException : FirebaseException()
+
+actual open class FirebaseApiNotAvailableException : FirebaseException()

@@ -20,3 +20,7 @@ expect class FirebaseOptionsBuilder constructor() {
 expect open class FirebaseException : Exception
 
 expect open class FirebaseNetworkException : FirebaseException
+
+expect open class FirebaseTooManyRequestsException : FirebaseException
+
+expect open class FirebaseApiNotAvailableException : FirebaseException
