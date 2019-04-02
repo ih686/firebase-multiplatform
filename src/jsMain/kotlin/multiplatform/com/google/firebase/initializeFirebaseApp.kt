@@ -42,3 +42,7 @@ actual open class FirebaseNetworkException : FirebaseException()
 actual open class FirebaseTooManyRequestsException : FirebaseException()
 
 actual open class FirebaseApiNotAvailableException : FirebaseException()
+
+actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String): FirebaseOptionsBuilder {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
