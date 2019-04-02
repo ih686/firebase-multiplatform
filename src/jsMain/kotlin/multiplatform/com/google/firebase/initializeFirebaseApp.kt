@@ -38,4 +38,6 @@ actual fun getFirebaseApps(context: Any): List<FirebaseApp> {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual open class FirebaseNetworkException : FirebaseException()
+actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String): FirebaseOptionsBuilder {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
