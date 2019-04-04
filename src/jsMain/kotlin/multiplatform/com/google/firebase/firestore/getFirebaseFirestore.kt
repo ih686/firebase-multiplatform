@@ -37,7 +37,9 @@ actual val DocumentSnapshot.id: String
 
 actual interface ListenerRegistration
 
-actual interface EventListener<T>
+actual interface EventListener<T> {
+    actual fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
+}
 
 actual fun fieldPathOf(vararg fieldNames: String): FieldPath {
     TODO("not implemented")
@@ -269,7 +271,4 @@ actual fun DocumentSnapshot.contains(field: String): Boolean {
 }
 
 actual fun ListenerRegistration.remove() {
-}
-
-actual fun <T> EventListener<T>.onEvent(snapshot: T?, exception: FirebaseFirestoreException?) {
 }

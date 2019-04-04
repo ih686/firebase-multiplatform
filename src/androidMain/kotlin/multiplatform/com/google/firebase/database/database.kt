@@ -69,12 +69,6 @@ actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener)
 actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
 }
 
-actual fun ValueEventListener.onDataChange(data: DataSnapshot) {
-}
-
-actual fun ValueEventListener.onCancelled(error: DatabaseError) {
-}
-
 actual fun DatabaseError.toException(): DatabaseException {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }

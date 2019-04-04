@@ -227,5 +227,3 @@ actual fun DocumentSnapshot.contains(field: String): Boolean {
 actual fun ListenerRegistration.remove() {
 }
 
-actual fun <T> EventListener<T>.onEvent(snapshot: T?, exception: FirebaseFirestoreException?) {
-}

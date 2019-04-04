@@ -4,7 +4,9 @@ actual fun getFirebaseAuth(): FirebaseAuth {
     TODO("not implemented")
 }
 
-actual interface AuthStateListener
+actual interface AuthStateListener {
+    actual fun onAuthStateChanged(auth: FirebaseAuth)
+}
 
 actual class FirebaseAuth
 
@@ -16,7 +18,7 @@ actual interface AuthResult
 actual val AuthResult.user: FirebaseUser
     get() = TODO("not implemented")
 
-actual abstract class FirebaseUser
+actual class FirebaseUser
 
 actual val FirebaseUser.uid: String
     get() = TODO("not implemented")
@@ -33,10 +35,8 @@ actual val FirebaseUser.isAnonymous: Boolean
     get() = TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
 actual suspend fun FirebaseUser.awaitDelete() {}
-actual suspend fun FirebaseUser.awaitReload() {
-}
 
-actual fun AuthStateListener.onAuthStateChanged(auth: FirebaseAuth) {
+actual suspend fun FirebaseUser.awaitReload() {
 }
 
 actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener) {

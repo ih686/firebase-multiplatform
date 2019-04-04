@@ -28,10 +28,10 @@ expect fun DatabaseReference.removeEventListener(listener: ValueEventListener)
 expect suspend fun DatabaseReference.awaitSetValue(value: Any?)
 expect suspend fun DatabaseReference.awaitRemoveValue()
 
-expect interface ValueEventListener
-
-expect fun ValueEventListener.onDataChange(data: DataSnapshot)
-expect fun ValueEventListener.onCancelled(error: DatabaseError)
+expect interface ValueEventListener {
+    fun onDataChange(data: DataSnapshot)
+    fun onCancelled(error: DatabaseError)
+}
 
 expect class DataSnapshot
 

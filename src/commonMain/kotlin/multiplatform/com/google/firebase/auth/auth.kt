@@ -2,9 +2,9 @@ package multiplatform.com.google.firebase.auth
 
 expect fun getFirebaseAuth(): FirebaseAuth
 
-expect interface AuthStateListener
-
-expect fun AuthStateListener.onAuthStateChanged(auth: FirebaseAuth)
+expect interface AuthStateListener {
+    fun onAuthStateChanged(auth: FirebaseAuth)
+}
 
 expect class FirebaseAuth
 
@@ -21,7 +21,7 @@ expect interface AuthResult
 
 expect val AuthResult.user: FirebaseUser
 
-expect abstract class FirebaseUser
+expect class FirebaseUser
 
 expect val FirebaseUser.uid: String
 expect val FirebaseUser.isAnonymous: Boolean

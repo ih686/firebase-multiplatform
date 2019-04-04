@@ -10,7 +10,10 @@ actual class FirebaseDatabase
 
 actual class DatabaseReference
 
-actual interface ValueEventListener
+actual interface ValueEventListener {
+    actual fun onDataChange(data: DataSnapshot)
+    actual fun onCancelled(error: DatabaseError)
+}
 
 actual class DataSnapshot
 
@@ -47,7 +50,7 @@ actual fun FirebaseDatabase.getReference(path: String): DatabaseReference {
 actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
 }
 
-    actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) {
+actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) {
 }
 
 actual fun DatabaseReference.push(): DatabaseReference {
@@ -63,12 +66,6 @@ actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener)
 }
 
 actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
-}
-
-actual fun ValueEventListener.onDataChange(data: DataSnapshot) {
-}
-
-actual fun ValueEventListener.onCancelled(error: DatabaseError) {
 }
 
 actual fun DatabaseError.toException(): DatabaseException {

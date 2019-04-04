@@ -134,10 +134,9 @@ expect interface ListenerRegistration
 expect fun ListenerRegistration.remove()
 
 
-expect interface EventListener<T>
-
-expect fun <T> EventListener<T>.onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
-
+expect interface EventListener<T> {
+    fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
+}
 
 expect class SetOptions
 
