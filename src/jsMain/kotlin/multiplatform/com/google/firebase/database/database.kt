@@ -6,33 +6,9 @@ actual fun getFirebaseDatabase(): FirebaseDatabase {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual class FirebaseDatabase {
-    actual fun getReference(path: String): DatabaseReference {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    actual fun setPersistenceEnabled(enabled: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+actual class FirebaseDatabase
 
-    actual fun setLogLevel(logLevel: LoggerLevel) {
-    }
-}
-
-actual class DatabaseReference {
-    actual fun push(): DatabaseReference {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun onDisconnect(): OnDisconnect {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun addValueEventListener(listener: ValueEventListener): ValueEventListener {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    actual fun removeEventListener(listener: ValueEventListener) {}
-}
+actual class DatabaseReference
 
 actual interface ValueEventListener {
     actual fun onDataChange(data: DataSnapshot)
@@ -45,13 +21,7 @@ actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T? {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual class DatabaseError {
-    actual fun toException(): DatabaseException {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-}
+actual class DatabaseError
 
 actual class OnDisconnect
 
@@ -71,4 +41,33 @@ actual class DatabaseException : RuntimeException()
 actual suspend fun DatabaseReference.awaitRemoveValue() {}
 actual enum class LoggerLevel {
     DEBUG, INFO, WARN, ERROR, NONE
+}
+
+actual fun FirebaseDatabase.getReference(path: String): DatabaseReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
+}
+
+actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) {
+}
+
+actual fun DatabaseReference.push(): DatabaseReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.onDisconnect(): OnDisconnect {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
+}
+
+actual fun DatabaseError.toException(): DatabaseException {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }

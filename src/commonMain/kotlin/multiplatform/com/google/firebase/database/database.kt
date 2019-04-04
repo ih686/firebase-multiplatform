@@ -12,18 +12,18 @@ expect enum class LoggerLevel {
     NONE
 }
 
-expect class FirebaseDatabase {
-    fun getReference(path: String): DatabaseReference
-    fun setPersistenceEnabled(enabled: Boolean)
-    fun setLogLevel(logLevel: LoggerLevel)
-}
+expect class FirebaseDatabase
 
-expect class DatabaseReference {
-    fun push(): DatabaseReference
-    fun onDisconnect(): OnDisconnect
-    fun addValueEventListener(listener: ValueEventListener): ValueEventListener
-    fun removeEventListener(listener: ValueEventListener)
-}
+expect fun FirebaseDatabase.getReference(path: String): DatabaseReference
+expect fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean)
+expect fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel)
+
+expect class DatabaseReference
+
+expect fun DatabaseReference.push(): DatabaseReference
+expect fun DatabaseReference.onDisconnect(): OnDisconnect
+expect fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener
+expect fun DatabaseReference.removeEventListener(listener: ValueEventListener)
 
 expect suspend fun DatabaseReference.awaitSetValue(value: Any?)
 expect suspend fun DatabaseReference.awaitRemoveValue()
@@ -41,9 +41,9 @@ expect val TIMESTAMP: Map<String, String>
 
 expect class DatabaseException : RuntimeException
 
-expect class DatabaseError {
-    fun toException(): DatabaseException
-}
+expect class DatabaseError
+
+expect fun DatabaseError.toException(): DatabaseException
 
 expect class OnDisconnect
 

@@ -1,5 +1,6 @@
 package multiplatform.com.google.firebase.auth
 
+import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.tasks.await
 
 actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
@@ -7,7 +8,7 @@ actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
 actual typealias FirebaseAuth = com.google.firebase.auth.FirebaseAuth
 
 actual val FirebaseAuth.currentUser: FirebaseUser?
-    get() = currentUser
+    get() = currentUser?.let { it }
 
 actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = signInWithCustomToken(token).await()
 
@@ -31,3 +32,12 @@ actual val FirebaseUser.isAnonymous: Boolean
 actual suspend fun FirebaseUser.awaitDelete() = delete().await().run { Unit }
 
 actual suspend fun FirebaseUser.awaitReload() = reload().await().run { Unit }
+
+actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.signOut() {
+}
