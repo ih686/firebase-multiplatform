@@ -8,7 +8,7 @@ actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
 actual typealias FirebaseAuth = com.google.firebase.auth.FirebaseAuth
 
 actual val FirebaseAuth.currentUser: FirebaseUser?
-    get() = currentUser?.let { FirebaseUser(it) }
+    get() = currentUser?.let { it }
 
 actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = signInWithCustomToken(token).await()
 
@@ -17,14 +17,9 @@ actual typealias AuthStateListener = com.google.firebase.auth.FirebaseAuth.AuthS
 actual typealias AuthResult = com.google.firebase.auth.AuthResult
 
 actual val AuthResult.user: FirebaseUser
-    get() = FirebaseUser(user)
+    get() = user
 
-actual class FirebaseUser internal constructor(private val user: com.google.firebase.auth.FirebaseUser) : com.google.firebase.auth.FirebaseUser() {
-    override val isAnonymous = user.isAnonymous
-    override val uid = user.uid
-    override fun delete() = user.delete()
-    override fun reload() = user.reload()
-}
+actual typealias FirebaseUser = com.google.firebase.auth.FirebaseUser
 
 actual val FirebaseUser.uid: String
     get() = uid

@@ -21,7 +21,7 @@ expect interface AuthResult
 
 expect val AuthResult.user: FirebaseUser
 
-expect class FirebaseUser
+expect abstract class FirebaseUser
 
 expect val FirebaseUser.uid: String
 expect val FirebaseUser.isAnonymous: Boolean
