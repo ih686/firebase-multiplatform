@@ -4,15 +4,9 @@ actual fun getFirebaseAuth(): FirebaseAuth {
     TODO("not implemented")
 }
 
-actual interface AuthStateListener {
-    actual fun onAuthStateChanged(auth: FirebaseAuth)
-}
+actual interface AuthStateListener
 
-actual class FirebaseAuth {
-    actual fun addAuthStateListener(listener: AuthStateListener) {}
-    actual fun signOut() {}
-    actual fun removeAuthStateListener(listener: AuthStateListener) {}
-}
+actual class FirebaseAuth
 
 actual val FirebaseAuth.currentUser: FirebaseUser?
     get() = TODO("not implemented")
@@ -40,4 +34,16 @@ actual val FirebaseUser.isAnonymous: Boolean
 
 actual suspend fun FirebaseUser.awaitDelete() {}
 actual suspend fun FirebaseUser.awaitReload() {
+}
+
+actual fun AuthStateListener.onAuthStateChanged(auth: FirebaseAuth) {
+}
+
+actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.signOut() {
 }

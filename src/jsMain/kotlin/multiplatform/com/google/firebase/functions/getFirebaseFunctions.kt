@@ -4,11 +4,7 @@ actual fun getFirebaseFunctions(): FirebaseFunctions {
     TODO("not implemented")
 }
 
-actual class FirebaseFunctions {
-    actual fun getHttpsCallable(name: String): HttpsCallableReference {
-        TODO("not implemented")
-    }
-}
+actual class FirebaseFunctions
 
 actual class HttpsCallableReference
 
@@ -24,4 +20,8 @@ actual suspend fun HttpsCallableReference.awaitCall(data: Any?): HttpsCallableRe
 
 actual suspend fun HttpsCallableReference.awaitCall(): HttpsCallableResult {
     TODO("not implemented")
+}
+
+actual fun FirebaseFunctions.getHttpsCallable(name: String): HttpsCallableReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }

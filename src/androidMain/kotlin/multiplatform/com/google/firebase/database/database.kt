@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.OnDisconnect
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.tasks.await
+
 import kotlin.reflect.KClass
 
 actual fun getFirebaseDatabase() = FirebaseDatabase.getInstance()
@@ -42,3 +43,38 @@ actual suspend fun OnDisconnect.awaitSetValue(value: Any?) = setValue(value).awa
 actual val TIMESTAMP = ServerValue.TIMESTAMP
 
 actual suspend fun DatabaseReference.awaitRemoveValue() = removeValue().await().run { Unit }
+
+actual fun FirebaseDatabase.getReference(path: String): DatabaseReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
+}
+
+actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) {
+}
+
+actual fun DatabaseReference.push(): DatabaseReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.onDisconnect(): OnDisconnect {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
+}
+
+actual fun ValueEventListener.onDataChange(data: DataSnapshot) {
+}
+
+actual fun ValueEventListener.onCancelled(error: DatabaseError) {
+}
+
+actual fun DatabaseError.toException(): DatabaseException {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

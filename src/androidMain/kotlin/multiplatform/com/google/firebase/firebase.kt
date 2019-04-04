@@ -44,3 +44,7 @@ actual fun FirebaseOptionsBuilder.setProjectId(projectId: String?): FirebaseOpti
 actual fun FirebaseOptionsBuilder.build(): FirebaseOptions {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String): FirebaseOptionsBuilder {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

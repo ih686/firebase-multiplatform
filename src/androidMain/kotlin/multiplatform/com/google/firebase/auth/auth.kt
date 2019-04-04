@@ -31,3 +31,14 @@ actual val FirebaseUser.isAnonymous: Boolean
 actual suspend fun FirebaseUser.awaitDelete() = delete().await().run { Unit }
 
 actual suspend fun FirebaseUser.awaitReload() = reload().await().run { Unit }
+actual fun AuthStateListener.onAuthStateChanged(auth: FirebaseAuth) {
+}
+
+actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
+}
+
+actual fun FirebaseAuth.signOut() {
+}

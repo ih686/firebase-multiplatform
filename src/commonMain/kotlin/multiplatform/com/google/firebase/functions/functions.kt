@@ -2,9 +2,8 @@ package multiplatform.com.google.firebase.functions
 
 expect fun getFirebaseFunctions(): FirebaseFunctions
 
-expect class FirebaseFunctions {
-    fun getHttpsCallable(name: String): HttpsCallableReference
-}
+expect class FirebaseFunctions
+expect fun FirebaseFunctions.getHttpsCallable(name: String): HttpsCallableReference
 
 expect class HttpsCallableReference
 

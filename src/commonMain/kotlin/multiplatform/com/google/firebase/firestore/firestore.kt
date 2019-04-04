@@ -5,68 +5,68 @@ import kotlin.reflect.KClass
 
 expect fun getFirebaseFirestore(): FirebaseFirestore
 
-expect class FirebaseFirestore {
-    fun getFirestoreSettings(): FirebaseFirestoreSettings
-    fun setFirestoreSettings(settings: FirebaseFirestoreSettings)
-    fun collection(collectionPath: String): CollectionReference
-    fun document(documentPath: String): DocumentReference
-    fun batch(): WriteBatch
-}
+expect class FirebaseFirestore
+
+expect fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings
+expect fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings)
+expect fun FirebaseFirestore.collection(collectionPath: String): CollectionReference
+expect fun FirebaseFirestore.document(documentPath: String): DocumentReference
+expect fun FirebaseFirestore.batch(): WriteBatch
+
 
 expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T
 
-expect class Transaction {
-    fun set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
-    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): Transaction
-    fun set(documentRef: DocumentReference, pojo: Any): Transaction
-    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): Transaction
-    fun update(documentRef: DocumentReference, data: Map<String, Any>): Transaction
-    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
-    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
-    fun delete(documentRef: DocumentReference): Transaction
-    fun get(documentRef: DocumentReference): DocumentSnapshot
-}
+expect class Transaction
+expect fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+expect fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): Transaction
+expect fun Transaction.set(documentRef: DocumentReference, pojo: Any): Transaction
+expect fun Transaction.set(documentRef: DocumentReference, pojo: Any, options: SetOptions): Transaction
+expect fun Transaction.update(documentRef: DocumentReference, data: Map<String, Any>): Transaction
+expect fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+expect fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+expect fun Transaction.delete(documentRef: DocumentReference): Transaction
+expect fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot
+
 
 expect class FirebaseFirestoreSettingsBuilder constructor() {
     constructor(settings: FirebaseFirestoreSettings)
-    fun setPersistenceEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder
-    fun setTimestampsInSnapshotsEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder
-    fun build(): FirebaseFirestoreSettings
 }
+
+expect fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder
+expect fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder
+expect fun FirebaseFirestoreSettingsBuilder.build(): FirebaseFirestoreSettings
+
 
 expect class FirebaseFirestoreSettings
 
-expect open class Query {
-    fun whereEqualTo(field: String, value: Any?): Query
-    fun whereEqualTo(path: FieldPath, value: Any?): Query
-    fun whereGreaterThan(field: String, value: Any): Query
-    fun whereGreaterThan(path: FieldPath, value: Any): Query
-    fun whereArrayContains(field: String, value: Any): Query
-    fun whereArrayContains(path: FieldPath, value: Any): Query
-    fun addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
-}
-
-expect class WriteBatch {
-    fun set(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
-    fun set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): WriteBatch
-    fun set(documentRef: DocumentReference, pojo: Any): WriteBatch
-    fun set(documentRef: DocumentReference, pojo: Any, options: SetOptions): WriteBatch
-    fun update(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
-    fun update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
-    fun update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
-    fun delete(documentRef: DocumentReference): WriteBatch
-
-}
-
-expect suspend fun WriteBatch.awaitCommit()
-
+expect open class Query
+expect fun Query.whereEqualTo(field: String, value: Any?): Query
+expect fun Query.whereEqualTo(path: FieldPath, value: Any?): Query
+expect fun Query.whereGreaterThan(field: String, value: Any): Query
+expect fun Query.whereGreaterThan(path: FieldPath, value: Any): Query
+expect fun Query.whereArrayContains(field: String, value: Any): Query
+expect fun Query.whereArrayContains(path: FieldPath, value: Any): Query
+expect fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration
 expect fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration
 
 expect suspend fun Query.awaitGet(): QuerySnapshot
 
-expect class DocumentReference {
-    fun addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
-}
+expect class WriteBatch
+
+expect fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+expect fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions): WriteBatch
+expect fun WriteBatch.set(documentRef: DocumentReference, pojo: Any): WriteBatch
+expect fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions): WriteBatch
+expect fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>): WriteBatch
+expect fun WriteBatch.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+expect fun WriteBatch.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
+expect fun WriteBatch.delete(documentRef: DocumentReference): WriteBatch
+
+expect suspend fun WriteBatch.awaitCommit()
+
+expect class DocumentReference
+
+expect fun DocumentReference.addSnapshotListener(listener: EventListener<DocumentSnapshot>): ListenerRegistration
 
 expect val DocumentReference.id: String
 
@@ -120,22 +120,24 @@ expect class QuerySnapshot
 
 expect val QuerySnapshot.documents: List<DocumentSnapshot>
 
-expect class DocumentSnapshot {
-    fun get(field: String): Any?
-    fun getString(field: String): String?
-    fun contains(field: String): Boolean
-}
+expect class DocumentSnapshot
 
+expect fun DocumentSnapshot.get(field: String): Any?
+expect fun DocumentSnapshot.getString(field: String): String?
+expect fun DocumentSnapshot.contains(field: String): Boolean
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
+
 expect val DocumentSnapshot.id: String
 
-expect interface ListenerRegistration {
-    fun remove()
-}
+expect interface ListenerRegistration
 
-expect interface EventListener<T> {
-    fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
-}
+expect fun ListenerRegistration.remove()
+
+
+expect interface EventListener<T>
+
+expect fun <T> EventListener<T>.onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
+
 
 expect class SetOptions
 

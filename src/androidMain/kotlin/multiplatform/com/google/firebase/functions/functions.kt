@@ -17,3 +17,7 @@ actual typealias HttpsCallableResult = com.google.firebase.functions.HttpsCallab
 
 actual val HttpsCallableResult.data: Any
         get() = data
+
+actual fun FirebaseFunctions.getHttpsCallable(name: String): HttpsCallableReference {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

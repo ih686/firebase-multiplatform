@@ -10,6 +10,7 @@ expect class FirebaseOptions
 
 expect class FirebaseOptionsBuilder()
 
+expect fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String): FirebaseOptionsBuilder
 expect fun FirebaseOptionsBuilder.setApiKey(apiKey: String): FirebaseOptionsBuilder
 expect fun FirebaseOptionsBuilder.setApplicationId(applicationId: String): FirebaseOptionsBuilder
 expect fun FirebaseOptionsBuilder.setDatabaseUrl(databaseUrl: String?): FirebaseOptionsBuilder
