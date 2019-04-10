@@ -272,3 +272,6 @@ actual fun DocumentSnapshot.contains(field: String): Boolean {
 
 actual fun ListenerRegistration.remove() {
 }
+
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) {
+}

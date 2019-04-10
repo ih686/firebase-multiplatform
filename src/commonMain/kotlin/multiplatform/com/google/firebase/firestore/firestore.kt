@@ -12,6 +12,7 @@ expect fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSet
 expect fun FirebaseFirestore.collection(collectionPath: String): CollectionReference
 expect fun FirebaseFirestore.document(documentPath: String): DocumentReference
 expect fun FirebaseFirestore.batch(): WriteBatch
+expect fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean)
 
 
 expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T

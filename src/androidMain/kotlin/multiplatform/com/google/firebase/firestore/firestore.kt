@@ -81,6 +81,7 @@ actual typealias WriteBatch = com.google.firebase.firestore.WriteBatch
 actual suspend fun WriteBatch.awaitCommit() = commit().await().run { Unit }
 
 actual suspend fun DocumentReference.awaitGet() = get().await()
+
 actual fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
@@ -227,3 +228,4 @@ actual fun DocumentSnapshot.contains(field: String): Boolean {
 actual fun ListenerRegistration.remove() {
 }
 
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = FirebaseFirestore.setLoggingEnabled(true)
