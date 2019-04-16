@@ -1,30 +1,38 @@
 package multiplatform.com.google.firebase.functions
 
+import kotlinx.coroutines.await
+import multiplatform.com.google.firebase.App
+import kotlin.js.Promise
+
 @JsModule("firebase")
 external val firebase: dynamic
+
 @JsModule("firebase/functions")
-external val functions: dynamic
+external fun functions(app: App? = definedExternally): Functions
 
+actual fun getFirebaseFunctions() = functions()
 
-//actual class FirebaseFunctions {
-//
-//    private val instance = firebase.functions()
-//
-//    actual companion object {
-//        private val instance = FirebaseFunctions()
-//        actual fun getInstance() = instance
-//    }
-//
-//    actual fun getHttpsCallable(name: String) = HttpsCallableReference(instance.httpsCallable(name))
-//
-//}
-//
-//actual class HttpsCallableReference(private val ref: dynamic) {
-//    actual fun call(data: Any?) = ref.call(data).asDeferred()
-//    actual fun call() = ref.call().asDeferred()
-//}
-//
-//actual class HttpsCallableResult {
-//    actual val data: Any
-//        get() = TODO("not implemented")
-//}
+@JsModule("firebase/functions")
+open external class Functions {
+    fun httpsCallable(name: String) : HttpsCallable
+}
+
+actual typealias FirebaseFunctions = Functions
+
+@JsModule("firebase/functions")
+open external class HttpsCallable {
+    fun __call(data: Any? = definedExternally): Promise<HttpsCallableResult>
+}
+
+actual typealias HttpsCallableReference = HttpsCallable
+
+actual class HttpsCallableResult
+
+actual val HttpsCallableResult.data: Any
+    get() = data?.let{ it }
+
+actual suspend fun HttpsCallableReference.awaitCall(data: Any?) = __call(data).await()
+
+actual suspend fun HttpsCallableReference.awaitCall() = __call().await()
+
+actual fun FirebaseFunctions.getHttpsCallable(name: String) = httpsCallable(name)
