@@ -39,5 +39,5 @@ actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener) {
 actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
 }
 
-actual fun FirebaseAuth.signOut() {
+actual suspend fun FirebaseAuth.signOut() {
 }
