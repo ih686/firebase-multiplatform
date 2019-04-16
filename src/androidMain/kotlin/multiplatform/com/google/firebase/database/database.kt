@@ -44,30 +44,19 @@ actual val TIMESTAMP = ServerValue.TIMESTAMP
 
 actual suspend fun DatabaseReference.awaitRemoveValue() = removeValue().await().run { Unit }
 
-actual fun FirebaseDatabase.getReference(path: String): DatabaseReference {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun FirebaseDatabase.getReference(path: String) = getReference(path)
 
-actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
-}
+actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) = setPersistenceEnabled(enabled)
 
-actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) {
-}
+actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) = setLogLevel(logLevel)
 
-actual fun DatabaseReference.push(): DatabaseReference {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DatabaseReference.push() = push()
 
-actual fun DatabaseReference.onDisconnect(): OnDisconnect {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DatabaseReference.onDisconnect() = onDisconnect()
 
-actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener) = addValueEventListener(listener)
 
-actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
-}
+actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = removeEventListener(listener)
 
 actual fun DatabaseError.toException(): DatabaseException {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
