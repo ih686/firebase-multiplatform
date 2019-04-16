@@ -17,6 +17,14 @@ actual interface AuthStateListener {
 @JsModule("firebase/auth")
 open external class Auth {
     val currentUser: FirebaseUser?
+
+    fun signInWithCustomToken(token: String): Promise<AuthResult>
+    fun signInAnonymously(): Promise<AuthResult>
+    fun signOut(): Promise<Unit>
+
+    fun onAuthStateChanged(nextOrObserver: Any): ()->Unit
+
+    var unsubscribe: ()->Unit
 }
 
 actual typealias FirebaseAuth = Auth
@@ -40,6 +48,9 @@ actual val AuthResult.user: FirebaseUser
 open external class User {
     val uid: String
     val isAnonymous: Boolean
+
+    fun delete(): Promise<Unit>
+    fun reload(): Promise<Unit>
 }
 
 actual abstract class FirebaseUser : User()
@@ -47,20 +58,22 @@ actual abstract class FirebaseUser : User()
 actual val FirebaseUser.uid: String
     get() = uid
 
-actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = (firebase.auth().signInWithCustomToken(token) as Promise<AuthResult>).await()
+actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = signInWithCustomToken(token).await()
 
-actual suspend fun FirebaseAuth.awaitSignInAnonymously() = (firebase.auth().signInAnonymously() as Promise<AuthResult>).await()
+actual suspend fun FirebaseAuth.awaitSignInAnonymously() = signInAnonymously().await()
+
+actual suspend fun FirebaseAuth.signOut() = signOut().await()
 
 actual val FirebaseUser.isAnonymous: Boolean
     get() = isAnonymous
 
-actual suspend fun FirebaseUser.awaitDelete() = firebase.auth().currentUser?.delete()
+actual suspend fun FirebaseUser.awaitDelete() = delete().await()
 
-actual suspend fun FirebaseUser.awaitReload() = firebase.auth().currentUser?.reload()
+actual suspend fun FirebaseUser.awaitReload() = reload().await()
 
-actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener)  = firebase.auth().onAuthStateChanged(listener)
+actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener)  =
+        onAuthStateChanged(listener)
+        .let{ unsubscribe = it }
 
-actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
-}
+actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) = unsubscribe()
 
-actual fun FirebaseAuth.signOut() = firebase.auth().signOut()
