@@ -32,9 +32,7 @@ actual class FirebaseOptionsBuilder actual constructor() {
 }
 
 
-fun FirebaseError.toFirebaseException() = when(code) {
-    else -> FirebaseException(this)
-}
+fun FirebaseError.toFirebaseException() = FirebaseException(this)
 
 actual open class FirebaseException(error: FirebaseError) : Exception(error)
 
