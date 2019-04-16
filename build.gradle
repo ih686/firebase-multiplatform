@@ -100,17 +100,17 @@ android {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            url myMavenRepoWriteUrl
-            credentials {
-                username myMavenRepoWriteUsername
-                password myMavenRepoWritePassword
-            }
-        }
-    }
-}
+//publishing {
+//    repositories {
+//        maven {
+//            url myMavenRepoWriteUrl
+//            credentials {
+//                username myMavenRepoWriteUsername
+//                password myMavenRepoWritePassword
+//            }
+//        }
+//    }
+//}
 
 task copyPackageJson(type: Copy) {
     from file("package.json")
