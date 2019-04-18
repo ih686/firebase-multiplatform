@@ -93,7 +93,7 @@ actual enum class FirestoreExceptionCode {
     UNAUTHENTICATED
 }
 
-actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T {
+actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T): T {
     TODO("not implemented")
 }
 
@@ -275,3 +275,13 @@ actual fun ListenerRegistration.remove() {
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) {
 }
+
+actual annotation class IgnoreExtraProperties
+
+actual annotation class Exclude
+
+actual fun deleteFieldValue(): FieldValue {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual abstract class FieldValue

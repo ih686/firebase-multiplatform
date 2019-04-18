@@ -1,5 +1,8 @@
 package multiplatform.com.google.firebase.firestore
 
+import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.IgnoreExtraProperties
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlin.reflect.KClass
 
@@ -7,7 +10,8 @@ actual fun getFirebaseFirestore() = FirebaseFirestore.getInstance()
 
 actual typealias FirebaseFirestore = com.google.firebase.firestore.FirebaseFirestore
 
-actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T) = runTransaction(func).await()
+actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T)
+        = runTransaction { runBlocking { func(it) } }.await()
 
 actual typealias Transaction = com.google.firebase.firestore.Transaction
 
@@ -21,7 +25,8 @@ actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) = 
 
 actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) = update(data).await().run { Unit }
 
-actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit) = addSnapshotListener { s, e -> listener(s, e) }
+actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit)
+        = addSnapshotListener { s, e -> listener(s, e) }
 
 actual typealias CollectionReference = com.google.firebase.firestore.CollectionReference
 
@@ -229,3 +234,11 @@ actual fun ListenerRegistration.remove() {
 }
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = FirebaseFirestore.setLoggingEnabled(true)
+
+actual typealias IgnoreExtraProperties = IgnoreExtraProperties
+
+actual typealias Exclude = Exclude
+
+actual typealias FieldValue = com.google.firebase.firestore.FieldValue
+
+actual fun deleteFieldValue() = FieldValue.delete()

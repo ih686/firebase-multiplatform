@@ -14,8 +14,11 @@ expect fun FirebaseFirestore.document(documentPath: String): DocumentReference
 expect fun FirebaseFirestore.batch(): WriteBatch
 expect fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean)
 
+expect annotation class IgnoreExtraProperties()
+expect annotation class Exclude()
 
-expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T
+
+expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T): T
 
 expect class Transaction
 expect fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
@@ -146,3 +149,7 @@ expect fun mergeSetOptions(): SetOptions
 expect fun fieldPathOf(vararg fieldNames: String): FieldPath
 
 expect class FieldPath
+
+expect abstract class FieldValue
+
+expect fun deleteFieldValue(): FieldValue
