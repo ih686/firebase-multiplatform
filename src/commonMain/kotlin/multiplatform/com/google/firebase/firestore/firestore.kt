@@ -46,6 +46,8 @@ expect class FirebaseFirestoreSettings
 expect open class Query
 expect fun Query.whereEqualTo(field: String, value: Any?): Query
 expect fun Query.whereEqualTo(path: FieldPath, value: Any?): Query
+expect fun Query.whereLessThan(field: String, value: Any): Query
+expect fun Query.whereLessThan(path: FieldPath, value: Any): Query
 expect fun Query.whereGreaterThan(field: String, value: Any): Query
 expect fun Query.whereGreaterThan(path: FieldPath, value: Any): Query
 expect fun Query.whereArrayContains(field: String, value: Any): Query
@@ -130,6 +132,7 @@ expect fun DocumentSnapshot.get(field: String): Any?
 expect fun DocumentSnapshot.getString(field: String): String?
 expect fun DocumentSnapshot.contains(field: String): Boolean
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
+expect fun DocumentSnapshot.exists(): Boolean
 
 expect val DocumentSnapshot.id: String
 

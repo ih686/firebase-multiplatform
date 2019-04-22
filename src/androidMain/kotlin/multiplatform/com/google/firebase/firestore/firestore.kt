@@ -162,6 +162,14 @@ actual fun Query.whereEqualTo(path: FieldPath, value: Any?): Query {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
+actual fun Query.whereLessThan(field: String, value: Any): Query {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun Query.whereLessThan(path: FieldPath, value: Any): Query {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
 actual fun Query.whereGreaterThan(field: String, value: Any): Query {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
@@ -242,3 +250,6 @@ actual typealias Exclude = Exclude
 actual typealias FieldValue = com.google.firebase.firestore.FieldValue
 
 actual fun deleteFieldValue() = FieldValue.delete()
+actual fun DocumentSnapshot.exists(): Boolean {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

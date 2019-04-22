@@ -1,5 +1,5 @@
 group = "io.multiplatform"
-version = "17.1.0-rev1"
+version = "17.1.0-rev2"
 
 buildscript {
     repositories {
@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.3.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30-eap-11")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30")
     }
 }
 
@@ -128,7 +128,7 @@ tasks {
     
     val copyJS by registering(Copy::class) {
         from(file("${buildDir}/classes/kotlin/js/main/${project.name}.js"))
-        into(file("${buildDir}/node_module"))
+        into(file("${buildDir}/node_module"))   
         rename("${project.name}\\.js", "index.js")
     }
     

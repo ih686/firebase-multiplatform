@@ -202,6 +202,14 @@ actual fun Query.whereEqualTo(path: FieldPath, value: Any?): Query {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
+actual fun Query.whereLessThan(field: String, value: Any): Query {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun Query.whereLessThan(path: FieldPath, value: Any): Query {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
 actual fun Query.whereGreaterThan(field: String, value: Any): Query {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
@@ -285,3 +293,7 @@ actual fun deleteFieldValue(): FieldValue {
 }
 
 actual abstract class FieldValue
+
+actual fun DocumentSnapshot.exists(): Boolean {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
