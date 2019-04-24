@@ -17,6 +17,14 @@ repositories {
 kotlin {
     android()
 
+    jvm {
+        val main by compilations.getting {
+            kotlinOptions {
+                jvmTarget ="1.8"
+            }
+        }
+    }
+
     js {
         val main by compilations.getting {
             kotlinOptions {
@@ -48,6 +56,15 @@ kotlin {
                 api("com.google.firebase:firebase-database:16.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+            }
+        }
+        jvm().compilations["main"].defaultSourceSet {
+            kotlin.srcDir("src/androidMain/kotlin")
+            dependencies {
+                api("app.teamhub:firebase-java:0.1.0")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+                implementation(kotlin("stdlib-jdk8"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
             }
         }
     }
