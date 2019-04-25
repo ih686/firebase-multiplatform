@@ -37,7 +37,6 @@ actual typealias DatabaseReference = Reference
 actual interface ValueEventListener {
     actual fun onDataChange(data: DataSnapshot)
     actual fun onCancelled(error: DatabaseError)
-    var callback: (DataSnapshot) -> Unit
 }
 
 @JsModule("firebase/database")
@@ -87,10 +86,10 @@ actual fun DatabaseReference.push() = getFirebaseDatabase().ref().push()
 actual fun DatabaseReference.onDisconnect() = onDisconnect()
 
 actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener) = on("value", { listener.onDataChange(it) }, { listener.onCancelled(DatabaseError(it)) })
-        .let { listener.callback = it }
+        .let { listener.asDynamic().callback = it }
         .run { listener }
 
-actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = off("value", listener.callback)
+actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = off("value", listener.asDynamic().callback)
 
 
 actual fun DatabaseError.toException() = DatabaseException(error)
