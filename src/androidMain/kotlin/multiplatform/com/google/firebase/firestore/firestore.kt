@@ -138,7 +138,7 @@ actual fun Transaction.delete(documentRef: DocumentReference): Transaction {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot {
+actual suspend fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
