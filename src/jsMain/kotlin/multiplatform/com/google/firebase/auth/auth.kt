@@ -8,7 +8,7 @@ external val firebase: dynamic
 @JsModule("firebase/auth")
 external val auth: dynamic
 
-actual fun getFirebaseAuth() = firebase.auth()
+actual fun getFirebaseAuth() = firebase.auth() as FirebaseAuth
 
 actual interface AuthStateListener {
     actual fun onAuthStateChanged(auth: FirebaseAuth)

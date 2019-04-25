@@ -13,7 +13,7 @@ external val database: dynamic
 @JsModule("firebase/database")
 external fun enableLogging(logger: Boolean?, persistent: Boolean? = definedExternally)
 
-actual fun getFirebaseDatabase() = firebase.database()
+actual fun getFirebaseDatabase() = firebase.database() as FirebaseDatabase
 
 @JsModule("firebase/database")
 open external class Database {

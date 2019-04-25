@@ -10,7 +10,7 @@ external val firebase: dynamic
 @JsModule("firebase/functions")
 external fun functions(app: App? = definedExternally): Functions
 
-actual fun getFirebaseFunctions() = functions()
+actual fun getFirebaseFunctions() = functions() as FirebaseFunctions
 
 @JsModule("firebase/functions")
 open external class Functions {

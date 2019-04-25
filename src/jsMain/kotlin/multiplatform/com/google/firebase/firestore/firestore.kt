@@ -15,7 +15,7 @@ external val firebase: dynamic
 @JsModule("firebase/firestore")
 external val firestore: dynamic
 
-actual fun getFirebaseFirestore() = firebase.firestore()
+actual fun getFirebaseFirestore() = firebase.firestore() as FirebaseFirestore
 
 @JsModule("firebase/firestore")
 open external class Firestore {
