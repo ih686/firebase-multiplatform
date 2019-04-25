@@ -1,6 +1,9 @@
 package multiplatform.com.google.firebase.firestore
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.await
+import kotlinx.coroutines.promise
 import multiplatform.com.google.firebase.FirebaseError
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.js.Promise
@@ -189,7 +192,9 @@ actual enum class FirestoreExceptionCode {
     UNAUTHENTICATED
 }
 
-actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T) = runTransaction(func).await()
+actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T) =
+    runTransaction { GlobalScope.promise { func(it) } }.await()
+
 
 actual suspend fun WriteBatch.awaitCommit() = commit().await()
 
