@@ -23,6 +23,7 @@ expect class DatabaseReference
 expect fun DatabaseReference.push(): DatabaseReference
 expect fun DatabaseReference.onDisconnect(): OnDisconnect
 expect fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener
+expect fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener)
 expect fun DatabaseReference.removeEventListener(listener: ValueEventListener)
 
 expect suspend fun DatabaseReference.awaitSetValue(value: Any?)
@@ -36,6 +37,7 @@ expect interface ValueEventListener {
 expect class DataSnapshot
 
 expect fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>): T?
+expect val DataSnapshot.children: Iterable<DataSnapshot>
 
 expect val TIMESTAMP: Map<String, String>
 

@@ -28,6 +28,9 @@ actual typealias DataSnapshot = DataSnapshot
 
 actual fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>) = getValue(valueType.java)
 
+actual val DataSnapshot.children: Iterable<DataSnapshot>
+    get() = TODO("not implemented")
+
 actual typealias DatabaseException = DatabaseException
 
 actual typealias DatabaseError = DatabaseError
@@ -59,5 +62,9 @@ actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener)
 actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = removeEventListener(listener)
 
 actual fun DatabaseError.toException(): DatabaseException {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }

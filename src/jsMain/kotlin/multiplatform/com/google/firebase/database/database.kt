@@ -92,4 +92,12 @@ actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener)
 
 actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = off("value", listener.callback)
 
+
 actual fun DatabaseError.toException() = DatabaseException(error)
+
+actual val DataSnapshot.children: Iterable<DataSnapshot>
+    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

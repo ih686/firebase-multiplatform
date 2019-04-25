@@ -12,9 +12,13 @@ expect fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSet
 expect fun FirebaseFirestore.collection(collectionPath: String): CollectionReference
 expect fun FirebaseFirestore.document(documentPath: String): DocumentReference
 expect fun FirebaseFirestore.batch(): WriteBatch
+expect fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean)
+
+expect annotation class IgnoreExtraProperties()
+expect annotation class Exclude()
 
 
-expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T): T
+expect suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T): T
 
 expect class Transaction
 expect fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>): Transaction
@@ -42,6 +46,8 @@ expect class FirebaseFirestoreSettings
 expect open class Query
 expect fun Query.whereEqualTo(field: String, value: Any?): Query
 expect fun Query.whereEqualTo(path: FieldPath, value: Any?): Query
+expect fun Query.whereLessThan(field: String, value: Any): Query
+expect fun Query.whereLessThan(path: FieldPath, value: Any): Query
 expect fun Query.whereGreaterThan(field: String, value: Any): Query
 expect fun Query.whereGreaterThan(path: FieldPath, value: Any): Query
 expect fun Query.whereArrayContains(field: String, value: Any): Query
@@ -126,6 +132,7 @@ expect fun DocumentSnapshot.get(field: String): Any?
 expect fun DocumentSnapshot.getString(field: String): String?
 expect fun DocumentSnapshot.contains(field: String): Boolean
 expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
+expect fun DocumentSnapshot.exists(): Boolean
 
 expect val DocumentSnapshot.id: String
 
@@ -145,3 +152,7 @@ expect fun mergeSetOptions(): SetOptions
 expect fun fieldPathOf(vararg fieldNames: String): FieldPath
 
 expect class FieldPath
+
+expect abstract class FieldValue
+
+expect fun deleteFieldValue(): FieldValue
