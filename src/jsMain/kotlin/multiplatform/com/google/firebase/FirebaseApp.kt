@@ -11,7 +11,8 @@ external fun initializeApp(options: Any, name: String? = definedExternally) : Ap
 
 @JsModule("firebase")
 open external class FirebaseError : Throwable {
-    val code: String
+    var code: String
+    override var message: String
 }
 
 actual typealias FirebaseApp = App
