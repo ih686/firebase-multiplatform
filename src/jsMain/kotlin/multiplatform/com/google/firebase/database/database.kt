@@ -81,7 +81,7 @@ actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
 
 actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) = enableLogging(logLevel != LoggerLevel.NONE)
 
-actual fun DatabaseReference.push() = firebase.database().ref().push()
+actual fun DatabaseReference.push() = firebase.database().ref().push() as DatabaseReference
 
 actual fun DatabaseReference.onDisconnect() = onDisconnect()
 

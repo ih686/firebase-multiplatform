@@ -77,7 +77,7 @@ actual val QuerySnapshot.documents: List<DocumentSnapshot>
 @JsModule("firebase/firestore")
 actual open external class DocumentSnapshot {
     val id: String
-
+    val exists: Boolean
     fun get(fieldPath: Any, options: Any? = definedExternally): Any?
 }
 
@@ -225,11 +225,11 @@ actual fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings {
 actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) {
 }
 
-actual fun FirebaseFirestore.collection(collectionPath: String) = firebase.firestore().collection(collectionPath)
+actual fun FirebaseFirestore.collection(collectionPath: String) = firebase.firestore().collection(collectionPath) as CollectionReference
 
-actual fun FirebaseFirestore.document(documentPath: String) = firebase.firestore().doc(documentPath)
+actual fun FirebaseFirestore.document(documentPath: String) = firebase.firestore().doc(documentPath) as DocumentReference
 
-actual fun FirebaseFirestore.batch() = firebase.firestore().batch()
+actual fun FirebaseFirestore.batch() = firebase.firestore().batch() as WriteBatch
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore().setLoggingEnabled(loggingEnabled)
 
@@ -291,7 +291,5 @@ actual fun deleteFieldValue(): FieldValue {
 
 actual abstract class FieldValue
 
-actual fun DocumentSnapshot.exists(): Boolean {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DocumentSnapshot.exists() = exists
 
