@@ -1,5 +1,5 @@
 group = "io.multiplatform"
-version = "17.1.0-rev1"
+version = "17.1.0-rev2"
 
 plugins {
     `maven-publish`

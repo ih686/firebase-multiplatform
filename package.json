@@ -1,6 +1,6 @@
 {
   "name": "@multiplatform/firebase",
-  "version": "17.1.0-rev1",
+  "version": "17.1.0-rev2",
   "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/multiplatform-io/firebase",
   "dependencies": {
-    "firebase": "^5.5.2"
+    "firebase": "^5.5.2",
+    "kotlin": "^1.2.70",
+    "kotlinx-coroutines-core": "^0.26.0"
   }
 }
 
