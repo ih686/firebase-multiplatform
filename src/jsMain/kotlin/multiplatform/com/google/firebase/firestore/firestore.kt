@@ -98,6 +98,10 @@ actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "=", va
 
 actual fun Query.whereEqualTo(path: FieldPath, value: Any?) = where(path, "=", value).let { this }
 
+actual fun Query.whereLessThan(field: String, value: Any) = where(field, "<", value).let { this }
+
+actual fun Query.whereLessThan(path: FieldPath, value: Any) = where(path, "<", value).let { this }
+
 actual fun Query.whereGreaterThan(field: String, value: Any) = where(field, ">", value).let { this }
 
 actual fun Query.whereGreaterThan(path: FieldPath, value: Any) = where(path, ">", value).let { this }
@@ -263,5 +267,20 @@ actual fun DocumentSnapshot.contains(field: String) = get(field) != undefined
 
 actual fun ListenerRegistration.remove() {
     TODO("Not implemented")
+}
+
+
+actual annotation class IgnoreExtraProperties
+
+actual annotation class Exclude
+
+actual fun deleteFieldValue(): FieldValue {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
+actual abstract class FieldValue
+
+actual fun DocumentSnapshot.exists(): Boolean {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
