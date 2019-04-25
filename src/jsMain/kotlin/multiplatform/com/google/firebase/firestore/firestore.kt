@@ -1,6 +1,7 @@
 package multiplatform.com.google.firebase.firestore
 
 import kotlinx.coroutines.await
+import multiplatform.com.google.firebase.FirebaseError
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.js.Promise
 import kotlin.reflect.KClass
@@ -56,7 +57,10 @@ actual open external class CollectionReference : Query {
 }
 
 actual class FirebaseFirestoreException
-    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException()
+    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError().apply{
+    message = detailMessage
+    this.code = code.name
+})
 
 @JsModule("firebase/firestore")
 actual open external class QuerySnapshot {
@@ -185,7 +189,7 @@ actual enum class FirestoreExceptionCode {
     UNAUTHENTICATED
 }
 
-actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: (transaction: Transaction) -> T) = runTransaction(func).await()
+actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T) = runTransaction(func).await()
 
 actual suspend fun WriteBatch.awaitCommit() = commit().await()
 
@@ -221,6 +225,8 @@ actual fun FirebaseFirestore.collection(collectionPath: String) = getFirebaseFir
 actual fun FirebaseFirestore.document(documentPath: String) = getFirebaseFirestore().doc(documentPath)
 
 actual fun FirebaseFirestore.batch() = getFirebaseFirestore().batch()
+
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = getFirebaseFirestore().setLoggingEnabled(loggingEnabled)
 
 actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data).let { this }
 
