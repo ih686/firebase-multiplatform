@@ -138,9 +138,7 @@ actual fun Transaction.delete(documentRef: DocumentReference): Transaction {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
 
-actual suspend fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual suspend fun Transaction.awaitGet(documentRef: DocumentReference) = get(documentRef)
 
 actual fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

@@ -29,7 +29,7 @@ expect fun Transaction.update(documentRef: DocumentReference, data: Map<String, 
 expect fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
 expect fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
 expect fun Transaction.delete(documentRef: DocumentReference): Transaction
-expect suspend fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot
+expect suspend fun Transaction.awaitGet(documentRef: DocumentReference): DocumentSnapshot
 
 
 expect class FirebaseFirestoreSettingsBuilder constructor() {

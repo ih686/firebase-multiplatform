@@ -249,7 +249,7 @@ actual fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPa
 
 actual fun Transaction.delete(documentRef: DocumentReference) = delete(documentRef).let { this }
 
-actual suspend fun Transaction.get(documentRef: DocumentReference) = get(documentRef).await()
+actual suspend fun Transaction.awaitGet(documentRef: DocumentReference) = get(documentRef).await()
 
 
 actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data)
