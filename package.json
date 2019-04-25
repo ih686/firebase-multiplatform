@@ -1,14 +1,14 @@
 {
-  "name": "@multiplatform/firebase-firestore",
-  "version": "2.3.0-rev1",
-  "description": "Wrapper around firestore for usage in Kotlin Multiplatform projects",
+  "name": "@multiplatform/firebase",
+  "version": "17.1.0-rev1",
+  "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/multiplatform-io/firestore.git"
+    "url": "git+https://github.com/multiplatform-io/firebase.git"
   },
   "keywords": [
     "kotlin",
@@ -20,9 +20,9 @@
   "author": "multiplatform.io",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/multiplatform-io/firestore/issues"
+    "url": "https://github.com/multiplatform-io/firebase/issues"
   },
-  "homepage": "https://github.com/multiplatform-io/firestore",
+  "homepage": "https://github.com/multiplatform-io/firebase",
   "dependencies": {
     "firebase": "^5.5.2"
   }
