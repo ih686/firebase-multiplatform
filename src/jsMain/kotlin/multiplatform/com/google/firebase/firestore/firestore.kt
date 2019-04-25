@@ -225,13 +225,13 @@ actual fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings {
 actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) {
 }
 
-actual fun FirebaseFirestore.collection(collectionPath: String) = getFirebaseFirestore().collection(collectionPath)
+actual fun FirebaseFirestore.collection(collectionPath: String) = firebase.firestore().collection(collectionPath)
 
-actual fun FirebaseFirestore.document(documentPath: String) = getFirebaseFirestore().doc(documentPath)
+actual fun FirebaseFirestore.document(documentPath: String) = firebase.firestore().doc(documentPath)
 
-actual fun FirebaseFirestore.batch() = getFirebaseFirestore().batch()
+actual fun FirebaseFirestore.batch() = firebase.firestore().batch()
 
-actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = getFirebaseFirestore().setLoggingEnabled(loggingEnabled)
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore().setLoggingEnabled(loggingEnabled)
 
 actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data).let { this }
 
