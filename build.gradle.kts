@@ -96,19 +96,18 @@ android {
 tasks {
     val copyPackageJson by registering(Copy::class) {
         from(file("package.json"))
-        into(file("${buildDir}/node_module"))
+        into(file("$buildDir/node_module"))
     }
 
     val copyJS by registering(Copy::class) {
-        from(file("${buildDir}/classes/kotlin/js/main/${project.name}.js"))
-        into(file("${buildDir}/node_module"))
+        from(file("$buildDir/classes/kotlin/js/main/${project.name}.js"))
+        into(file("$buildDir/node_module"))
         rename("${project.name}\\.js", "index.js")
     }
 
     val publishToNpm by registering(Exec::class) {
         dependsOn(copyPackageJson, copyJS)
-        workingDir("${buildDir}/node_module")
-        commandLine("npm publish")
-        //args ['publish']
+        workingDir("$buildDir/node_module")
+        commandLine("npm",  "publish", "--registry http://localhost:4873")
     }
 }
