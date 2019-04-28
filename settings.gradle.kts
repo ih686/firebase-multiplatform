@@ -1,6 +1,6 @@
 enableFeaturePreview("GRADLE_METADATA")
 
-rootProject.name = "firebase"
+rootProject.name = "firebase-multiplatform"
 
 pluginManagement {
     repositories {

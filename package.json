@@ -1,5 +1,5 @@
 {
-  "name": "@multiplatform/firebase",
+  "name": "firebase-multiplatform",
   "version": "17.1.0-rev2",
   "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
   "main": "index.js",
