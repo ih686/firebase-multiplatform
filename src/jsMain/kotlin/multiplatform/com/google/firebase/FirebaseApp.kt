@@ -1,23 +1,9 @@
 package multiplatform.com.google.firebase
 
-@JsModule("firebase")
-open external class App
+actual typealias FirebaseApp = firebase.App
+typealias FirebaseError = firebase.FirebaseError
 
-@JsModule("firebase")
-external val apps : List<App>
-
-@JsModule("firebase")
-external fun initializeApp(options: Any, name: String? = definedExternally) : App
-
-@JsModule("firebase")
-open external class FirebaseError : Throwable {
-    var code: String
-    override var message: String
-}
-
-actual typealias FirebaseApp = App
-
-actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  initializeApp(options)
+actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(options)
 
 actual data class FirebaseOptions internal constructor(
         private val apiKey: String = "",
@@ -32,12 +18,11 @@ actual class FirebaseOptionsBuilder actual constructor() {
     internal var options = FirebaseOptions()
 }
 
-
 fun FirebaseError.toFirebaseException() = FirebaseException(this)
 
 actual open class FirebaseException(error: FirebaseError) : Exception(error)
 
-actual fun getFirebaseApps(context: Any) = apps
+actual fun getFirebaseApps(context: Any) = firebase.apps
 
 actual open class FirebaseNetworkException(error: FirebaseError) : FirebaseException(error)
 actual open class FirebaseTooManyRequestsException(error: FirebaseError) : FirebaseException(error)

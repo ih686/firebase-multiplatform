@@ -1,28 +1,26 @@
 package multiplatform.com.google.firebase.firestore
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.promise
 import multiplatform.com.google.firebase.FirebaseError
 import multiplatform.com.google.firebase.FirebaseException
-import kotlin.js.Promise
 import kotlin.reflect.KClass
+import multiplatform.com.google.firebase.firebase
 
-@JsModule("firebase")
-external val firebase: dynamic
 
-@JsModule("firebase/firestore")
-external val firestore: dynamic
+actual fun getFirebaseFirestore() = firebase.firestore()
 
-actual fun getFirebaseFirestore() = firebase.firestore() as FirebaseFirestore
-
-@JsModule("firebase/firestore")
-open external class Firestore {
-    fun <T> runTransaction(func: (transaction: Transaction) -> Promise<T>): Promise<T>
-}
-
-actual typealias FirebaseFirestore = Firestore
+actual typealias FirebaseFirestore = firebase.firestore.Firestore
+actual typealias QuerySnapshot = firebase.firestore.QuerySnapshot
+actual typealias DocumentSnapshot = firebase.firestore.DocumentSnapshot
+actual typealias Query = firebase.firestore.Query
+actual typealias DocumentReference = firebase.firestore.DocumentReference
+actual typealias WriteBatch = firebase.firestore.WriteBatch
+actual typealias Transaction = firebase.firestore.Transaction
+actual typealias SetOptions = firebase.firestore.SetOptions
+actual typealias CollectionReference = firebase.firestore.CollectionReference
+actual typealias FieldPath = firebase.firestore.FieldPath
 
 actual data class FirebaseFirestoreSettings internal constructor(
         private val cacheSizeBytes: Number = 40,
@@ -48,54 +46,29 @@ actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enab
 
 actual fun FirebaseFirestoreSettingsBuilder.build() = settings
 
-@JsModule("firebase/firestore")
-actual open external class Query {
-    fun get(options: Any? = definedExternally): Promise<QuerySnapshot>
-    fun where(fieldPath: Any, opStr: String, value: Any?): Query
-}
-
-@JsModule("firebase/firestore")
-actual open external class CollectionReference : Query {
-    fun add(data: Any): Promise<DocumentReference>
-}
-
 actual class FirebaseFirestoreException
     actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError().apply{
     message = detailMessage
     this.code = code.name
 })
 
-@JsModule("firebase/firestore")
-actual open external class QuerySnapshot {
-    val docs: List<DocumentSnapshot>
-}
-
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = docs
 
-@JsModule("firebase/firestore")
-actual open external class DocumentSnapshot {
-    val id: String
-    val exists: Boolean
-    fun get(fieldPath: Any, options: Any? = definedExternally): Any?
-}
 
 actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = valueType as T
 
 actual val DocumentSnapshot.id: String
     get() = id
 
-actual interface ListenerRegistration
+actual typealias ListenerRegistration = firebase.firestore.ListenerRegistration
 
 actual interface EventListener<T> {
     actual fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
 }
 
 actual fun fieldPathOf(vararg fieldNames: String) = FieldPath(fieldNames)
-
-@JsModule("firebase/firestore")
-actual open external class FieldPath internal constructor(fieldNames: Array<out String>)
 
 actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
     TODO("not implemented")
@@ -122,24 +95,6 @@ actual fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>): Li
 }
 
 
-@JsModule("firebase/firestore")
-actual open external class DocumentReference {
-    val id: String
-
-    fun get(options: Any? = definedExternally): Promise<DocumentSnapshot>
-    fun set(data: Any, options: Any? = definedExternally): Promise<Unit>
-    fun update(data: Any): Promise<Unit>
-    fun delete(): Promise<Unit>
-    fun onSnapshot(observer: Any): ListenerRegistration
-}
-
-@JsModule("firebase/firestore")
-actual open external class SetOptions {
-    companion object {
-        var merge: Boolean
-    }
-}
-
 actual fun mergeSetOptions(): SetOptions {
     TODO("Not implemented")
 }
@@ -149,24 +104,6 @@ actual val DocumentReference.id: String
 
 actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
     TODO("not implemented")
-}
-
-@JsModule("firebase/firestore")
-actual open external class WriteBatch {
-    fun commit(): Promise<Unit>
-    fun delete(documentReference: DocumentReference): WriteBatch
-    fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): WriteBatch
-    fun update(documentReference: DocumentReference, data: Any): WriteBatch
-    fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): WriteBatch
-}
-
-@JsModule("firebase/firestore")
-actual open external class Transaction {
-    fun get(documentRefence: DocumentReference): Promise<DocumentSnapshot>
-    fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): Transaction
-    fun update(documentReference: DocumentReference, data: Any): Transaction
-    fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): Transaction
-    fun delete(documentReference: DocumentReference): Transaction
 }
 
 actual val FirebaseFirestoreException.code: FirestoreExceptionCode
@@ -225,13 +162,13 @@ actual fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings {
 actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) {
 }
 
-actual fun FirebaseFirestore.collection(collectionPath: String) = firebase.firestore().collection(collectionPath) as CollectionReference
+actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath) as CollectionReference
 
-actual fun FirebaseFirestore.document(documentPath: String) = firebase.firestore().doc(documentPath) as DocumentReference
+actual fun FirebaseFirestore.document(documentPath: String) = doc(documentPath) as DocumentReference
 
-actual fun FirebaseFirestore.batch() = firebase.firestore().batch() as WriteBatch
+actual fun FirebaseFirestore.batch() = batch() as WriteBatch
 
-actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore().setLoggingEnabled(loggingEnabled)
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "debug" else "silent")
 
 actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data).let { this }
 

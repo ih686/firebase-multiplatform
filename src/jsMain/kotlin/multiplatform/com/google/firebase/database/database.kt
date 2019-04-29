@@ -1,64 +1,31 @@
 package multiplatform.com.google.firebase.database
 
 import kotlinx.coroutines.await
-import kotlin.js.Promise
 import kotlin.reflect.KClass
+import multiplatform.com.google.firebase.firebase
 
-@JsModule("firebase")
-external val firebase: dynamic
+actual fun getFirebaseDatabase() = firebase.database()
 
-@JsModule("firebase")
-external val database: dynamic
+actual typealias FirebaseDatabase = firebase.database.Database
 
-@JsModule("firebase/database")
-external fun enableLogging(logger: Boolean?, persistent: Boolean? = definedExternally)
+actual typealias DatabaseReference = firebase.database.Reference
 
-actual fun getFirebaseDatabase() = firebase.database() as FirebaseDatabase
+actual typealias DataSnapshot = firebase.database.DataSnapshot
 
-@JsModule("firebase/database")
-open external class Database {
-    fun ref(path: String?): DatabaseReference
-}
-
-actual typealias FirebaseDatabase = Database
-
-@JsModule("firebase/database")
-open external class Reference {
-    fun remove(): Promise<Unit>
-    fun onDisconnect(): OnDisconnect
-    fun set(value: Any? = definedExternally): Promise<Unit>
-    fun on(eventType: String?, callback: (data: DataSnapshot) -> Unit, cancelCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot) -> Unit
-    fun off(eventType: String?, callback: (data: DataSnapshot) -> Unit, context: Any? = definedExternally)
-}
-
-
-actual typealias DatabaseReference = Reference
+actual typealias OnDisconnect = firebase.database.OnDisconnect
 
 actual interface ValueEventListener {
     actual fun onDataChange(data: DataSnapshot)
     actual fun onCancelled(error: DatabaseError)
 }
 
-@JsModule("firebase/database")
-actual external class DataSnapshot {
-    fun `val`(): Any
-}
-
-
 actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>) = `val`() as T?
 
 actual class DatabaseError(internal val error: Throwable)
 
-@JsModule("firebase/database")
-actual open external class OnDisconnect {
-    fun remove(): Promise<Unit>
-    fun cancel(): Promise<Unit>
-    fun set(value: Any?): Promise<Unit>
-}
-
 
 actual val TIMESTAMP: Map<String, String>
-    get() = firebase.database.ServerValue.TIMESTAMP as Map<String, String>
+    get() = firebase.database.ServerValue.TIMESTAMP
 
 actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = set(value).await()
 
@@ -79,7 +46,7 @@ actual fun FirebaseDatabase.getReference(path: String) = ref(path)
 actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
 }
 
-actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) = enableLogging(logLevel != LoggerLevel.NONE)
+actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) = firebase.database.enableLogging(logLevel != LoggerLevel.NONE)
 
 actual fun DatabaseReference.push() = firebase.database().ref().push() as DatabaseReference
 
