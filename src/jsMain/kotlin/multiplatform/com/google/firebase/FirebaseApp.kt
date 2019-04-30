@@ -22,7 +22,7 @@ fun FirebaseError.toFirebaseException() = FirebaseException(this)
 
 actual open class FirebaseException(error: FirebaseError) : Exception(error)
 
-actual fun getFirebaseApps(context: Any) = firebase.apps
+actual fun getFirebaseApps(context: Any) = firebase.apps.toList()
 
 actual open class FirebaseNetworkException(error: FirebaseError) : FirebaseException(error)
 actual open class FirebaseTooManyRequestsException(error: FirebaseError) : FirebaseException(error)

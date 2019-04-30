@@ -7,7 +7,7 @@ import kotlin.js.Promise
 external object firebase {
 
     open class App
-    val apps : List<App>
+    val apps : Array<App>
     fun initializeApp(options: Any, name: String? = definedExternally) : App
 
     open class FirebaseError : Throwable {
