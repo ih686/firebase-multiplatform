@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 group = "io.multiplatform"
 version = "17.1.0-rev2"
 
@@ -108,6 +110,11 @@ tasks {
     val publishToNpm by registering(Exec::class) {
         dependsOn(copyPackageJson, copyJS)
         workingDir("$buildDir/node_module")
-        commandLine("npm",  "publish", "--registry http://localhost:4873")
+        if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine("cmd", "/c", "npm unpublish --force --registry http://localhost:4873 firebase-multiplatform & npm publish --registry http://localhost:4873")
+        } else {
+            commandLine("npm", "unpublish", "--force", "--registry http://localhost:4873", "firebase-multiplatform")
+            commandLine("npm", "publish", "--registry http://localhost:4873")
+        }
     }
 }
