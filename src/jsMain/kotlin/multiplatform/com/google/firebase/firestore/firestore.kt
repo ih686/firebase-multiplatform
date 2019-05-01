@@ -7,6 +7,8 @@ import multiplatform.com.google.firebase.FirebaseError
 import multiplatform.com.google.firebase.FirebaseException
 import kotlin.reflect.KClass
 import multiplatform.com.google.firebase.firebase
+import kotlin.js.Json
+import kotlin.js.json
 
 
 actual fun getFirebaseFirestore() = firebase.firestore()
@@ -24,35 +26,36 @@ actual typealias FieldPath = firebase.firestore.FieldPath
 
 
 actual data class FirebaseFirestoreSettings internal constructor(
-    val cacheSizeBytes: Number = 40,
-    val host: String = "",
-    val ssl: Boolean = false,
-    var timestampInSnapshots: Boolean = true,
+    val cacheSizeBytes: Number? = undefined,
+    val host: String? = undefined,
+    val ssl: Boolean? = undefined,
+    var timestampInSnapshots: Boolean? = undefined,
     var enablePersistence: Boolean = false
 )
 
-actual class FirebaseFirestoreSettingsBuilder actual constructor() {
-    internal var settings = FirebaseFirestoreSettings()
-
-    actual constructor(settings: FirebaseFirestoreSettings) : this() {
-        this.settings = settings
-    }
-
-    fun init() { build() }
+actual class FirebaseFirestoreSettingsBuilder actual constructor(internal var settings: FirebaseFirestoreSettings) {
+    actual constructor() : this(FirebaseFirestoreSettings())
 }
 
 actual fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean) = settings.copy( enablePersistence = enabled ).let { settings = it }.let{ this }
 
 actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean) = settings.copy( timestampInSnapshots = enabled ).let { settings = it }.let { this }
 
-actual fun FirebaseFirestoreSettingsBuilder.build() = settings.also { FirebaseFirestore._settings_ = settings }
+actual fun FirebaseFirestoreSettingsBuilder.build() = settings
 
 
-actual fun FirebaseFirestore.getFirestoreSettings() = FirebaseFirestore._settings_ as FirebaseFirestoreSettings
+actual fun FirebaseFirestore.getFirestoreSettings() = _th_settings ?: FirebaseFirestoreSettings()
 
-actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) = settings(settings)
-        .also { FirebaseFirestore._settings_ = settings }
-        .also{ if(settings.enablePersistence) enablePersistence() }
+actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) {
+    _th_settings = settings
+    settings(json(
+            "cacheSizeBytes" to settings.cacheSizeBytes,
+            "host" to settings.host,
+            "ssl" to settings.ssl,
+            "timestampInSnapshots" to settings.timestampInSnapshots
+    ))
+    if(settings.enablePersistence) enablePersistence()
+}
 
 actual class FirebaseFirestoreException
     actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError()

@@ -2,6 +2,7 @@
 package multiplatform.com.google.firebase
 
 import multiplatform.com.google.firebase.firestore.FirebaseFirestoreSettings
+import kotlin.js.Json
 import kotlin.js.Promise
 
 @JsModule("firebase")
@@ -102,14 +103,12 @@ external object firebase {
         }
 
         open class Firestore {
-            companion object {
-                var _settings_: Any?
-            }
+            var _th_settings: dynamic
             fun <T> runTransaction(func: (transaction: Transaction) -> Promise<T>): Promise<T>
             fun batch(): WriteBatch
             fun collection(collectionPath: String): CollectionReference
             fun doc(documentPath: String): DocumentReference
-            fun settings(settings: Any)
+            fun settings(settings: Json)
             fun enablePersistence(): Promise<Unit>
         }
 

@@ -1,12 +1,9 @@
 package multiplatform.com.google.firebase
 
-import multiplatform.com.google.firebase.firestore.FirebaseFirestoreSettingsBuilder
-
 actual typealias FirebaseApp = firebase.App
 typealias FirebaseError = firebase.FirebaseError
 
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(options)
-        .also { FirebaseFirestoreSettingsBuilder().init() }
 
 actual data class FirebaseOptions internal constructor(
          val apiKey: String = "",
