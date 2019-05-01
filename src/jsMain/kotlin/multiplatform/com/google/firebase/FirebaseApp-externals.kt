@@ -1,6 +1,7 @@
 
 package multiplatform.com.google.firebase
 
+import multiplatform.com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlin.js.Promise
 
 @JsModule("firebase")
@@ -95,11 +96,21 @@ external object firebase {
     fun firestore(): firestore.Firestore
     object firestore {
         fun setLogLevel(level: String)
+
+        open class PersistenceSettings {
+            var experimentalTabSynchronization: Boolean
+        }
+
         open class Firestore {
+            companion object {
+                var _settings_: Any?
+            }
             fun <T> runTransaction(func: (transaction: Transaction) -> Promise<T>): Promise<T>
             fun batch(): WriteBatch
             fun collection(collectionPath: String): CollectionReference
             fun doc(documentPath: String): DocumentReference
+            fun settings(settings: Any)
+            fun enablePersistence(): Promise<Unit>
         }
 
         open class FieldPath internal constructor(fieldNames: Array<out String>)

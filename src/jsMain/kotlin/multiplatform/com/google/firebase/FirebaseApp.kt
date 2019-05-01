@@ -1,17 +1,20 @@
 package multiplatform.com.google.firebase
 
+import multiplatform.com.google.firebase.firestore.FirebaseFirestoreSettingsBuilder
+
 actual typealias FirebaseApp = firebase.App
 typealias FirebaseError = firebase.FirebaseError
 
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(options)
+        .also { FirebaseFirestoreSettingsBuilder().init() }
 
 actual data class FirebaseOptions internal constructor(
-        private val apiKey: String = "",
-        private val applicationId: String = "",
-        private val databaseUrl: String? = "",
-        private val storageBucket: String? = "",
-        private val projectId: String? = "",
-        private val googleAppId: String = ""
+         val apiKey: String = "",
+         val applicationId: String = "",
+         val databaseUrl: String? = "",
+         val storageBucket: String? = "",
+         val projectId: String? = "",
+         val googleAppId: String = ""
 )
 
 actual class FirebaseOptionsBuilder actual constructor() {
@@ -29,16 +32,16 @@ actual open class FirebaseTooManyRequestsException(error: FirebaseError) : Fireb
 
 actual open class FirebaseApiNotAvailableException(error: FirebaseError) : FirebaseException(error)
 
-actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String) = options.copy(googleAppId = googleAppId).let { this }
+actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String) = options.copy(googleAppId = googleAppId).let { options = it }.let { this }
 
-actual fun FirebaseOptionsBuilder.setApiKey(apiKey: String) = options.copy(apiKey = apiKey).let { this }
+actual fun FirebaseOptionsBuilder.setApiKey(apiKey: String) = options.copy(apiKey = apiKey).let { options = it }.let { this }
 
-actual fun FirebaseOptionsBuilder.setApplicationId(applicationId: String) = options.copy(applicationId = applicationId).let { this }
+actual fun FirebaseOptionsBuilder.setApplicationId(applicationId: String) = options.copy(applicationId = applicationId).let { options = it }.let { this }
 
-actual fun FirebaseOptionsBuilder.setDatabaseUrl(databaseUrl: String?) = options.copy(databaseUrl = databaseUrl).let { this }
+actual fun FirebaseOptionsBuilder.setDatabaseUrl(databaseUrl: String?) = options.copy(databaseUrl = databaseUrl).let { options = it }.let { this }
 
-actual fun FirebaseOptionsBuilder.setStorageBucket(storageBucket: String?) = options.copy(storageBucket = storageBucket).let { this }
+actual fun FirebaseOptionsBuilder.setStorageBucket(storageBucket: String?) = options.copy(storageBucket = storageBucket).let { options = it }.let { this }
 
-actual fun FirebaseOptionsBuilder.setProjectId(projectId: String?) = options.copy(projectId = projectId).let { this }
+actual fun FirebaseOptionsBuilder.setProjectId(projectId: String?) = options.copy(projectId = projectId).let { options = it }.let { this }
 
 actual fun FirebaseOptionsBuilder.build() = options

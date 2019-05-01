@@ -22,11 +22,13 @@ actual typealias SetOptions = firebase.firestore.SetOptions
 actual typealias CollectionReference = firebase.firestore.CollectionReference
 actual typealias FieldPath = firebase.firestore.FieldPath
 
+
 actual data class FirebaseFirestoreSettings internal constructor(
-        private val cacheSizeBytes: Number = 40,
-        private val host: String = "",
-        private val ssl: Boolean = false,
-        private val timestampInSnapshots: Boolean = true
+    val cacheSizeBytes: Number = 40,
+    val host: String = "",
+    val ssl: Boolean = false,
+    var timestampInSnapshots: Boolean = true,
+    var enablePersistence: Boolean = false
 )
 
 actual class FirebaseFirestoreSettingsBuilder actual constructor() {
@@ -35,23 +37,29 @@ actual class FirebaseFirestoreSettingsBuilder actual constructor() {
     actual constructor(settings: FirebaseFirestoreSettings) : this() {
         this.settings = settings
     }
+
+    fun init() { build() }
 }
 
-// TODO: see TODO above ...
-actual fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean): FirebaseFirestoreSettingsBuilder {
-    TODO("not implemented")
-}
+actual fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean) = settings.copy( enablePersistence = enabled ).let { settings = it }.let{ this }
 
-actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean) = settings.copy(timestampInSnapshots = enabled).let { this }
+actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean) = settings.copy( timestampInSnapshots = enabled ).let { settings = it }.let { this }
 
-actual fun FirebaseFirestoreSettingsBuilder.build() = settings
+actual fun FirebaseFirestoreSettingsBuilder.build() = settings.also { FirebaseFirestore._settings_ = settings }
+
+
+actual fun FirebaseFirestore.getFirestoreSettings() = FirebaseFirestore._settings_ as FirebaseFirestoreSettings
+
+actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) = settings(settings)
+        .also { FirebaseFirestore._settings_ = settings }
+        .also{ if(settings.enablePersistence) enablePersistence() }
 
 actual class FirebaseFirestoreException
-    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError().apply{
-    message = detailMessage
-    this.code = code.name
-})
-
+    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError()
+        .apply{
+            message = detailMessage
+            this.code = code.name
+        })
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = docs
@@ -154,13 +162,6 @@ actual suspend fun DocumentReference.awaitDelete() = delete().await()
 actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) = add(data).await()
 
 actual suspend fun CollectionReference.awaitAdd(pojo: Any) = add(pojo).await()
-
-actual fun FirebaseFirestore.getFirestoreSettings(): FirebaseFirestoreSettings {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSettings) {
-}
 
 actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath) as CollectionReference
 
