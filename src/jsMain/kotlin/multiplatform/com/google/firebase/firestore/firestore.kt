@@ -29,7 +29,7 @@ actual data class FirebaseFirestoreSettings internal constructor(
     val cacheSizeBytes: Number? = undefined,
     val host: String? = undefined,
     val ssl: Boolean? = undefined,
-    var timestampInSnapshots: Boolean? = undefined,
+    var timestampsInSnapshots: Boolean? = undefined,
     var enablePersistence: Boolean = false
 )
 
@@ -39,7 +39,7 @@ actual class FirebaseFirestoreSettingsBuilder actual constructor(internal var se
 
 actual fun FirebaseFirestoreSettingsBuilder.setPersistenceEnabled(enabled: Boolean) = settings.copy( enablePersistence = enabled ).let { settings = it }.let{ this }
 
-actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean) = settings.copy( timestampInSnapshots = enabled ).let { settings = it }.let { this }
+actual fun FirebaseFirestoreSettingsBuilder.setTimestampsInSnapshotsEnabled(enabled: Boolean) = settings.copy( timestampsInSnapshots = enabled ).let { settings = it }.let { this }
 
 actual fun FirebaseFirestoreSettingsBuilder.build() = settings
 
@@ -52,7 +52,7 @@ actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSet
             "cacheSizeBytes" to settings.cacheSizeBytes,
             "host" to settings.host,
             "ssl" to settings.ssl,
-            "timestampInSnapshots" to settings.timestampInSnapshots
+            "timestampsInSnapshots" to settings.timestampsInSnapshots
     ))
     if(settings.enablePersistence) enablePersistence()
 }
