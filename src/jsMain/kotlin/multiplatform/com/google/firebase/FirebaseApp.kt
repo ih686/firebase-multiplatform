@@ -1,9 +1,17 @@
 package multiplatform.com.google.firebase
 
+import kotlin.js.json
+
 actual typealias FirebaseApp = firebase.App
 typealias FirebaseError = firebase.FirebaseError
 
-actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(options)
+actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(json(
+        "apiKey" to options.apiKey,
+        "applicationId" to options.applicationId,
+        "databaseURL" to options.databaseUrl,
+        "storageBucket" to options.storageBucket,
+        "projectId" to options.projectId,
+        "googleAppId" to options.googleAppId))
 
 actual data class FirebaseOptions internal constructor(
          val apiKey: String = "",
