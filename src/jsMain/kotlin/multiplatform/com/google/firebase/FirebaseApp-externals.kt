@@ -1,7 +1,6 @@
 
 package multiplatform.com.google.firebase
 
-import multiplatform.com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlin.js.Json
 import kotlin.js.Promise
 

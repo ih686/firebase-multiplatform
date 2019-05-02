@@ -2,6 +2,7 @@ package multiplatform.com.google.firebase.auth
 
 import kotlinx.coroutines.await
 import multiplatform.com.google.firebase.firebase
+import kotlin.js.Promise
 
 actual fun getFirebaseAuth() = firebase.auth()
 
@@ -28,7 +29,7 @@ actual val FirebaseUser.uid: String
 
 actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = signInWithCustomToken(token).await()
 
-actual suspend fun FirebaseAuth.awaitSignInAnonymously() = signInAnonymously().await()
+actual suspend fun FirebaseAuth.awaitSignInAnonymously() = Promise.resolve(signInAnonymously()).await()
 
 actual suspend fun FirebaseAuth.signOut() = signOut().await()
 
