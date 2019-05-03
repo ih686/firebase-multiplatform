@@ -5,21 +5,24 @@ import kotlin.js.json
 actual typealias FirebaseApp = firebase.App
 typealias FirebaseError = firebase.FirebaseError
 
-actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(json(
-        "apiKey" to options.apiKey,
-        "applicationId" to options.applicationId,
-        "databaseURL" to options.databaseUrl,
-        "storageBucket" to options.storageBucket,
-        "projectId" to options.projectId,
-        "googleAppId" to options.googleAppId))
+actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(
+        json(
+            "apiKey" to options.apiKey,
+            "applicationId" to options.applicationId,
+            "databaseURL" to options.databaseUrl,
+            "storageBucket" to options.storageBucket,
+            "projectId" to options.projectId,
+            "googleAppId" to options.googleAppId
+        )
+)
 
 actual data class FirebaseOptions internal constructor(
-         val apiKey: String = "",
-         val applicationId: String = "",
-         val databaseUrl: String? = "",
-         val storageBucket: String? = "",
-         val projectId: String? = "",
-         val googleAppId: String = ""
+         val apiKey: String? = undefined,
+         val applicationId: String? = undefined,
+         val databaseUrl: String? = undefined,
+         val storageBucket: String? = undefined,
+         val projectId: String? = undefined,
+         val googleAppId: String? = undefined
 )
 
 actual class FirebaseOptionsBuilder actual constructor() {
