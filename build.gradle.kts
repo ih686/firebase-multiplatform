@@ -5,8 +5,8 @@ version = "17.1.0-rev2"
 
 plugins {
     `maven-publish`
-    id("com.android.library") version "3.4.0"
-    kotlin("multiplatform") version "1.3.30"
+    id("com.android.library") version "3.3.2"
+    kotlin("multiplatform") version "1.3.21"
 }
 
 repositories {
@@ -41,32 +41,32 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.1")
             }
         }
         js().compilations["main"].defaultSourceSet {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.0.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.2.1")
             }
         }
         val androidMain by getting {
             dependencies {
                 api("com.google.firebase:firebase-firestore:18.2.0")
-                api("com.google.firebase:firebase-auth:16.2.0")
+                api("com.google.firebase:firebase-auth:16.2.1")
                 api("com.google.firebase:firebase-functions:16.3.0")
                 api("com.google.firebase:firebase-database:16.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
             }
         }
         jvm().compilations["main"].defaultSourceSet {
             kotlin.srcDir("src/androidMain/kotlin")
             dependencies {
                 api("app.teamhub:firebase-java:0.1.0")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
                 implementation(kotlin("stdlib-jdk8"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
             }
         }
     }
