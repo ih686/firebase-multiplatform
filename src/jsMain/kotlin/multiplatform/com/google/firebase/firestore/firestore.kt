@@ -234,3 +234,17 @@ actual abstract class FieldValue
 
 actual fun DocumentSnapshot.exists() = exists
 
+actual fun arrayUnionFieldValue(vararg elements: Any): FieldValue {
+    TODO("not implemented")
+}
+
+actual fun arrayRemoveFieldValue(vararg elements: Any): FieldValue {
+    TODO("not implemented")
+}
+
+
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) {
+}
+
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) {
+}

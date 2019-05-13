@@ -248,6 +248,15 @@ actual typealias Exclude = Exclude
 actual typealias FieldValue = com.google.firebase.firestore.FieldValue
 
 actual fun deleteFieldValue() = FieldValue.delete()
+
+actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(*elements)
+
+actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(*elements)
+
 actual fun DocumentSnapshot.exists(): Boolean {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(field, value, *moreFieldsAndValues).await().run { Unit }
+
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(fieldPath, value, *moreFieldsAndValues).await().run { Unit }

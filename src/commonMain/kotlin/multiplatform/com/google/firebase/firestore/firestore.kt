@@ -90,6 +90,10 @@ expect suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions)
 
 expect suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>)
 
+expect suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any)
+
+expect suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any)
+
 expect suspend fun DocumentReference.awaitDelete()
 
 expect class CollectionReference : Query
@@ -156,3 +160,8 @@ expect class FieldPath
 expect abstract class FieldValue
 
 expect fun deleteFieldValue(): FieldValue
+
+expect fun arrayUnionFieldValue(vararg elements: Any): FieldValue
+
+expect fun arrayRemoveFieldValue(vararg elements: Any): FieldValue
+
