@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.OnDisconnect
 import com.google.firebase.database.ValueEventListener
@@ -72,3 +73,5 @@ actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEvent
 actual fun DataSnapshot.child(path: String): DataSnapshot {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual typealias Exclude = Exclude

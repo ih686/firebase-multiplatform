@@ -2,6 +2,8 @@ package multiplatform.com.google.firebase.database
 
 import kotlin.reflect.KClass
 
+expect annotation class Exclude()
+
 expect fun getFirebaseDatabase(): FirebaseDatabase
 
 expect enum class LoggerLevel {

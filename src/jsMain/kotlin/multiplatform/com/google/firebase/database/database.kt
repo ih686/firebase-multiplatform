@@ -71,3 +71,5 @@ actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEvent
 actual fun DataSnapshot.child(path: String): DataSnapshot {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual annotation class Exclude actual constructor()
