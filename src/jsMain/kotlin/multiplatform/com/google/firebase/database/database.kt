@@ -67,3 +67,7 @@ actual val DataSnapshot.children: Iterable<DataSnapshot>
 actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
+
+actual fun DataSnapshot.child(path: String): DataSnapshot {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}

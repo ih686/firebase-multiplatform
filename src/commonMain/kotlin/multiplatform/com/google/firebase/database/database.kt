@@ -37,6 +37,7 @@ expect interface ValueEventListener {
 expect class DataSnapshot
 
 expect fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>): T?
+expect fun DataSnapshot.child(path: String): DataSnapshot
 expect val DataSnapshot.children: Iterable<DataSnapshot>
 
 expect val TIMESTAMP: Map<String, String>
