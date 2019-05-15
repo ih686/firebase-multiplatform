@@ -73,7 +73,8 @@ actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = valueType
 actual val DocumentSnapshot.id: String
     get() = id
 
-actual typealias ListenerRegistration = firebase.firestore.ListenerRegistration
+actual interface ListenerRegistration
+
 
 actual interface EventListener<T> {
     actual fun onEvent(snapshot: T?, exception: FirebaseFirestoreException?)
@@ -81,9 +82,10 @@ actual interface EventListener<T> {
 
 actual fun fieldPathOf(vararg fieldNames: String) = FieldPath(fieldNames)
 
-actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
-    TODO("not implemented")
-}
+actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit) = onSnapshot({ listener(it, undefined) }, { listener(undefined, FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN)) })
+        .also { it.asDynamic().remove = { it() } }
+        .asDynamic()
+
 
 actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "=", value).let { this }
 
@@ -101,10 +103,11 @@ actual fun Query.whereArrayContains(field: String, value: Any) = where(field, "a
 
 actual fun Query.whereArrayContains(path: FieldPath, value: Any) = where(path, "array-contains", value).let { this }
 
-actual fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>): ListenerRegistration {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
+actual fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>) = onSnapshot(
+        { listener.onEvent(snapshot = it, exception = undefined)},
+        { listener.onEvent(snapshot = undefined, exception = FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN))})
+        .also { it.asDynamic().remove = { it() } }
+        .asDynamic()
 
 actual fun mergeSetOptions(): SetOptions {
     TODO("Not implemented")
@@ -113,9 +116,9 @@ actual fun mergeSetOptions(): SetOptions {
 actual val DocumentReference.id: String
     get() = id
 
-actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit): ListenerRegistration {
-    TODO("not implemented")
-}
+actual fun DocumentReference.addSnapshotListener(listener: (snapshot: DocumentSnapshot?, exception: FirebaseFirestoreException?) -> Unit)  = onSnapshot({ listener(it, undefined) }, { listener(undefined, FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN)) })
+        .also { it.asDynamic().remove = { it() } }
+        .asDynamic()
 
 actual val FirebaseFirestoreException.code: FirestoreExceptionCode
     get() = TODO("not implemented")
@@ -209,7 +212,11 @@ actual fun WriteBatch.update(documentRef: DocumentReference, fieldPath: FieldPat
 
 actual fun WriteBatch.delete(documentRef: DocumentReference) = delete(documentRef)
 
-actual fun DocumentReference.addSnapshotListener(listener: EventListener<DocumentSnapshot>) = onSnapshot(listener)
+actual fun DocumentReference.addSnapshotListener(listener: EventListener<DocumentSnapshot>) = onSnapshot(
+        { listener.onEvent(snapshot = it, exception = undefined)},
+        { listener.onEvent(snapshot = undefined, exception = FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN))})
+        .also { it.asDynamic().remove = { it() } }
+        .asDynamic()
 
 actual fun DocumentSnapshot.get(field: String) = get(field)
 
@@ -244,7 +251,9 @@ actual fun arrayRemoveFieldValue(vararg elements: Any): FieldValue {
 
 
 actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) {
+    TODO("not implemented")
 }
 
 actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) {
+    TODO("not implemented")
 }

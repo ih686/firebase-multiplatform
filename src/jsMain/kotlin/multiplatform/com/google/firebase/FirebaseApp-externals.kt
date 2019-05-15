@@ -1,6 +1,7 @@
 
 package multiplatform.com.google.firebase
 
+import multiplatform.com.google.firebase.firestore.FirebaseFirestoreException
 import kotlin.js.Json
 import kotlin.js.Promise
 
@@ -116,6 +117,7 @@ external object firebase {
         open class Query {
             fun get(options: Any? = definedExternally): Promise<QuerySnapshot>
             fun where(fieldPath: Any, opStr: String, value: Any?): Query
+            fun onSnapshot(next: (snapshot: QuerySnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class CollectionReference : Query {
@@ -132,8 +134,6 @@ external object firebase {
             fun get(fieldPath: Any, options: Any? = definedExternally): Any?
         }
 
-        interface ListenerRegistration
-
         open class DocumentReference {
             val id: String
 
@@ -141,7 +141,7 @@ external object firebase {
             fun set(data: Any, options: Any? = definedExternally): Promise<Unit>
             fun update(data: Any): Promise<Unit>
             fun delete(): Promise<Unit>
-            fun onSnapshot(observer: Any): ListenerRegistration
+            fun onSnapshot(next: (snapshot: DocumentSnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class WriteBatch {
