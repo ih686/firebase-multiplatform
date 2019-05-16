@@ -87,21 +87,21 @@ actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, except
         .asDynamic()
 
 
-actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "=", value).let { this }
+actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "=", value)
 
-actual fun Query.whereEqualTo(path: FieldPath, value: Any?) = where(path, "=", value).let { this }
+actual fun Query.whereEqualTo(path: FieldPath, value: Any?) = where(path, "=", value)
 
-actual fun Query.whereLessThan(field: String, value: Any) = where(field, "<", value).let { this }
+actual fun Query.whereLessThan(field: String, value: Any) = where(field, "<", value)
 
-actual fun Query.whereLessThan(path: FieldPath, value: Any) = where(path, "<", value).let { this }
+actual fun Query.whereLessThan(path: FieldPath, value: Any) = where(path, "<", value)
 
-actual fun Query.whereGreaterThan(field: String, value: Any) = where(field, ">", value).let { this }
+actual fun Query.whereGreaterThan(field: String, value: Any) = where(field, ">", value)
 
-actual fun Query.whereGreaterThan(path: FieldPath, value: Any) = where(path, ">", value).let { this }
+actual fun Query.whereGreaterThan(path: FieldPath, value: Any) = where(path, ">", value)
 
-actual fun Query.whereArrayContains(field: String, value: Any) = where(field, "array-contains", value).let { this }
+actual fun Query.whereArrayContains(field: String, value: Any) = where(field, "array-contains", value)
 
-actual fun Query.whereArrayContains(path: FieldPath, value: Any) = where(path, "array-contains", value).let { this }
+actual fun Query.whereArrayContains(path: FieldPath, value: Any) = where(path, "array-contains", value)
 
 actual fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>) = onSnapshot(
         { listener.onEvent(snapshot = it, exception = undefined)},
