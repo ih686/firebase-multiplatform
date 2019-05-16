@@ -124,13 +124,16 @@ external object firebase {
             fun add(data: Any): Promise<DocumentReference>
         }
 
+        open class DocumentData
+
         open class QuerySnapshot {
-            val docs: List<DocumentSnapshot>
+            val docs: Array<DocumentSnapshot>
         }
 
         open class DocumentSnapshot {
             val id: String
             val exists: Boolean
+            fun data(options: Any? = definedExternally): DocumentData
             fun get(fieldPath: Any, options: Any? = definedExternally): Any?
         }
 

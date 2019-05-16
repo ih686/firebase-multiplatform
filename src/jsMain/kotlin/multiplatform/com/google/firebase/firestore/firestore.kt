@@ -65,10 +65,12 @@ actual class FirebaseFirestoreException
         })
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
-    get() = docs
+    get() = docs.toList()
 
 
-actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = valueType as T
+//inline fun <T> emptyArray(): Array<T> = js("[]")
+
+actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = js("Object").assign(js("Reflect").construct(valueType.js, emptyArray<Any>()), data()) as T
 
 actual val DocumentSnapshot.id: String
     get() = id
@@ -169,11 +171,11 @@ actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) = add(da
 
 actual suspend fun CollectionReference.awaitAdd(pojo: Any) = add(pojo).await()
 
-actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath) as CollectionReference
+actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath)
 
-actual fun FirebaseFirestore.document(documentPath: String) = doc(documentPath) as DocumentReference
+actual fun FirebaseFirestore.document(documentPath: String) = doc(documentPath)
 
-actual fun FirebaseFirestore.batch() = batch() as WriteBatch
+actual fun FirebaseFirestore.batch() = batch()
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "debug" else "silent")
 
