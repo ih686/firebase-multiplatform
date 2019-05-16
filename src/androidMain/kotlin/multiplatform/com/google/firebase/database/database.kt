@@ -58,9 +58,13 @@ actual fun DatabaseReference.push() = push()
 
 actual fun DatabaseReference.onDisconnect() = onDisconnect()
 
-actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener) = addValueEventListener(listener)
+actual fun DatabaseReference.addValueEventListener(listener: ValueEventListener): ValueEventListener {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
 
-actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) = removeEventListener(listener)
+actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
 
 actual fun DatabaseError.toException(): DatabaseException {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

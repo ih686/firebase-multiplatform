@@ -67,9 +67,6 @@ actual class FirebaseFirestoreException
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = docs.toList()
 
-
-//inline fun <T> emptyArray(): Array<T> = js("[]")
-
 actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = js("Object").assign(js("Reflect").construct(valueType.js, emptyArray<Any>()), data()) as T
 
 actual val DocumentSnapshot.id: String

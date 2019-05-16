@@ -14,7 +14,7 @@ actual interface AuthStateListener {
 
 
 actual val FirebaseAuth.currentUser: FirebaseUser?
-    get() = currentUser?.let{ it }
+    get() = currentUser
 
 actual typealias AuthResult = firebase.auth.AuthResult
 
