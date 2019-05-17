@@ -103,9 +103,9 @@ actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, except
         .asDynamic()
 
 
-actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "=", value)
+actual fun Query.whereEqualTo(field: String, value: Any?) = where(field, "==", value)
 
-actual fun Query.whereEqualTo(path: FieldPath, value: Any?) = where(path, "=", value)
+actual fun Query.whereEqualTo(path: FieldPath, value: Any?) = where(path, "==", value)
 
 actual fun Query.whereLessThan(field: String, value: Any) = where(field, "<", value)
 
@@ -191,7 +191,7 @@ actual fun FirebaseFirestore.document(documentPath: String) = doc(documentPath)
 
 actual fun FirebaseFirestore.batch() = batch()
 
-actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "debug" else "silent")
+actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "error" else "silent")
 
 actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data).let { this }
 
