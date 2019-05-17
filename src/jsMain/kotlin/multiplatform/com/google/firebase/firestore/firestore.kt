@@ -67,7 +67,24 @@ actual class FirebaseFirestoreException
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = docs.toList()
 
-actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = js("Object").assign(js("Reflect").construct(valueType.js, emptyArray<Any>()), data()) as T
+private fun translate(data: Any?): Any? = when(data) {
+    undefined -> undefined
+    is Boolean -> data
+    is Double -> data
+    is String -> data
+    is Array<*> -> data.map { translate(it) }
+    else -> (js("Object").entries(data) as Array<Array<Any>>)
+            .associate { (key, value) -> key to translate(value) }
+}
+
+
+@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE", "UNCHECKED_CAST")
+actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>): T {
+    val json = js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json
+    (js("Object").entries(data()) as Array<Array<Any>>)
+            .forEach { (key, value) -> json[key as String] = translate(value) }
+    return json as T
+}
 
 actual val DocumentSnapshot.id: String
     get() = id
