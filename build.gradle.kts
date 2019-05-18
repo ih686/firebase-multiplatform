@@ -44,7 +44,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.1")
             }
         }
-        js().compilations["main"].defaultSourceSet {
+        val jsMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.2.1")
@@ -60,7 +60,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
             }
         }
-        jvm().compilations["main"].defaultSourceSet {
+        val jvmMain by getting {
             kotlin.srcDir("src/androidMain/kotlin")
             dependencies {
                 api("app.teamhub:firebase-java:0.1.0")
