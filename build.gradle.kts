@@ -106,9 +106,15 @@ tasks {
         into(file("$buildDir/node_module"))
         rename("${project.name}\\.js", "index.js")
     }
-
+    
+    val copySourceMap by registering(Copy::class) {
+        from(file("$buildDir/classes/kotlin/js/main/${project.name}.js.map"))
+        into(file("$buildDir/node_module"))
+        rename("${project.name}\\.js.map", "index.js.map")
+    }
+    
     val publishToNpm by registering(Exec::class) {
-        dependsOn(copyPackageJson, copyJS)
+        dependsOn(copyPackageJson, copyJS, copySourceMap)
         workingDir("$buildDir/node_module")
         if(Os.isFamily(Os.FAMILY_WINDOWS)) {
             commandLine("cmd", "/c", "npm unpublish --force --registry http://localhost:4873 firebase-multiplatform & npm publish --registry http://localhost:4873")
