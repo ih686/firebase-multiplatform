@@ -80,9 +80,11 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .associate { (key, value) -> key to fromJson(value) }
                 .let { return@fromJson it }
 
-        val json = js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json
-        (js("Object").entries(data) as Array<Array<Any>>)
-                .forEach { (key, value) -> json[key as String] = fromJson(value) }
+        (js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json)
+                .also {
+                    (js("Object").entries(data) as Array<Array<Any>>)
+                        .forEach { (key, value) -> it[key as String] = fromJson(value) }
+                }
    }
 }
 
