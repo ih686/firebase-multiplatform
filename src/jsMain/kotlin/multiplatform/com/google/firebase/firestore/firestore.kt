@@ -20,7 +20,7 @@ actual typealias Query = firebase.firestore.Query
 actual typealias DocumentReference = firebase.firestore.DocumentReference
 actual typealias WriteBatch = firebase.firestore.WriteBatch
 actual typealias Transaction = firebase.firestore.Transaction
-actual typealias SetOptions = firebase.firestore.SetOptions
+actual typealias SetOptions = NewOptions
 actual typealias CollectionReference = firebase.firestore.CollectionReference
 actual typealias FieldPath = firebase.firestore.FieldPath
 
@@ -65,7 +65,7 @@ actual class FirebaseFirestoreException
         })
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
-    get() = docs.toList()
+    get() = docs?.toList()
 
 private fun translate(data: Any?): Any? = when(data) {
     undefined -> undefined
@@ -125,9 +125,12 @@ actual fun Query.addSnapshotListener(listener: EventListener<QuerySnapshot>) = o
         .also { it.asDynamic().remove = { it() } }
         .asDynamic()
 
-actual fun mergeSetOptions(): SetOptions {
-    TODO("Not implemented")
+
+class NewOptions {
+    val merge: Boolean = true
 }
+
+actual fun mergeSetOptions() = NewOptions()
 
 actual val DocumentReference.id: String
     get() = id

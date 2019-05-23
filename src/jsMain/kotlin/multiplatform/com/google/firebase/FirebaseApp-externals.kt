@@ -126,6 +126,7 @@ external object firebase {
 
         open class QuerySnapshot {
             val docs: Array<DocumentSnapshot>
+            val empty: Boolean
         }
 
         open class DocumentSnapshot {
@@ -161,10 +162,5 @@ external object firebase {
             fun delete(documentReference: DocumentReference): Transaction
         }
 
-        open class SetOptions {
-            companion object {
-                var merge: Boolean
-            }
-        }
     }
 }
