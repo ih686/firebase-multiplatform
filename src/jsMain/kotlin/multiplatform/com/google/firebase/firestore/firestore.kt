@@ -3,10 +3,10 @@ package multiplatform.com.google.firebase.firestore
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.await
 import kotlinx.coroutines.promise
-import multiplatform.com.google.firebase.FirebaseError
-import multiplatform.com.google.firebase.FirebaseException
+import multiplatform.com.google.firebase.*
+import multiplatform.com.google.firebase.fromJson
+import multiplatform.com.google.firebase.toJson
 import kotlin.reflect.KClass
-import multiplatform.com.google.firebase.firebase
 import kotlin.js.Json
 import kotlin.js.json
 
@@ -65,26 +65,10 @@ actual class FirebaseFirestoreException
         })
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
-    get() = docs?.toList()
+    get() = docs.toList()
 
-private fun translate(data: Any?): Any? = when(data) {
-    undefined -> undefined
-    is Boolean -> data
-    is Double -> data
-    is String -> data
-    is Array<*> -> data.map { translate(it) }
-    else -> (js("Object").entries(data) as Array<Array<Any>>)
-            .associate { (key, value) -> key to translate(value) }
-}
-
-
-@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE", "UNCHECKED_CAST")
-actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>): T {
-    val json = js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json
-    (js("Object").entries(data()) as Array<Array<Any>>)
-            .forEach { (key, value) -> json[key as String] = translate(value) }
-    return json as T
-}
+@Suppress("UNCHECKED_CAST")
+actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>): T = fromJson(data(), valueType)  as T
 
 actual val DocumentSnapshot.id: String
     get() = id
@@ -172,21 +156,21 @@ actual suspend fun Query.awaitGet() = get().await()
 
 actual suspend fun DocumentReference.awaitGet() = get().await()
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) = set(data).await()
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) = set(toJson(data)!!).await()
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any) = set(pojo).await()
+actual suspend fun DocumentReference.awaitSet(pojo: Any) = set(toJson(pojo)!!).await()
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) = set(data, options).await()
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) = set(toJson(data)!!, options).await()
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) = set(pojo, options).await()
+actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) = set(toJson(pojo)!!, options).await()
 
-actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) = update(data).await()
+actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) = update(toJson(data)!!).await()
 
 actual suspend fun DocumentReference.awaitDelete() = delete().await()
 
-actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) = add(data).await()
+actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) = add(toJson(data)!!).await()
 
-actual suspend fun CollectionReference.awaitAdd(pojo: Any) = add(pojo).await()
+actual suspend fun CollectionReference.awaitAdd(pojo: Any) = add(toJson(pojo)!!).await()
 
 actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath)
 
@@ -196,15 +180,15 @@ actual fun FirebaseFirestore.batch() = batch()
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "error" else "silent")
 
-actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, toJson(data)!!).let { this }
 
-actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, data, options).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, toJson(data)!!, options).let { this }
 
-actual fun Transaction.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, pojo).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, toJson(pojo)!!).let { this }
 
-actual fun Transaction.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, pojo, options).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, toJson(pojo)!!, options).let { this }
 
-actual fun Transaction.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, data).let { this }
+actual fun Transaction.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, toJson(data)!!).let { this }
 
 actual fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(documentRef, field, value, moreFieldsAndValues)
 
@@ -215,13 +199,13 @@ actual fun Transaction.delete(documentRef: DocumentReference) = delete(documentR
 actual suspend fun Transaction.awaitGet(documentRef: DocumentReference) = get(documentRef).await()
 
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, data)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, toJson(data)!!)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, data, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, toJson(data)!!, options)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, pojo)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, toJson(pojo)!!)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, pojo, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, toJson(pojo)!!, options)
 
 actual fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, data)
 

@@ -3,6 +3,9 @@ package multiplatform.com.google.firebase.database
 import kotlinx.coroutines.await
 import kotlin.reflect.KClass
 import multiplatform.com.google.firebase.firebase
+import multiplatform.com.google.firebase.fromJson
+import multiplatform.com.google.firebase.toJson
+import kotlin.js.Json
 
 actual fun getFirebaseDatabase() = firebase.database()
 
@@ -19,7 +22,8 @@ actual interface ValueEventListener {
     actual fun onCancelled(error: DatabaseError)
 }
 
-actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>) = `val`() as T?
+@Suppress("UNCHECKED_CAST")
+actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T? = fromJson(`val`(), valueType)  as T?
 
 actual class DatabaseError(internal val error: Throwable)
 
@@ -27,7 +31,7 @@ actual class DatabaseError(internal val error: Throwable)
 actual val TIMESTAMP: Map<String, String>
     get() = firebase.database.ServerValue.TIMESTAMP
 
-actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = set(value).await()
+actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = set(toJson(value)).await()
 
 actual suspend fun OnDisconnect.awaitRemoveValue() = remove().await()
 actual suspend fun OnDisconnect.awaitCancel() = cancel().await()
