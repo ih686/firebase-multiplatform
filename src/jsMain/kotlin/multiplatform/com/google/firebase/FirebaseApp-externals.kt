@@ -1,7 +1,6 @@
 
 package multiplatform.com.google.firebase
 
-import multiplatform.com.google.firebase.firestore.FirebaseFirestoreException
 import kotlin.js.Json
 import kotlin.js.Promise
 
@@ -142,16 +141,17 @@ external object firebase {
             fun get(options: Any? = definedExternally): Promise<DocumentSnapshot>
             fun set(data: Any, options: Any? = definedExternally): Promise<Unit>
             fun update(data: Any): Promise<Unit>
+            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any): Promise<Unit>
             fun delete(): Promise<Unit>
             fun onSnapshot(next: (snapshot: DocumentSnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class WriteBatch {
             fun commit(): Promise<Unit>
-            fun delete(documentReference: DocumentReference): multiplatform.com.google.firebase.firestore.WriteBatch
-            fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): multiplatform.com.google.firebase.firestore.WriteBatch
-            fun update(documentReference: DocumentReference, data: Any): multiplatform.com.google.firebase.firestore.WriteBatch
-            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): multiplatform.com.google.firebase.firestore.WriteBatch
+            fun delete(documentReference: DocumentReference): WriteBatch
+            //fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): WriteBatch
+            fun update(documentReference: DocumentReference, data: Any): WriteBatch
+            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): WriteBatch
         }
 
         open class Transaction {
@@ -162,5 +162,12 @@ external object firebase {
             fun delete(documentReference: DocumentReference): Transaction
         }
 
+        open abstract class FieldValue {
+            companion object {
+                fun delete(): FieldValue
+                fun arrayRemove(vararg elements: Any): FieldValue
+                fun arrayUnion(vararg elements: Any): FieldValue
+            }
+        }
     }
 }

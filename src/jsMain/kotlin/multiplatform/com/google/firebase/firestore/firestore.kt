@@ -23,7 +23,7 @@ actual typealias Transaction = firebase.firestore.Transaction
 actual typealias SetOptions = NewOptions
 actual typealias CollectionReference = firebase.firestore.CollectionReference
 actual typealias FieldPath = firebase.firestore.FieldPath
-
+actual typealias FieldValue = firebase.firestore.FieldValue
 
 actual data class FirebaseFirestoreSettings internal constructor(
     val cacheSizeBytes: Number? = undefined,
@@ -199,13 +199,13 @@ actual fun Transaction.delete(documentRef: DocumentReference) = delete(documentR
 actual suspend fun Transaction.awaitGet(documentRef: DocumentReference) = get(documentRef).await()
 
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, toJson(data)!!)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().set(documentRef, toJson(data)!!)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, toJson(data)!!, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = asDynamic().set(documentRef, toJson(data)!!, options)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, toJson(pojo)!!)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = asDynamic().set(documentRef, toJson(pojo)!!)
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, toJson(pojo)!!, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = asDynamic().set(documentRef, toJson(pojo)!!, options)
 
 actual fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, data)
 
@@ -236,27 +236,15 @@ actual annotation class IgnoreExtraProperties
 
 actual annotation class Exclude
 
-actual fun deleteFieldValue(): FieldValue {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
-
-actual abstract class FieldValue
+actual fun deleteFieldValue() = FieldValue.delete()
 
 actual fun DocumentSnapshot.exists() = exists
 
-actual fun arrayUnionFieldValue(vararg elements: Any): FieldValue {
-    TODO("not implemented")
-}
+actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(elements)
 
-actual fun arrayRemoveFieldValue(vararg elements: Any): FieldValue {
-    TODO("not implemented")
-}
+actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(elements)
 
 
-actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) {
-    TODO("not implemented")
-}
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(field, value, moreFieldsAndValues).await()
 
-actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) {
-    TODO("not implemented")
-}
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(fieldPath, value, moreFieldsAndValues).await()

@@ -57,7 +57,7 @@ actual fun FirebaseOptionsBuilder.setProjectId(projectId: String?) = options.cop
 actual fun FirebaseOptionsBuilder.build() = options
 
 internal fun toJson(data: Any?): Any? = when(data) {
-    null -> undefined
+    null -> null
     is Boolean -> data
     is Double -> data
     is String -> data
