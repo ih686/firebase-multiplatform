@@ -8,6 +8,7 @@ import multiplatform.com.google.firebase.fromJson
 import multiplatform.com.google.firebase.toJson
 import kotlin.reflect.KClass
 import kotlin.js.Json
+import kotlin.js.Promise
 import kotlin.js.json
 
 
@@ -210,7 +211,7 @@ actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: Se
 
 actual fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().update(documentRef, toJson(data)).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update(documentRef, field, toJson(value), arrayOf(moreFieldsAndValues)).unsafeCast<WriteBatch>()
+actual fun WriteBatch.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(documentRef, field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<WriteBatch>()
 
 actual fun WriteBatch.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(documentRef, fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<WriteBatch>()
 
@@ -246,7 +247,6 @@ actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(el
 actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(elements)
 
 
-actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(field, toJson(value), arrayOf(moreFieldsAndValues)).await()
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await()
 
-actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(fieldPath, toJson(value), *moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }.toTypedArray()).await()
-
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await()

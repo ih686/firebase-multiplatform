@@ -141,7 +141,7 @@ external object firebase {
             fun get(options: Any? = definedExternally): Promise<DocumentSnapshot>
             fun set(data: Any, options: Any? = definedExternally): Promise<Unit>
             fun update(data: Any): Promise<Unit>
-            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any?): Promise<Unit>
+//            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any?): Promise<Unit>
             fun delete(): Promise<Unit>
             fun onSnapshot(next: (snapshot: DocumentSnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
         }
