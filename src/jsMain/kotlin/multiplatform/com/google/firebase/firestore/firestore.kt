@@ -180,40 +180,41 @@ actual fun FirebaseFirestore.batch() = batch()
 
 actual fun FirebaseFirestore.setLoggingEnabled(loggingEnabled: Boolean) = firebase.firestore.setLogLevel( if(loggingEnabled) "error" else "silent")
 
-actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = set(documentRef, toJson(data)!!).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().set(documentRef, toJson(data)!!).unsafeCast<Transaction>()
 
-actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = set(documentRef, toJson(data)!!, options).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = asDynamic().set(documentRef, toJson(data)!!, options).unsafeCast<Transaction>()
 
-actual fun Transaction.set(documentRef: DocumentReference, pojo: Any) = set(documentRef, toJson(pojo)!!).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, pojo: Any) = asDynamic().set(documentRef, toJson(pojo)!!).unsafeCast<Transaction>()
 
-actual fun Transaction.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = set(documentRef, toJson(pojo)!!, options).let { this }
+actual fun Transaction.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = asDynamic().set(documentRef, toJson(pojo)!!, options).unsafeCast<Transaction>()
 
-actual fun Transaction.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, toJson(data)!!).let { this }
+actual fun Transaction.update(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().update(documentRef, toJson(data)).unsafeCast<Transaction>()
 
-actual fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(documentRef, field, value, moreFieldsAndValues)
+actual fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(documentRef, field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Transaction>()
 
-actual fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(documentRef, fieldPath, value, moreFieldsAndValues)
+actual fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(documentRef, fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Transaction>()
 
-actual fun Transaction.delete(documentRef: DocumentReference) = delete(documentRef).let { this }
+
+actual fun Transaction.delete(documentRef: DocumentReference) = asDynamic().delete(documentRef).unsafeCast<Transaction>()
 
 actual suspend fun Transaction.awaitGet(documentRef: DocumentReference) = get(documentRef).await()
 
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().set(documentRef, toJson(data)!!)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().set(documentRef, toJson(data)).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = asDynamic().set(documentRef, toJson(data)!!, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, data: Map<String, Any>, options: SetOptions) = asDynamic().set(documentRef, toJson(data), options).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = asDynamic().set(documentRef, toJson(pojo)!!)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any) = asDynamic().set(documentRef, toJson(pojo)!!).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = asDynamic().set(documentRef, toJson(pojo)!!, options)
+actual fun WriteBatch.set(documentRef: DocumentReference, pojo: Any, options: SetOptions) = asDynamic().set(documentRef, toJson(pojo), options).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>) = update(documentRef, data)
+actual fun WriteBatch.update(documentRef: DocumentReference, data: Map<String, Any>) = asDynamic().update(documentRef, toJson(data)).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(documentRef, field, value, arrayOf(moreFieldsAndValues))
+actual fun WriteBatch.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update(documentRef, field, toJson(value), arrayOf(moreFieldsAndValues)).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(documentRef, fieldPath, value, arrayOf(moreFieldsAndValues))
+actual fun WriteBatch.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(documentRef, fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<WriteBatch>()
 
-actual fun WriteBatch.delete(documentRef: DocumentReference) = delete(documentRef)
+actual fun WriteBatch.delete(documentRef: DocumentReference) = asDynamic().delete(documentRef).unsafeCast<WriteBatch>()
 
 actual fun DocumentReference.addSnapshotListener(listener: EventListener<DocumentSnapshot>) = onSnapshot(
         { listener.onEvent(snapshot = it, exception = undefined)},
@@ -245,6 +246,7 @@ actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(el
 actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(elements)
 
 
-actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(field, value, moreFieldsAndValues).await()
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = update(field, toJson(value), arrayOf(moreFieldsAndValues)).await()
 
-actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(fieldPath, value, moreFieldsAndValues).await()
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = update(fieldPath, toJson(value), *moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }.toTypedArray()).await()
+

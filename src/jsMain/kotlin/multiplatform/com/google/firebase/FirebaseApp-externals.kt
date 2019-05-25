@@ -141,25 +141,25 @@ external object firebase {
             fun get(options: Any? = definedExternally): Promise<DocumentSnapshot>
             fun set(data: Any, options: Any? = definedExternally): Promise<Unit>
             fun update(data: Any): Promise<Unit>
-            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any): Promise<Unit>
+            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any?): Promise<Unit>
             fun delete(): Promise<Unit>
             fun onSnapshot(next: (snapshot: DocumentSnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class WriteBatch {
             fun commit(): Promise<Unit>
-            fun delete(documentReference: DocumentReference): WriteBatch
-            //fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): WriteBatch
-            fun update(documentReference: DocumentReference, data: Any): WriteBatch
-            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): WriteBatch
+//            fun delete(documentReference: DocumentReference): WriteBatch
+//            fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): WriteBatch
+//            fun update(documentReference: DocumentReference, data: Any): WriteBatch
+//            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Any): WriteBatch
         }
 
         open class Transaction {
             fun get(documentRefence: DocumentReference): Promise<DocumentSnapshot>
-            fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): Transaction
-            fun update(documentReference: DocumentReference, data: Any): Transaction
-            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Array<out Any>): Transaction
-            fun delete(documentReference: DocumentReference): Transaction
+//            fun set(documentReference: DocumentReference, data: Any, options: Any? = definedExternally): Transaction
+//            fun update(documentReference: DocumentReference, data: Any): Transaction
+//            fun update(documentReference: DocumentReference, field: Any, value: Any?, vararg moreFieldsAndValues: Any): Transaction
+//            fun delete(documentReference: DocumentReference): Transaction
         }
 
         open abstract class FieldValue {
