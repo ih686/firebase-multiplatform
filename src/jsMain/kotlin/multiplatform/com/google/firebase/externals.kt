@@ -59,7 +59,9 @@ external object firebase {
         open class Reference {
             fun remove(): Promise<Unit>
             fun onDisconnect(): OnDisconnect
-            fun set(value: Any? = definedExternally): Promise<Unit>
+
+            fun update(value: Any?): Promise<Unit>
+            fun set(value: Any?): Promise<Unit>
             fun on(eventType: String?, callback: (data: DataSnapshot) -> Unit, cancelCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot) -> Unit
             fun off(eventType: String?, callback: (data: DataSnapshot) -> Unit, context: Any? = definedExternally)
             fun push(): ThenableReference
@@ -69,6 +71,7 @@ external object firebase {
         }
 
         open class OnDisconnect {
+            fun update(value: Any?): Promise<Unit>
             fun remove(): Promise<Unit>
             fun cancel(): Promise<Unit>
             fun set(value: Any?): Promise<Unit>
@@ -82,11 +85,13 @@ external object firebase {
     // FUNCTIONS
     fun functions(app: App? = definedExternally): functions.Functions
     object functions {
-        open class Functions {
+        class Functions {
             fun httpsCallable(name: String): HttpsCallable
         }
-        open class HttpsCallableResult
-        open class HttpsCallable {
+        class HttpsCallableResult {
+            val data: Any
+        }
+        class HttpsCallable {
             fun __call(data: Any? = definedExternally): Promise<HttpsCallableResult>
         }
 

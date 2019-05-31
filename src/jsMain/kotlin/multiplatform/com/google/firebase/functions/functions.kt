@@ -11,7 +11,7 @@ actual typealias HttpsCallableResult = firebase.functions.HttpsCallableResult
 actual typealias HttpsCallableReference = firebase.functions.HttpsCallable
 
 actual val HttpsCallableResult.data: Any
-    get() = data?.let{ it }
+    get() = TODO("not implemented")
 
 actual suspend fun HttpsCallableReference.awaitCall(data: Any?) = __call(data).await()
 

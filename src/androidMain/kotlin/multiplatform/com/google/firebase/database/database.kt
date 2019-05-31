@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.database.OnDisconnect
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.tasks.await
@@ -23,11 +24,17 @@ actual typealias DatabaseReference = DatabaseReference
 
 actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = setValue(value).await().run { Unit }
 
+actual suspend fun DatabaseReference.awaitUpdateChildren(update: Map<String, Any?>) = updateChildren(update).await().run { Unit }
+
 actual typealias ValueEventListener = ValueEventListener
 
 actual typealias DataSnapshot = DataSnapshot
 
 actual fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>) = getValue(valueType.java)
+
+actual fun DataSnapshot.getValue(): Any? {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
 
 actual val DataSnapshot.children: Iterable<DataSnapshot>
     get() = TODO("not implemented")
@@ -43,6 +50,8 @@ actual suspend fun OnDisconnect.awaitRemoveValue() = removeValue().await().run {
 actual suspend fun OnDisconnect.awaitCancel() = cancel().await().run { Unit }
 
 actual suspend fun OnDisconnect.awaitSetValue(value: Any?) = setValue(value).await().run { Unit }
+
+actual suspend fun OnDisconnect.awaitUpdateChildren(update: Map<String, Any?>) = updateChildren(update).await().run { Unit }
 
 actual val TIMESTAMP = ServerValue.TIMESTAMP
 
@@ -79,3 +88,5 @@ actual fun DataSnapshot.child(path: String): DataSnapshot {
 }
 
 actual typealias Exclude = Exclude
+actual typealias IgnoreExtraProperties = IgnoreExtraProperties
+

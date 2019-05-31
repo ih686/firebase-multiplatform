@@ -25,6 +25,9 @@ actual interface ValueEventListener {
 @Suppress("UNCHECKED_CAST")
 actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T? = fromJson(`val`(), valueType)  as T?
 
+actual fun DataSnapshot.getValue(): Any? = fromJson(`val`())
+
+
 actual class DatabaseError(internal val error: Throwable)
 
 
@@ -32,10 +35,12 @@ actual val TIMESTAMP: Map<String, String>
     get() = firebase.database.ServerValue.TIMESTAMP
 
 actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = set(toJson(value)).await()
+actual suspend fun DatabaseReference.awaitUpdateChildren(update: Map<String, Any?>) = update(toJson(update)).await()
 
 actual suspend fun OnDisconnect.awaitRemoveValue() = remove().await()
 actual suspend fun OnDisconnect.awaitCancel() = cancel().await()
 actual suspend fun OnDisconnect.awaitSetValue(value: Any?) = set(value).await()
+actual suspend fun OnDisconnect.awaitUpdateChildren(update: Map<String, Any?>) = update(toJson(update)).await()
 
 actual class DatabaseException(cause: Throwable) : RuntimeException(cause)
 
@@ -77,3 +82,4 @@ actual fun DataSnapshot.child(path: String): DataSnapshot {
 }
 
 actual annotation class Exclude actual constructor()
+actual annotation class IgnoreExtraProperties actual constructor()
