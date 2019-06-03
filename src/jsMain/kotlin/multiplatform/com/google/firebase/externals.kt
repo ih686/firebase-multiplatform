@@ -89,7 +89,7 @@ external object firebase {
             fun httpsCallable(name: String): HttpsCallable
         }
         class HttpsCallableResult {
-            val data: Any
+//            val data: Any
         }
         class HttpsCallable {
             fun __call(data: Any? = definedExternally): Promise<HttpsCallableResult>
