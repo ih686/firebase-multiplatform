@@ -91,9 +91,7 @@ external object firebase {
         class HttpsCallableResult {
 //            val data: Any
         }
-        class HttpsCallable {
-            fun __call(data: Any? = definedExternally): Promise<HttpsCallableResult>
-        }
+        class HttpsCallable
 
     }
 
