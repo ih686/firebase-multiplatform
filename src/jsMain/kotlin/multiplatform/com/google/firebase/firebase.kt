@@ -85,7 +85,7 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .also { instance ->
                     (js("Object").entries(data) as Array<Array<Any>>)
                         .forEach { (key, value) ->
-                            js("Object").getOwnPropertyDescriptor(valueType.js, key)
+                            js("Object").getOwnPropertyDescriptor(instance, key)
                                     ?.writable
                                     ?.unsafeCast<Boolean>()
                                     ?.takeIf { it }
