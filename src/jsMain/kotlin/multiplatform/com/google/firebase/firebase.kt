@@ -91,11 +91,18 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
 
         val instance = js("Reflect").construct(valueType.js, emptyArray<Any>())
 
+        val mangled = js("Object")
+                .keys(instance)
+                .unsafeCast<Array<String>>()
+                .associate { it.substringBefore("_") to it }
+
         (js("Object").entries(data) as Array<Array<Any>>)
             .forEach { (key, value) ->
                 val descriptor = js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
-                if(descriptor == null || descriptor.set != null) {
+                if(descriptor == null) {
                     instance[key as String] = fromJson(value)
+                } else {
+                    instance[mangled[key as String]] = fromJson(value)
                 }
             }
 
