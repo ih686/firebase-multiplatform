@@ -5,8 +5,8 @@ version = "17.1.0-rev2"
 
 plugins {
     `maven-publish`
-    id("com.android.library") version "3.4.0"
-    kotlin("multiplatform") version "1.3.31"
+    id("com.android.library") version "3.3.2"
+    kotlin("multiplatform") version "1.3.21"
 }
 
 repositories {
