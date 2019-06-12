@@ -97,14 +97,15 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .associate { it.substringBefore("_") to it }
 
         (js("Object").entries(data) as Array<Array<Any>>)
-            .forEach { (key, value) ->
-                val descriptor = js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
-                if(descriptor == null) {
-                    instance[key as String] = fromJson(value)
-                } else {
-                    instance[mangled[key as String]] = fromJson(value)
+                .filter { (key) -> !key.toString().startsWith("__exclude__") }
+                .forEach { (key, value) ->
+                    val descriptor = js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
+                    if(descriptor == null) {
+                        instance[key as String] = fromJson(value)
+                    } else {
+                        instance[mangled[key as String]] = fromJson(value)
+                    }
                 }
-            }
 
         instance.unsafeCast<Json>()
    }
