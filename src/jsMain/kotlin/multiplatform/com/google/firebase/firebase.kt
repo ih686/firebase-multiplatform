@@ -85,12 +85,10 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
 
         (js("Object").entries(data) as Array<Array<Any>>)
             .forEach { (key, value) ->
-                js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
-                        ?.writable
-                        ?.unsafeCast<Boolean>()
-                        .takeIf { it == false }
-                        ?.run { return@forEach }
-                instance[key as String] = fromJson(value)
+                val descriptor = js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
+                if(descriptor == null || descriptor.set != null) {
+                    instance[key as String] = fromJson(value)
+                }
             }
 
         instance.unsafeCast<Json>()
