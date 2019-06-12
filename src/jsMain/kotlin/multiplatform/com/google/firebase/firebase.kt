@@ -64,8 +64,8 @@ internal fun toJson(data: Any?): Any? = when(data) {
     is String -> data
     is List<*> -> data.map { toJson(it) }.toTypedArray()
     is Map<*, *> -> json(*data.entries.map { (k, v) -> k as String to toJson(v) }.toTypedArray())
-    else -> (js("Object").entries(data) as Array<Array<Any>>)
-            .map { (key, value) -> key as String to toJson(value) }
+    else -> (js("Object").keys(data.asDynamic().prototype) as Array<String>)
+            .map { it to toJson(data.unsafeCast<Json>()[it]) }
             .let { json(*it.toTypedArray()) }
 }
 
@@ -81,19 +81,19 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .associate { (key, value) -> key to fromJson(value) }
                 .let { return@fromJson it }
 
-        (js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json)
-                .also { json ->
+        js("Reflect").construct(valueType.js, emptyArray<Any>())
+                .also { instance ->
                     (js("Object").entries(data) as Array<Array<Any>>)
                         .forEach { (key, value) ->
-                            js("Object").getOwnPropertyDescriptor(json, key)
+                            js("Object").getOwnPropertyDescriptor(instance.prototype, key)
                                     ?.writable
                                     ?.unsafeCast<Boolean>()
                                     ?.takeIf { it }
                                     ?.run {
-                                        json[key as String] = fromJson(value)
+                                        instance[key as String] = fromJson(value)
                                     }
                         }
-                }
+                }.unsafeCast<Any?>()
    }
 }
 
