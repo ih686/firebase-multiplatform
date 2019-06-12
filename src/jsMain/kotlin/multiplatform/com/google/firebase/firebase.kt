@@ -81,19 +81,19 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .associate { (key, value) -> key to fromJson(value) }
                 .let { return@fromJson it }
 
-        js("Reflect").construct(valueType.js, emptyArray<Any>()).unsafeCast<Json>()
-                .also { instance ->
-                    (js("Object").entries(data) as Array<Array<Any>>)
-                        .forEach { (key, value) ->
-                            js("Object").getOwnPropertyDescriptor(instance, key)
-                                    ?.writable
-                                    ?.unsafeCast<Boolean>()
-                                    ?.takeIf { it }
-                                    ?.run {
-                                        instance[key as String] = fromJson(value)
-                                    }
+        val instance = js("Reflect").construct(valueType.js, emptyArray<Any>())
+
+        (js("Object").entries(data) as Array<Array<Any>>)
+            .forEach { (key, value) ->
+                js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
+                        ?.writable
+                        ?.unsafeCast<Boolean>()
+                        ?.takeIf { it }
+                        ?.run {
+                            instance[key as String] = fromJson(value)
                         }
-                }
+            }
+        instance.unsafeCast<Json>()
    }
 }
 
