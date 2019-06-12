@@ -82,12 +82,16 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .let { return@fromJson it }
 
         (js("Reflect").construct(valueType.js, emptyArray<Any>()) as Json)
-                .also {
+                .also { json ->
                     (js("Object").entries(data) as Array<Array<Any>>)
                         .forEach { (key, value) ->
-                            if(js("Object").getOwnPropertyDescriptor(it, key).writable.unsafeCast<Boolean>()) {
-                                it[key as String] = fromJson(value)
-                            }
+                            js("Object").getOwnPropertyDescriptor(json, key)
+                                    ?.writable
+                                    ?.unsafeCast<Boolean>()
+                                    ?.takeIf { it }
+                                    ?.run {
+                                        json[key as String] = fromJson(value)
+                                    }
                         }
                 }
    }
