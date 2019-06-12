@@ -64,8 +64,16 @@ internal fun toJson(data: Any?): Any? = when(data) {
     is String -> data
     is List<*> -> data.map { toJson(it) }.toTypedArray()
     is Map<*, *> -> json(*data.entries.map { (k, v) -> k as String to toJson(v) }.toTypedArray())
-    else -> (js("Object").keys(data.asDynamic().prototype) as Array<String>)
-            .map { it to toJson(data.unsafeCast<Json>()[it]) }
+    else -> (js("Object").entries(data) as Array<Array<Any>>)
+            .map { (key, value) ->
+                key as String
+                val unmangled = key.substringBefore("_")
+                if(data.asDynamic().__proto__.hasOwnProperty(unmangled).unsafeCast<Boolean>()) {
+                    unmangled to toJson(value)
+                } else {
+                    key to toJson(value)
+                }
+            }
             .let { json(*it.toTypedArray()) }
 }
 
