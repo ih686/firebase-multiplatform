@@ -65,6 +65,7 @@ internal fun toJson(data: Any?): Any? = when(data) {
     is List<*> -> data.map { toJson(it) }.toTypedArray()
     is Map<*, *> -> json(*data.entries.map { (k, v) -> k as String to toJson(v) }.toTypedArray())
     else -> (js("Object").entries(data) as Array<Array<Any>>)
+            .filter { (key) -> !key.toString().startsWith("__exclude__") }
             .map { (key, value) ->
                 key as String
                 val unmangled = key.substringBefore("_")
@@ -97,7 +98,6 @@ internal fun fromJson(data: Any?, valueType: KClass<*>? = null): Any? = when(dat
                 .associate { it.substringBefore("_") to it }
 
         (js("Object").entries(data) as Array<Array<Any>>)
-                .filter { (key) -> !key.toString().startsWith("__exclude__") }
                 .forEach { (key, value) ->
                     val descriptor = js("Object").getOwnPropertyDescriptor(instance.__proto__, key)
                     if(descriptor == null) {
