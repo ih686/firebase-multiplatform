@@ -59,11 +59,7 @@ actual fun FirebaseFirestore.setFirestoreSettings(settings: FirebaseFirestoreSet
 }
 
 actual class FirebaseFirestoreException
-    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(FirebaseError()
-        .apply{
-            message = detailMessage
-            this.code = code.name
-        })
+    actual constructor(detailMessage: String, code: FirestoreExceptionCode) : FirebaseException(Error(detailMessage + " " +code))
 
 actual val QuerySnapshot.documents: List<DocumentSnapshot>
     get() = docs.toList()
@@ -83,7 +79,11 @@ actual interface EventListener<T> {
 
 actual fun fieldPathOf(vararg fieldNames: String) = FieldPath(fieldNames)
 
-actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit) = onSnapshot({ listener(it, undefined) }, { listener(undefined, FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN)) })
+actual fun Query.addSnapshotListener(listener: (snapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) -> Unit) =
+        onSnapshot(
+                { listener(it, undefined) },
+                { listener(undefined, FirebaseFirestoreException(it.message as String, FirestoreExceptionCode.UNKNOWN)) }
+        )
         .also { it.asDynamic().remove = { it() } }
         .asDynamic()
 

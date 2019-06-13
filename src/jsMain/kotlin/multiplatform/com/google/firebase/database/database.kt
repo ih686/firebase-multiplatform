@@ -71,15 +71,18 @@ actual fun DatabaseReference.removeEventListener(listener: ValueEventListener) =
 actual fun DatabaseError.toException() = DatabaseException(error)
 
 actual val DataSnapshot.children: Iterable<DataSnapshot>
-    get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    get() {
+        val children = ArrayList<DataSnapshot>(numChildren())
+        forEach {
+            children.add( it.`val`() as DataSnapshot )
+        }
+        return children
+    }
 
-actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEventListener) = once("value", { listener.onDataChange(it) }, { listener.onCancelled(DatabaseError(it)) })
+                .let { listener.asDynamic().callback = it }
 
-actual fun DataSnapshot.child(path: String): DataSnapshot {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-}
+actual fun DataSnapshot.child(path: String) = asDynamic().child(path).unsafeCast<DataSnapshot>()
 
 actual annotation class Exclude actual constructor()
 actual annotation class IgnoreExtraProperties actual constructor()

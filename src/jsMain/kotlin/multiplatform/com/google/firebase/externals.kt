@@ -11,9 +11,10 @@ external object firebase {
     val apps : Array<App>
     fun initializeApp(options: Any, name: String? = definedExternally) : App
 
-    open class FirebaseError : Throwable {
+    open interface FirebaseError {
         var code: String
-        override var message: String
+        var message: String
+        var name: String
     }
 
     // AUTH
@@ -51,6 +52,7 @@ external object firebase {
     fun database(): database.Database
     object database {
         fun enableLogging(logger: Boolean?, persistent: Boolean? = definedExternally)
+
         open class Database {
             fun ref(path: String? = definedExternally): Reference
         }
@@ -64,10 +66,13 @@ external object firebase {
             fun set(value: Any?): Promise<Unit>
             fun on(eventType: String?, callback: (data: DataSnapshot) -> Unit, cancelCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot) -> Unit
             fun off(eventType: String?, callback: (data: DataSnapshot) -> Unit, context: Any? = definedExternally)
+            fun once(eventType: String, callback: (data: DataSnapshot) -> Unit, failureCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot)->Unit
             fun push(): ThenableReference
         }
         open class DataSnapshot {
             fun `val`(): Any
+            fun forEach(action: (a: DataSnapshot)-> Boolean): Boolean
+            fun numChildren(): Int
         }
 
         open class OnDisconnect {

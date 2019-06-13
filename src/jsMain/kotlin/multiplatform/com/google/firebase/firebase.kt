@@ -5,7 +5,8 @@ import kotlin.js.json
 import kotlin.reflect.KClass
 
 actual typealias FirebaseApp = firebase.App
-typealias FirebaseError = firebase.FirebaseError
+
+typealias FirebaseError = Error
 
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(
         json(
