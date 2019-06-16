@@ -41,8 +41,8 @@ actual suspend fun FirebaseUser.awaitDelete() = delete().await()
 actual suspend fun FirebaseUser.awaitReload() = reload().await()
 
 actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener)  =
-        onAuthStateChanged(listener)
-                .let{ unsubscribe = it }
+        onAuthStateChanged { listener.onAuthStateChanged(getFirebaseAuth()) }
+                .let { listener.asDynamic().unsubscribe = it }
 
-actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) = unsubscribe()
+actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) = listener.asDynamic().unsubscribe()
 

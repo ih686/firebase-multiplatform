@@ -27,9 +27,7 @@ external object firebase {
             fun signInAnonymously(): Promise<AuthResult>
             fun signOut(): Promise<Unit>
 
-            fun onAuthStateChanged(nextOrObserver: Any): () -> Unit
-
-            var unsubscribe: () -> Unit
+            fun onAuthStateChanged(nextOrObserver: (user.User) -> Unit): () -> Unit
         }
         interface AuthResult {
             val user: user.User
