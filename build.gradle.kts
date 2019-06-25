@@ -5,8 +5,8 @@ version = "17.1.0-rev2"
 
 plugins {
     `maven-publish`
-    id("com.android.library") version "3.3.2"
-    kotlin("multiplatform") version "1.3.21"
+    id("com.android.library") version "3.4.0"
+    kotlin("multiplatform") version "1.3.40"
 }
 
 repositories {
@@ -41,13 +41,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.2")
             }
         }
         val jsMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.2.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.2.2")
             }
         }
         val androidMain by getting {
@@ -56,17 +56,17 @@ kotlin {
                 api("com.google.firebase:firebase-auth:17.0.0")
                 api("com.google.firebase:firebase-functions:17.0.0")
                 api("com.google.firebase:firebase-database:17.0.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.2")
             }
         }
         val jvmMain by getting {
             kotlin.srcDir("src/androidMain/kotlin")
             dependencies {
                 api("app.teamhub:firebase-java:0.1.0")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.2")
                 implementation(kotlin("stdlib-jdk8"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
             }
         }
     }
