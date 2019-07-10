@@ -1,10 +1,12 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 group = "io.multiplatform"
-version = "17.1.0-rev1"
+version = "17.1.0-rev2"
 
 plugins {
     `maven-publish`
     id("com.android.library") version "3.4.0"
-    kotlin("multiplatform") version "1.3.30"
+    kotlin("multiplatform") version "1.3.40"
 }
 
 repositories {
@@ -39,32 +41,32 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.2")
             }
         }
-        js().compilations["main"].defaultSourceSet {
+        val jsMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.0.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.2.2")
             }
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-firestore:18.2.0")
-                api("com.google.firebase:firebase-auth:16.2.0")
-                api("com.google.firebase:firebase-functions:16.3.0")
-                api("com.google.firebase:firebase-database:16.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+                api("com.google.firebase:firebase-firestore:19.0.2")
+                api("com.google.firebase:firebase-auth:17.0.0")
+                api("com.google.firebase:firebase-functions:17.0.0")
+                api("com.google.firebase:firebase-database:17.0.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.2")
             }
         }
-        jvm().compilations["main"].defaultSourceSet {
+        val jvmMain by getting {
             kotlin.srcDir("src/androidMain/kotlin")
             dependencies {
                 api("app.teamhub:firebase-java:0.1.0")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.0")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.2")
                 implementation(kotlin("stdlib-jdk8"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
             }
         }
     }
@@ -104,10 +106,21 @@ tasks {
         into(file("$buildDir/node_module"))
         rename("${project.name}\\.js", "index.js")
     }
-
+    
+    val copySourceMap by registering(Copy::class) {
+        from(file("$buildDir/classes/kotlin/js/main/${project.name}.js.map"))
+        into(file("$buildDir/node_module"))
+        rename("${project.name}\\.js.map", "index.js.map")
+    }
+    
     val publishToNpm by registering(Exec::class) {
-        dependsOn(copyPackageJson, copyJS)
+        dependsOn(copyPackageJson, copyJS, copySourceMap)
         workingDir("$buildDir/node_module")
-        commandLine("npm",  "publish", "--registry http://localhost:4873")
+        if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine("cmd", "/c", "npm unpublish --force --registry http://localhost:4873 firebase-multiplatform & npm publish --registry http://localhost:4873")
+        } else {
+            commandLine("npm", "unpublish", "--force", "--registry http://localhost:4873", "firebase-multiplatform")
+            commandLine("npm", "publish", "--registry http://localhost:4873")
+        }
     }
 }

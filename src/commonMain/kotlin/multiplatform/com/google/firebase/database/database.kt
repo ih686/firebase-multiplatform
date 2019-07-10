@@ -2,6 +2,9 @@ package multiplatform.com.google.firebase.database
 
 import kotlin.reflect.KClass
 
+expect annotation class Exclude()
+expect annotation class IgnoreExtraProperties()
+
 expect fun getFirebaseDatabase(): FirebaseDatabase
 
 expect enum class LoggerLevel {
@@ -27,6 +30,7 @@ expect fun DatabaseReference.addListenerForSingleValueEvent(listener: ValueEvent
 expect fun DatabaseReference.removeEventListener(listener: ValueEventListener)
 
 expect suspend fun DatabaseReference.awaitSetValue(value: Any?)
+expect suspend fun DatabaseReference.awaitUpdateChildren(update: Map<String, Any?>)
 expect suspend fun DatabaseReference.awaitRemoveValue()
 
 expect interface ValueEventListener {
@@ -37,6 +41,8 @@ expect interface ValueEventListener {
 expect class DataSnapshot
 
 expect fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>): T?
+expect fun DataSnapshot.getValue(): Any?
+expect fun DataSnapshot.child(path: String): DataSnapshot
 expect val DataSnapshot.children: Iterable<DataSnapshot>
 
 expect val TIMESTAMP: Map<String, String>
@@ -52,3 +58,4 @@ expect class OnDisconnect
 expect suspend fun OnDisconnect.awaitRemoveValue()
 expect suspend fun OnDisconnect.awaitCancel()
 expect suspend fun OnDisconnect.awaitSetValue(value: Any?)
+expect suspend fun OnDisconnect.awaitUpdateChildren(update: Map<String, Any?>)

@@ -20,7 +20,7 @@ expect fun FirebaseOptionsBuilder.build(): FirebaseOptions
 
 expect open class FirebaseException : Exception
 
-expect open class FirebaseNetworkException : FirebaseException
+expect class FirebaseNetworkException : FirebaseException
 
 expect open class FirebaseTooManyRequestsException : FirebaseException
 

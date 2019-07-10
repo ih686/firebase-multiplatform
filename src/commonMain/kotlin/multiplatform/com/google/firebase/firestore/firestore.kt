@@ -29,7 +29,7 @@ expect fun Transaction.update(documentRef: DocumentReference, data: Map<String, 
 expect fun Transaction.update(documentRef: DocumentReference, field: String, value: Any?, vararg moreFieldsAndValues: Any): Transaction
 expect fun Transaction.update(documentRef: DocumentReference, fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any): Transaction
 expect fun Transaction.delete(documentRef: DocumentReference): Transaction
-expect fun Transaction.get(documentRef: DocumentReference): DocumentSnapshot
+expect suspend fun Transaction.awaitGet(documentRef: DocumentReference): DocumentSnapshot
 
 
 expect class FirebaseFirestoreSettingsBuilder constructor() {
@@ -89,6 +89,10 @@ expect suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: S
 expect suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions)
 
 expect suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>)
+
+expect suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any)
+
+expect suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any)
 
 expect suspend fun DocumentReference.awaitDelete()
 
@@ -156,3 +160,8 @@ expect class FieldPath
 expect abstract class FieldValue
 
 expect fun deleteFieldValue(): FieldValue
+
+expect fun arrayUnionFieldValue(vararg elements: Any): FieldValue
+
+expect fun arrayRemoveFieldValue(vararg elements: Any): FieldValue
+

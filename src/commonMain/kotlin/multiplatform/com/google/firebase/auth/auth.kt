@@ -10,7 +10,7 @@ expect class FirebaseAuth
 
 expect fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener)
 expect fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener)
-expect fun FirebaseAuth.signOut()
+expect suspend fun FirebaseAuth.signOut()
 
 expect val FirebaseAuth.currentUser: FirebaseUser?
 
