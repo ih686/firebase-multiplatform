@@ -69,6 +69,7 @@ external object firebase {
         }
         open class DataSnapshot {
             fun `val`(): Any
+            fun exists(): Boolean
             fun forEach(action: (a: DataSnapshot)-> Boolean): Boolean
             fun numChildren(): Int
         }

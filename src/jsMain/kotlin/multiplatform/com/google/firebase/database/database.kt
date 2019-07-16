@@ -24,7 +24,7 @@ actual interface ValueEventListener {
 
 @Suppress("UNCHECKED_CAST")
 actual fun <T : Any> DataSnapshot.getValue(valueType: KClass<T>): T? = fromJson(`val`(), valueType)  as T?
-
+actual fun DataSnapshot.exists(): Boolean = exists()
 actual fun DataSnapshot.getValue(): Any? = fromJson(`val`())
 
 
@@ -57,7 +57,7 @@ actual fun FirebaseDatabase.setPersistenceEnabled(enabled: Boolean) {
 
 actual fun FirebaseDatabase.setLogLevel(logLevel: LoggerLevel) = firebase.database.enableLogging(logLevel != LoggerLevel.NONE)
 
-actual fun DatabaseReference.push() = firebase.database().ref().push() as DatabaseReference
+actual fun DatabaseReference.push() = push() as DatabaseReference
 
 actual fun DatabaseReference.onDisconnect() = onDisconnect()
 

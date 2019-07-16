@@ -41,6 +41,7 @@ expect interface ValueEventListener {
 expect class DataSnapshot
 
 expect fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>): T?
+expect fun DataSnapshot.exists(): Boolean
 expect fun DataSnapshot.getValue(): Any?
 expect fun DataSnapshot.child(path: String): DataSnapshot
 expect val DataSnapshot.children: Iterable<DataSnapshot>

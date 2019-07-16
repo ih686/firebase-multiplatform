@@ -32,6 +32,10 @@ actual typealias DataSnapshot = DataSnapshot
 
 actual fun <T: Any> DataSnapshot.getValue(valueType: KClass<T>) = getValue(valueType.java)
 
+actual fun DataSnapshot.exists(): Boolean {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+}
+
 actual fun DataSnapshot.getValue(): Any? {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 }
