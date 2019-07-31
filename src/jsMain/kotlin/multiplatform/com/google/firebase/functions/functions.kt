@@ -5,6 +5,7 @@ import multiplatform.com.google.firebase.firebase
 import multiplatform.com.google.firebase.fromJson
 import multiplatform.com.google.firebase.toJson
 import kotlin.js.Promise
+import kotlin.js.json
 
 
 actual fun getFirebaseFunctions() = firebase.functions()
@@ -20,4 +21,4 @@ actual suspend fun HttpsCallableReference.awaitCall(data: Any?) = this.asDynamic
 
 actual suspend fun HttpsCallableReference.awaitCall() = this.asDynamic()().unsafeCast<Promise<HttpsCallableResult>>().await()
 
-actual fun FirebaseFunctions.getHttpsCallable(name: String) = httpsCallable(name)
+actual fun FirebaseFunctions.getHttpsCallable(name: String, timeout: Long?) = httpsCallable(name, timeout?.let { json("timeout" to timeout.toDouble()) })

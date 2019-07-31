@@ -90,7 +90,7 @@ external object firebase {
     fun functions(app: App? = definedExternally): functions.Functions
     object functions {
         class Functions {
-            fun httpsCallable(name: String): HttpsCallable
+            fun httpsCallable(name: String, options: Json?): HttpsCallable
         }
         class HttpsCallableResult {
 //            val data: Any
