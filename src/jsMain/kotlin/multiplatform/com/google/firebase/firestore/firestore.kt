@@ -70,6 +70,9 @@ actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>): T = fromJs
 actual val DocumentSnapshot.id: String
     get() = id
 
+actual val DocumentSnapshot.reference: DocumentReference
+    get() = ref
+
 actual interface ListenerRegistration
 
 

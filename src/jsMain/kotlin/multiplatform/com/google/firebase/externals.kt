@@ -137,6 +137,7 @@ external object firebase {
 
         open class DocumentSnapshot {
             val id: String
+            val ref: DocumentReference
             val exists: Boolean
             fun data(options: Any? = definedExternally): Any?
             fun get(fieldPath: Any, options: Any? = definedExternally): Any?

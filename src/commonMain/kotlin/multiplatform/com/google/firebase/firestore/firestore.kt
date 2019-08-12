@@ -139,6 +139,7 @@ expect fun <T: Any> DocumentSnapshot.toObject(valueType: KClass<T>): T
 expect fun DocumentSnapshot.exists(): Boolean
 
 expect val DocumentSnapshot.id: String
+expect val DocumentSnapshot.reference: DocumentReference
 
 expect interface ListenerRegistration
 

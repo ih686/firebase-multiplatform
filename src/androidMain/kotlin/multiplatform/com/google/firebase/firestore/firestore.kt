@@ -50,6 +50,9 @@ actual typealias DocumentSnapshot = com.google.firebase.firestore.DocumentSnapsh
 actual val DocumentSnapshot.id: String
     get() = id
 
+actual val DocumentSnapshot.reference: DocumentReference
+    get() = reference
+
 actual fun <T : Any> DocumentSnapshot.toObject(valueType: KClass<T>) = toObject(valueType.java) as T
 
 actual typealias EventListener<T> = com.google.firebase.firestore.EventListener<T>
