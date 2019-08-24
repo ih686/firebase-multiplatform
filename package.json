@@ -1,6 +1,6 @@
 {
-  "name": "firebase-multiplatform",
-  "version": "17.1.0-rev2",
+  "name": "@teamhubapp/firebase-multiplatform",
+  "version": "0.1.0",
   "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/multiplatform-io/firebase.git"
+    "url": "git+https://github.com/TeamHubApp/firebase-multiplatform.git"
   },
   "keywords": [
     "kotlin",

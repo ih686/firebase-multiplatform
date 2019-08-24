@@ -117,10 +117,9 @@ tasks {
         dependsOn(copyPackageJson, copyJS, copySourceMap)
         workingDir("$buildDir/node_module")
         if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-            commandLine("cmd", "/c", "npm unpublish --force --registry http://localhost:4873 firebase-multiplatform & npm publish --registry http://localhost:4873")
+            commandLine("cmd", "/c", "npm publish --registry https://npm.pkg.github.com/")
         } else {
-            commandLine("npm", "unpublish", "--force", "--registry http://localhost:4873", "firebase-multiplatform")
-            commandLine("npm", "publish", "--registry http://localhost:4873")
+            commandLine("npm", "publish", "--registry https://npm.pkg.github.com/")
         }
     }
 }
