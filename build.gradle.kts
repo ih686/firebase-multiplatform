@@ -1,7 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 group = "io.multiplatform"
-version = "17.1.0-rev2"
+version = "0.1.0"
 
 plugins {
     `maven-publish`
@@ -104,16 +104,18 @@ tasks {
     val copyJS by registering(Copy::class) {
         from(file("$buildDir/classes/kotlin/js/main/${project.name}.js"))
         into(file("$buildDir/node_module"))
-        rename("${project.name}\\.js", "index.js")
     }
     
     val copySourceMap by registering(Copy::class) {
         from(file("$buildDir/classes/kotlin/js/main/${project.name}.js.map"))
         into(file("$buildDir/node_module"))
-        rename("${project.name}\\.js.map", "index.js.map")
     }
     
     val publishToNpm by registering(Exec::class) {
+        doFirst {
+            mkdir("$buildDir/node_module")
+        }
+
         dependsOn(copyPackageJson, copyJS, copySourceMap)
         workingDir("$buildDir/node_module")
         if(Os.isFamily(Os.FAMILY_WINDOWS)) {
