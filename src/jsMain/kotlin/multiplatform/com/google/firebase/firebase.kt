@@ -131,7 +131,7 @@ internal suspend fun <T, R> T.runActualWithHandler(function: suspend T.() -> R):
         return function()
     } catch(e: dynamic) {
         if(e.code) {
-            exception = when(e.code) {
+            throw when(e.code) {
                 "auth/app-deleted" -> FirebaseAuthException(e.code as String, e.message as String)
                 "auth/app-not-authorized" -> FirebaseAuthException(e.code as String, e.message as String)
                 "auth/argument-error" -> FirebaseAuthException(e.code as String, e.message as String)
