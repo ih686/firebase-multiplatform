@@ -41,3 +41,13 @@ actual fun FirebaseAuth.removeAuthStateListener(listener: AuthStateListener) {
 
 actual suspend fun FirebaseAuth.signOut() {
 }
+
+actual typealias FirebaseAuthException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthActionCodeException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthEmailException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthInvalidCredentialsException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthInvalidUserException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthRecentLoginRequiredException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthUserCollisionException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthWebException = com.google.firebase.auth.FirebaseAuthException
+
