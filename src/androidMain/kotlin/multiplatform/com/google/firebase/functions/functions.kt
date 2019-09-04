@@ -19,3 +19,5 @@ actual val HttpsCallableResult.data: Any
 
 actual fun FirebaseFunctions.getHttpsCallable(name: String, timeout: Long?) =
         getHttpsCallable(name).apply { timeout?.let { setTimeout(it, TimeUnit.MILLISECONDS) } }
+
+actual typealias FirebaseFunctionsException = com.google.firebase.functions.FirebaseFunctionsException

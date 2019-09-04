@@ -1,6 +1,7 @@
 package multiplatform.com.google.firebase.functions
 
 import kotlinx.coroutines.await
+import multiplatform.com.google.firebase.FirebaseException
 import multiplatform.com.google.firebase.firebase
 import multiplatform.com.google.firebase.fromJson
 import multiplatform.com.google.firebase.toJson
@@ -22,3 +23,5 @@ actual suspend fun HttpsCallableReference.awaitCall(data: Any?) = this.asDynamic
 actual suspend fun HttpsCallableReference.awaitCall() = this.asDynamic()().unsafeCast<Promise<HttpsCallableResult>>().await()
 
 actual fun FirebaseFunctions.getHttpsCallable(name: String, timeout: Long?) = httpsCallable(name, timeout?.let { json("timeout" to timeout.toDouble()) })
+
+actual open class FirebaseFunctionsException(code: String, message: String): FirebaseException(Error("${message} - ${code}"))
