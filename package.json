@@ -1,6 +1,6 @@
 {
   "name": "@teamhubapp/firebase-multiplatform",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
   "main": "index.js",
   "scripts": {
