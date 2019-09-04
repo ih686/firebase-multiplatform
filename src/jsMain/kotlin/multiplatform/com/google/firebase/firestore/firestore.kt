@@ -7,7 +7,6 @@ import multiplatform.com.google.firebase.*
 import multiplatform.com.google.firebase.fromJson
 import multiplatform.com.google.firebase.toJson
 import kotlin.reflect.KClass
-import kotlin.js.Json
 import kotlin.js.Promise
 import kotlin.js.json
 
@@ -151,30 +150,30 @@ actual enum class FirestoreExceptionCode {
 }
 
 actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T) =
-        runActualWithHandler { runTransaction { GlobalScope.promise { func(it) } }.await() }
+        translateException { runTransaction { GlobalScope.promise { func(it) } }.await() }
 
 
-actual suspend fun WriteBatch.awaitCommit() =  runActualWithHandler { commit().await() }
+actual suspend fun WriteBatch.awaitCommit() =  translateException { commit().await() }
 
-actual suspend fun Query.awaitGet() =  runActualWithHandler { get().await() }
+actual suspend fun Query.awaitGet() =  translateException { get().await() }
 
-actual suspend fun DocumentReference.awaitGet() =  runActualWithHandler { get().await() }
+actual suspend fun DocumentReference.awaitGet() =  translateException { get().await() }
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) =  runActualWithHandler {  set(toJson(data)!!).await() }
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) =  translateException {  set(toJson(data)!!).await() }
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any) = runActualWithHandler {  set(toJson(pojo)!!).await() }
+actual suspend fun DocumentReference.awaitSet(pojo: Any) = translateException {  set(toJson(pojo)!!).await() }
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) =  runActualWithHandler { set(toJson(data)!!, options).await() }
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) =  translateException { set(toJson(data)!!, options).await() }
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) =  runActualWithHandler { set(toJson(pojo)!!, options).await() }
+actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) =  translateException { set(toJson(pojo)!!, options).await() }
 
-actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) =  runActualWithHandler { update(toJson(data)!!).await() }
+actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) =  translateException { update(toJson(data)!!).await() }
 
-actual suspend fun DocumentReference.awaitDelete() =  runActualWithHandler { delete().await() }
+actual suspend fun DocumentReference.awaitDelete() =  translateException { delete().await() }
 
-actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) =  runActualWithHandler { add(toJson(data)!!).await() }
+actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) =  translateException { add(toJson(data)!!).await() }
 
-actual suspend fun CollectionReference.awaitAdd(pojo: Any) =  runActualWithHandler { add(toJson(pojo)!!).await() }
+actual suspend fun CollectionReference.awaitAdd(pojo: Any) =  translateException { add(toJson(pojo)!!).await() }
 
 actual fun FirebaseFirestore.collection(collectionPath: String) =  collection(collectionPath)
 
@@ -250,6 +249,6 @@ actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(el
 actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(elements)
 
 
-actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) =  runActualWithHandler {  asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) =  translateException {  asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
 
-actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) =  runActualWithHandler {  asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) =  translateException {  asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }

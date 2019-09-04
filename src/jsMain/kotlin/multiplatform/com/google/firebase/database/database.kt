@@ -4,9 +4,8 @@ import kotlinx.coroutines.await
 import kotlin.reflect.KClass
 import multiplatform.com.google.firebase.firebase
 import multiplatform.com.google.firebase.fromJson
-import multiplatform.com.google.firebase.runActualWithHandler
+import multiplatform.com.google.firebase.translateException
 import multiplatform.com.google.firebase.toJson
-import kotlin.js.Json
 
 actual fun getFirebaseDatabase() = firebase.database()
 
@@ -35,17 +34,17 @@ actual class DatabaseError(internal val error: Throwable)
 actual val TIMESTAMP: Map<String, String>
     get() = firebase.database.ServerValue.TIMESTAMP
 
-actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = runActualWithHandler { set(toJson(value)).await() }
-actual suspend fun DatabaseReference.awaitUpdateChildren(update: Map<String, Any?>) = runActualWithHandler { update(toJson(update)).await() }
+actual suspend fun DatabaseReference.awaitSetValue(value: Any?) = translateException { set(toJson(value)).await() }
+actual suspend fun DatabaseReference.awaitUpdateChildren(update: Map<String, Any?>) = translateException { update(toJson(update)).await() }
 
-actual suspend fun OnDisconnect.awaitRemoveValue() = runActualWithHandler { remove().await() }
-actual suspend fun OnDisconnect.awaitCancel() =  runActualWithHandler { cancel().await() }
-actual suspend fun OnDisconnect.awaitSetValue(value: Any?) =  runActualWithHandler { set(value).await() }
-actual suspend fun OnDisconnect.awaitUpdateChildren(update: Map<String, Any?>) =  runActualWithHandler { update(toJson(update)).await() }
+actual suspend fun OnDisconnect.awaitRemoveValue() = translateException { remove().await() }
+actual suspend fun OnDisconnect.awaitCancel() =  translateException { cancel().await() }
+actual suspend fun OnDisconnect.awaitSetValue(value: Any?) =  translateException { set(value).await() }
+actual suspend fun OnDisconnect.awaitUpdateChildren(update: Map<String, Any?>) =  translateException { update(toJson(update)).await() }
 
 actual class DatabaseException(cause: Throwable) : RuntimeException(cause)
 
-actual suspend fun DatabaseReference.awaitRemoveValue() =  runActualWithHandler { remove().await() }
+actual suspend fun DatabaseReference.awaitRemoveValue() =  translateException { remove().await() }
 
 actual enum class LoggerLevel {
     DEBUG, INFO, WARN, ERROR, NONE

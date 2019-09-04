@@ -1,10 +1,9 @@
 package multiplatform.com.google.firebase.auth
 
 import kotlinx.coroutines.await
-import multiplatform.com.google.firebase.FirebaseError
 import multiplatform.com.google.firebase.FirebaseException
 import multiplatform.com.google.firebase.firebase
-import multiplatform.com.google.firebase.runActualWithHandler
+import multiplatform.com.google.firebase.translateException
 import kotlin.js.Promise
 
 actual fun getFirebaseAuth() = firebase.auth()
@@ -29,18 +28,18 @@ actual typealias FirebaseUser = firebase.user.User
 actual val FirebaseUser.uid: String
     get() = uid
 
-actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = runActualWithHandler { signInWithCustomToken(token).await() }
+actual suspend fun FirebaseAuth.awaitSignInWithCustomToken(token: String) = translateException { signInWithCustomToken(token).await() }
 
-actual suspend fun FirebaseAuth.awaitSignInAnonymously() = runActualWithHandler { Promise.resolve(signInAnonymously()).await() }
+actual suspend fun FirebaseAuth.awaitSignInAnonymously() = translateException { Promise.resolve(signInAnonymously()).await() }
 
-actual suspend fun FirebaseAuth.signOut() = runActualWithHandler { signOut().await() }
+actual suspend fun FirebaseAuth.signOut() = translateException { signOut().await() }
 
 actual val FirebaseUser.isAnonymous: Boolean
     get() = isAnonymous
 
-actual suspend fun FirebaseUser.awaitDelete() = runActualWithHandler { delete().await() }
+actual suspend fun FirebaseUser.awaitDelete() = translateException { delete().await() }
 
-actual suspend fun FirebaseUser.awaitReload() = runActualWithHandler { reload().await() }
+actual suspend fun FirebaseUser.awaitReload() = translateException { reload().await() }
 
 actual fun FirebaseAuth.addAuthStateListener(listener: AuthStateListener)  =
         onAuthStateChanged { listener.onAuthStateChanged(getFirebaseAuth()) }
