@@ -1,6 +1,5 @@
 package multiplatform.com.google.firebase.auth
 
-import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.tasks.await
 
 actual fun getFirebaseAuth() = FirebaseAuth.getInstance()
@@ -43,11 +42,11 @@ actual suspend fun FirebaseAuth.signOut() {
 }
 
 actual typealias FirebaseAuthException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthActionCodeException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthEmailException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthInvalidCredentialsException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthInvalidUserException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthRecentLoginRequiredException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthUserCollisionException = com.google.firebase.auth.FirebaseAuthException
-actual typealias FirebaseAuthWebException = com.google.firebase.auth.FirebaseAuthException
+actual typealias FirebaseAuthActionCodeException = com.google.firebase.auth.FirebaseAuthActionCodeException
+actual typealias FirebaseAuthEmailException = com.google.firebase.auth.FirebaseAuthEmailException
+actual typealias FirebaseAuthInvalidCredentialsException = com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+actual typealias FirebaseAuthInvalidUserException = com.google.firebase.auth.FirebaseAuthInvalidUserException
+actual typealias FirebaseAuthRecentLoginRequiredException = com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+actual typealias FirebaseAuthUserCollisionException = com.google.firebase.auth.FirebaseAuthUserCollisionException
+actual typealias FirebaseAuthWebException = com.google.firebase.auth.FirebaseAuthWebException
 

@@ -32,11 +32,11 @@ expect suspend fun FirebaseUser.awaitDelete()
 expect suspend fun FirebaseUser.awaitReload()
 
 expect open class FirebaseAuthException: FirebaseException
-expect open class FirebaseAuthActionCodeException: FirebaseException
-expect open class FirebaseAuthEmailException: FirebaseException
-expect open class FirebaseAuthInvalidCredentialsException: FirebaseException
-expect open class FirebaseAuthInvalidUserException: FirebaseException
-expect open class FirebaseAuthRecentLoginRequiredException: FirebaseException
-expect open class FirebaseAuthUserCollisionException: FirebaseException
-expect open class FirebaseAuthWebException: FirebaseException
+expect class FirebaseAuthActionCodeException: FirebaseAuthException
+expect class FirebaseAuthEmailException: FirebaseAuthException
+expect class FirebaseAuthInvalidCredentialsException: FirebaseAuthException
+expect class FirebaseAuthInvalidUserException: FirebaseAuthException
+expect class FirebaseAuthRecentLoginRequiredException: FirebaseAuthException
+expect class FirebaseAuthUserCollisionException: FirebaseAuthException
+expect class FirebaseAuthWebException: FirebaseAuthException
 
