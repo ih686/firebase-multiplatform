@@ -151,34 +151,34 @@ actual enum class FirestoreExceptionCode {
 }
 
 actual suspend fun <T> FirebaseFirestore.awaitRunTransaction(func: suspend (transaction: Transaction) -> T) =
-    runTransaction { GlobalScope.promise { func(it) } }.await()
+        runActualWithHandler { runTransaction { GlobalScope.promise { func(it) } }.await() }
 
 
-actual suspend fun WriteBatch.awaitCommit() = commit().await()
+actual suspend fun WriteBatch.awaitCommit() =  runActualWithHandler { commit().await() }
 
-actual suspend fun Query.awaitGet() = get().await()
+actual suspend fun Query.awaitGet() =  runActualWithHandler { get().await() }
 
-actual suspend fun DocumentReference.awaitGet() = get().await()
+actual suspend fun DocumentReference.awaitGet() =  runActualWithHandler { get().await() }
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) = set(toJson(data)!!).await()
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>) =  runActualWithHandler {  set(toJson(data)!!).await() }
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any) = set(toJson(pojo)!!).await()
+actual suspend fun DocumentReference.awaitSet(pojo: Any) = runActualWithHandler {  set(toJson(pojo)!!).await() }
 
-actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) = set(toJson(data)!!, options).await()
+actual suspend fun DocumentReference.awaitSet(data: Map<String, Any>, options: SetOptions) =  runActualWithHandler { set(toJson(data)!!, options).await() }
 
-actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) = set(toJson(pojo)!!, options).await()
+actual suspend fun DocumentReference.awaitSet(pojo: Any, options: SetOptions) =  runActualWithHandler { set(toJson(pojo)!!, options).await() }
 
-actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) = update(toJson(data)!!).await()
+actual suspend fun DocumentReference.awaitUpdate(data: Map<String, Any>) =  runActualWithHandler { update(toJson(data)!!).await() }
 
-actual suspend fun DocumentReference.awaitDelete() = delete().await()
+actual suspend fun DocumentReference.awaitDelete() =  runActualWithHandler { delete().await() }
 
-actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) = add(toJson(data)!!).await()
+actual suspend fun CollectionReference.awaitAdd(data: Map<String, Any>) =  runActualWithHandler { add(toJson(data)!!).await() }
 
-actual suspend fun CollectionReference.awaitAdd(pojo: Any) = add(toJson(pojo)!!).await()
+actual suspend fun CollectionReference.awaitAdd(pojo: Any) =  runActualWithHandler { add(toJson(pojo)!!).await() }
 
-actual fun FirebaseFirestore.collection(collectionPath: String) = collection(collectionPath)
+actual fun FirebaseFirestore.collection(collectionPath: String) =  collection(collectionPath)
 
-actual fun FirebaseFirestore.document(documentPath: String) = doc(documentPath)
+actual fun FirebaseFirestore.document(documentPath: String) =  doc(documentPath)
 
 actual fun FirebaseFirestore.batch() = batch()
 
@@ -250,6 +250,6 @@ actual fun arrayUnionFieldValue(vararg elements: Any) = FieldValue.arrayUnion(el
 actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(elements)
 
 
-actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await()
+actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) =  runActualWithHandler {  asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
 
-actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) = asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await()
+actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) =  runActualWithHandler {  asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
