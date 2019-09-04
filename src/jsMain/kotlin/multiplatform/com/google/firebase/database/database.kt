@@ -1,10 +1,9 @@
 package multiplatform.com.google.firebase.database
 
 import kotlinx.coroutines.await
+import multiplatform.com.google.firebase.*
 import kotlin.reflect.KClass
-import multiplatform.com.google.firebase.firebase
 import multiplatform.com.google.firebase.fromJson
-import multiplatform.com.google.firebase.translateException
 import multiplatform.com.google.firebase.toJson
 
 actual fun getFirebaseDatabase() = firebase.database()
@@ -86,3 +85,13 @@ actual fun DataSnapshot.child(path: String) = asDynamic().child(path).unsafeCast
 
 actual annotation class Exclude actual constructor()
 actual annotation class IgnoreExtraProperties actual constructor()
+
+internal suspend fun <T, R> T.translateException(function: suspend T.() -> R): R {
+    var exception: Exception?
+
+    try {
+        return function()
+    } catch (e: Error) {
+        throw DatabaseException(e)
+    }
+}

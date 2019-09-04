@@ -252,3 +252,39 @@ actual fun arrayRemoveFieldValue(vararg elements: Any) = FieldValue.arrayRemove(
 actual suspend fun DocumentReference.awaitUpdate(field: String, value: Any?, vararg moreFieldsAndValues: Any) =  translateException {  asDynamic().update.apply(this, arrayOf(field, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
 
 actual suspend fun DocumentReference.awaitUpdate(fieldPath: FieldPath, value: Any?, vararg moreFieldsAndValues: Any) =  translateException {  asDynamic().update.apply(this, arrayOf(fieldPath, toJson(value)) + moreFieldsAndValues.mapIndexed { index, any -> if(index%2 == 0) any else toJson(any) }).unsafeCast<Promise<Unit>>().await() }
+
+internal suspend fun <T, R> T.translateException(function: suspend T.() -> R): R {
+    var exception: Exception?
+
+    try {
+        return function()
+    } catch(e: dynamic) {
+        if(e.code !== undefined) {
+            throw when {
+
+                e.code === "cancelled" && e.name === "FirebaseError"  -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.CANCELLED)
+                e.code === "unknown" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.UNKNOWN)
+                e.code === "invalid-argument" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.INVALID_ARGUMENT)
+                e.code === "deadline-exceeded" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.DEADLINE_EXCEEDED)
+                e.code === "not-found" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.NOT_FOUND)
+                e.code === "already-exists" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.ALREADY_EXISTS)
+                e.code === "permission-denied" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.PERMISSION_DENIED)
+                e.code === "resource-exhausted" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.RESOURCE_EXHAUSTED)
+                e.code === "failed-precondition" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.FAILED_PRECONDITION)
+                e.code === "aborted" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.ABORTED)
+                e.code === "out-of-range" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.OUT_OF_RANGE)
+                e.code === "unimplemented" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.UNIMPLEMENTED)
+                e.code === "internal" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.INTERNAL)
+                e.code === "unavailable" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.UNAVAILABLE)
+                e.code === "data-loss" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.DATA_LOSS)
+                e.code === "unauthenticated" && e.name === "FirebaseError" -> FirebaseFirestoreException(e.message as String, FirestoreExceptionCode.UNAUTHENTICATED)
+                else -> FirebaseException(e)
+            }
+        } else {
+            exception = FirebaseException(e)
+        }
+    }
+
+
+    throw exception!!
+}
