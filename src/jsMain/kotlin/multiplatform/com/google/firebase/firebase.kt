@@ -6,8 +6,6 @@ import kotlin.reflect.KClass
 
 actual typealias FirebaseApp = firebase.App
 
-typealias FirebaseError = Error
-
 actual fun initializeFirebaseApp(context: Any, options: FirebaseOptions) =  firebase.initializeApp(
         json(
             "apiKey" to options.apiKey,
@@ -32,16 +30,13 @@ actual class FirebaseOptionsBuilder actual constructor() {
     internal var options = FirebaseOptions()
 }
 
-fun FirebaseError.toFirebaseException() = FirebaseException(this)
-
-actual open class FirebaseException(error: FirebaseError) : Exception(error)
+actual open class FirebaseException(code: String?, message: String?) : Exception("$code: $message")
 
 actual fun getFirebaseApps(context: Any) = firebase.apps.toList()
 
-actual open class FirebaseNetworkException(error: FirebaseError) : FirebaseException(error)
-actual open class FirebaseTooManyRequestsException(error: FirebaseError) : FirebaseException(error)
-
-actual open class FirebaseApiNotAvailableException(error: FirebaseError) : FirebaseException(error)
+actual open class FirebaseNetworkException(code: String?, message: String?) : FirebaseException(code, message)
+actual open class FirebaseTooManyRequestsException(code: String?, message: String?) : FirebaseException(code, message)
+actual open class FirebaseApiNotAvailableException(code: String?, message: String?) : FirebaseException(code, message)
 
 actual fun FirebaseOptionsBuilder.setGoogleAppId(googleAppId: String) = options.copy(googleAppId = googleAppId).let { options = it }.let { this }
 

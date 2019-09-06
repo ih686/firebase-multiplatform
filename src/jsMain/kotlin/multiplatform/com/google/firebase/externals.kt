@@ -62,9 +62,9 @@ external object firebase {
 
             fun update(value: Any?): Promise<Unit>
             fun set(value: Any?): Promise<Unit>
-            fun on(eventType: String?, callback: (data: DataSnapshot) -> Unit, cancelCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot) -> Unit
+            fun on(eventType: String?, callback: (data: DataSnapshot) -> Unit, cancelCallbackOrContext: (error: Error) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot) -> Unit
             fun off(eventType: String?, callback: (data: DataSnapshot) -> Unit, context: Any? = definedExternally)
-            fun once(eventType: String, callback: (data: DataSnapshot) -> Unit, failureCallbackOrContext: (error: Throwable) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot)->Unit
+            fun once(eventType: String, callback: (data: DataSnapshot) -> Unit, failureCallbackOrContext: (error: Error) -> Unit? = definedExternally, context: Any? = definedExternally): (DataSnapshot)->Unit
             fun push(): ThenableReference
         }
         open class DataSnapshot {
@@ -123,7 +123,7 @@ external object firebase {
         open class Query {
             fun get(options: Any? = definedExternally): Promise<QuerySnapshot>
             fun where(fieldPath: Any, opStr: String, value: Any?): Query
-            fun onSnapshot(next: (snapshot: QuerySnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
+            fun onSnapshot(next: (snapshot: QuerySnapshot) -> Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class CollectionReference : Query {
@@ -151,7 +151,7 @@ external object firebase {
             fun update(data: Any): Promise<Unit>
 //            fun update(field: Any, value: Any?, vararg moreFieldsAndValues: Any?): Promise<Unit>
             fun delete(): Promise<Unit>
-            fun onSnapshot(next: (snapshot: DocumentSnapshot) ->Unit, error: (error: Error) -> Unit): ()->Unit
+            fun onSnapshot(next: (snapshot: DocumentSnapshot) -> Unit, error: (error: Error) -> Unit): ()->Unit
         }
 
         open class WriteBatch {
