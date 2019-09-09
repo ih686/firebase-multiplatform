@@ -63,13 +63,17 @@ private inline fun <R> rethrow(function: () -> R): R {
         return function()
     } catch (e: Exception) {
         throw e
-    } catch(e: Error) {
-            throw when(val code = e.asDynamic().code as String?) {
-                "auth/invalid-user-token" -> FirebaseAuthInvalidUserException(code, e.message)
-                "auth/requires-recent-login" -> FirebaseAuthRecentLoginRequiredException(code, e.message)
-                "auth/user-disabled" -> FirebaseAuthInvalidUserException(code, e.message)
-                "auth/user-token-expired" -> FirebaseAuthInvalidUserException(code, e.message)
-                "auth/web-storage-unsupported" -> FirebaseAuthWebException(code, e.message)
+    } catch(e: Throwable) {
+        throw errorToException(e)
+    }
+}
+
+private fun errorToException(e: Throwable) = when(val code = e.asDynamic().code as String?) {
+        "auth/invalid-user-token" -> FirebaseAuthInvalidUserException(code, e.message)
+        "auth/requires-recent-login" -> FirebaseAuthRecentLoginRequiredException(code, e.message)
+        "auth/user-disabled" -> FirebaseAuthInvalidUserException(code, e.message)
+        "auth/user-token-expired" -> FirebaseAuthInvalidUserException(code, e.message)
+        "auth/web-storage-unsupported" -> FirebaseAuthWebException(code, e.message)
 //                "auth/app-deleted" ->
 //                "auth/app-not-authorized" ->
 //                "auth/argument-error" ->
@@ -78,7 +82,5 @@ private inline fun <R> rethrow(function: () -> R): R {
 //                "auth/operation-not-allowed" ->
 //                "auth/too-many-arguments" ->
 //                "auth/unauthorized-domain" ->
-                else -> FirebaseAuthException(code, e.message)
-            }
-    }
+        else -> FirebaseAuthException(code, e.message)
 }

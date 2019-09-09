@@ -95,7 +95,7 @@ private inline fun <R> rethrow(function: () -> R): R {
         return function()
     } catch (e: Exception) {
         throw e
-    } catch(e: Error) {
+    } catch(e: Throwable) {
         throw DatabaseException(e.asDynamic().code as String?, e.message)
     }
 }

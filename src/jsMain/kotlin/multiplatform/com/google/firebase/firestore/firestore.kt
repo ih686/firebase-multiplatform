@@ -268,25 +268,27 @@ private inline fun <R> rethrow(function: () -> R): R {
         return function()
     } catch (e: Exception) {
         throw e
-    } catch(e: Error) {
-        throw when(val code = e.asDynamic().code as String?) {
-            "cancelled" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.CANCELLED)
-            "invalid-argument" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.INVALID_ARGUMENT)
-            "deadline-exceeded" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.DEADLINE_EXCEEDED)
-            "not-found" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.NOT_FOUND)
-            "already-exists" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.ALREADY_EXISTS)
-            "permission-denied" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.PERMISSION_DENIED)
-            "resource-exhausted" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.RESOURCE_EXHAUSTED)
-            "failed-precondition" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.FAILED_PRECONDITION)
-            "aborted" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.ABORTED)
-            "out-of-range" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.OUT_OF_RANGE)
-            "unimplemented" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNIMPLEMENTED)
-            "internal" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.INTERNAL)
-            "unavailable" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNAVAILABLE)
-            "data-loss" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.DATA_LOSS)
-            "unauthenticated" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNAUTHENTICATED)
-//          "unknown" ->
-            else -> FirebaseFirestoreException(code, FirestoreExceptionCode.UNKNOWN)
-        }
+    } catch(e: Throwable) {
+        throw errorToException(e)
     }
+}
+
+private fun errorToException(e: Throwable) = when(val code = e.asDynamic().code as String?) {
+    "cancelled" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.CANCELLED)
+    "invalid-argument" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.INVALID_ARGUMENT)
+    "deadline-exceeded" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.DEADLINE_EXCEEDED)
+    "not-found" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.NOT_FOUND)
+    "already-exists" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.ALREADY_EXISTS)
+    "permission-denied" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.PERMISSION_DENIED)
+    "resource-exhausted" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.RESOURCE_EXHAUSTED)
+    "failed-precondition" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.FAILED_PRECONDITION)
+    "aborted" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.ABORTED)
+    "out-of-range" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.OUT_OF_RANGE)
+    "unimplemented" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNIMPLEMENTED)
+    "internal" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.INTERNAL)
+    "unavailable" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNAVAILABLE)
+    "data-loss" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.DATA_LOSS)
+    "unauthenticated" -> FirebaseFirestoreException(e.message, FirestoreExceptionCode.UNAUTHENTICATED)
+//    "unknown" ->
+    else -> FirebaseFirestoreException(code, FirestoreExceptionCode.UNKNOWN)
 }
