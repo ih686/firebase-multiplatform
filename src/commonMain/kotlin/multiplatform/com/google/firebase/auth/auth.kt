@@ -1,5 +1,7 @@
 package multiplatform.com.google.firebase.auth
 
+import multiplatform.com.google.firebase.FirebaseException
+
 expect fun getFirebaseAuth(): FirebaseAuth
 
 expect interface AuthStateListener {
@@ -28,4 +30,13 @@ expect val FirebaseUser.isAnonymous: Boolean
 
 expect suspend fun FirebaseUser.awaitDelete()
 expect suspend fun FirebaseUser.awaitReload()
+
+expect open class FirebaseAuthException: FirebaseException
+expect class FirebaseAuthActionCodeException: FirebaseAuthException
+expect class FirebaseAuthEmailException: FirebaseAuthException
+expect class FirebaseAuthInvalidCredentialsException: FirebaseAuthException
+expect class FirebaseAuthInvalidUserException: FirebaseAuthException
+expect class FirebaseAuthRecentLoginRequiredException: FirebaseAuthException
+expect class FirebaseAuthUserCollisionException: FirebaseAuthException
+expect class FirebaseAuthWebException: FirebaseAuthException
 

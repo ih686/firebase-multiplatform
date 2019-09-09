@@ -63,7 +63,7 @@ kotlin {
         val jvmMain by getting {
             kotlin.srcDir("src/androidMain/kotlin")
             dependencies {
-                api("app.teamhub:firebase-java:0.1.0")
+                api("app.teamhub:firebase-java:0.2.0")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.2")
                 implementation(kotlin("stdlib-jdk8"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
