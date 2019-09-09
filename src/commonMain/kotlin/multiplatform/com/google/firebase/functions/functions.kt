@@ -1,5 +1,7 @@
 package multiplatform.com.google.firebase.functions
 
+import multiplatform.com.google.firebase.FirebaseException
+
 expect fun getFirebaseFunctions(): FirebaseFunctions
 
 expect class FirebaseFunctions
@@ -13,3 +15,6 @@ expect suspend fun HttpsCallableReference.awaitCall(): HttpsCallableResult
 expect class HttpsCallableResult
 
 expect val HttpsCallableResult.data: Any
+
+expect class FirebaseFunctionsException: FirebaseException
+

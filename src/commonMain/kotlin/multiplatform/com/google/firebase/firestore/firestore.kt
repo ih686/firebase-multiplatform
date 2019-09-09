@@ -102,7 +102,7 @@ expect suspend fun CollectionReference.awaitAdd(data: Map<String, Any>): Documen
 
 expect suspend fun CollectionReference.awaitAdd(pojo: Any): DocumentReference
 
-expect class FirebaseFirestoreException(detailMessage: String, code: FirestoreExceptionCode ) : FirebaseException
+expect class FirebaseFirestoreException : FirebaseException
 
 expect val FirebaseFirestoreException.code: FirestoreExceptionCode
 
