@@ -2,6 +2,7 @@ package multiplatform.com.google.firebase.auth
 
 import kotlinx.coroutines.await
 import multiplatform.com.google.firebase.FirebaseException
+import multiplatform.com.google.firebase.FirebaseNetworkException
 import multiplatform.com.google.firebase.firebase
 import kotlin.js.Promise
 
@@ -74,11 +75,11 @@ private fun errorToException(e: Throwable) = when(val code = e.asDynamic().code 
         "auth/user-disabled" -> FirebaseAuthInvalidUserException(code, e.message)
         "auth/user-token-expired" -> FirebaseAuthInvalidUserException(code, e.message)
         "auth/web-storage-unsupported" -> FirebaseAuthWebException(code, e.message)
+        "auth/network-request-failed" -> FirebaseNetworkException(code, e.message)
 //                "auth/app-deleted" ->
 //                "auth/app-not-authorized" ->
 //                "auth/argument-error" ->
 //                "auth/invalid-api-key" ->
-//                "auth/network-request-failed" ->
 //                "auth/operation-not-allowed" ->
 //                "auth/too-many-arguments" ->
 //                "auth/unauthorized-domain" ->
